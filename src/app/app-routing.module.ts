@@ -4,6 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [{
   path: 'account',
   loadChildren: './account/account.module#AccountModule'
+},
+{
+  path: 'category',
+  loadChildren: './category/category.module#CategoryModule'
 }];
 
 @NgModule({
