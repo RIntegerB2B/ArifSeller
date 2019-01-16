@@ -31,17 +31,17 @@ import {
   MatTableModule,
 } from '@angular/material';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import {CategoryRoutingModule} from './category-routing.module';
-import {CategoryService} from './category.service';
-import { SuperCategoryComponent } from './super-category/super-category.component';
-import { MainCategoryComponent } from './main-category/main-category.component';
-
+import {ProductRoutingModule} from './product-routing.module';
+import { AddProductComponent } from './add-product/add-product.component';
+import {ProductService} from './product.service';
+import { ViewProductsComponent } from './view-products/view-products.component';
+import { ViewSingleProductComponent } from './view-single-product/view-single-product.component';
 @NgModule({
-  declarations: [SuperCategoryComponent, MainCategoryComponent],
+  declarations: [AddProductComponent, ViewProductsComponent, ViewSingleProductComponent],
   imports: [
     HttpClientModule,
+    ProductRoutingModule,
     CommonModule,
-    CategoryRoutingModule,
     ReactiveFormsModule,
     MatCardModule,
     MatIconModule,
@@ -65,7 +65,7 @@ import { MainCategoryComponent } from './main-category/main-category.component';
   ],
   providers:
    [
-    CategoryService
+    ProductService
    ]
 })
-export class CategoryModule { }
+export class ProductModule { }

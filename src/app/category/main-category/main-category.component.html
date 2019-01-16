@@ -1,0 +1,95 @@
+<div class="pageBoxLg ">
+  <label class="pageBoxLg-label ">Main Category</label>
+  <form [formGroup]="mainCategoryForm" novalidate style="padding-top:60px">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-2">
+          <div class="textContainer">
+            <select #selectElem (change)="setNewUser(selectElem.value)" class="hideLabel form-control">
+              <option>Select super category</option>
+              <option *ngFor="let category of superCategoryModel" [value]="category._id">
+                {{category.categoryName}}
+              </option>
+            </select>
+
+          </div>
+
+        </div>
+        <div class="form-group col-sm-12 col-md-4">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Main Category Name" formControlName="categoryName" required #name>
+            <button mat-button matSuffix mat-icon-button aria-label="Main Category Name">
+            </button>
+            <mat-error *ngIf="mainCategoryForm.controls['categoryName'].errors?.required">
+              Main Category Name is
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="form-group col-sm-12 col-md-4">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Main Category Description" formControlName="description" required #desc>
+            <button mat-button matSuffix mat-icon-button aria-label="Main Category Description">
+            </button>
+            <mat-error *ngIf="mainCategoryForm.controls['description'].errors?.required">
+              Main Category Description
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col-sm-12 col-md-2">
+          <button mat-raised-button color="accent" type="submit" (click)="addMainCategory()" [disabled]='!mainCategoryForm.valid'>Save</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <label>View Main Category</label>
+        <div class="form-group col-sm-12 col-md-2">
+          <div class="textContainer">
+            <select #selectElem1 (change)="getCategory(selectElem1.value)" class="hideLabel form-control">
+              <option> Select super category</option>
+              <option *ngFor="let category of superCategoryModel" [value]="category._id">
+                {{category.categoryName}}
+              </option>
+            </select>
+
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="col-md-12 mx-auto">
+        <table mat-table [dataSource]="mainCategoryData" class="container-fluid">
+          <ng-container matColumnDef="categoryName">
+
+            <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label"> Category Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.mainCategoryName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label"> Description</th>
+            <td mat-cell *matCellDef="let element"> {{element.mainCategoryDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label"> Edit </th>
+            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="edit( )">
+                <mat-icon>edit</mat-icon>
+              </button></td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label"> Delete</th>
+            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="deleteMainCategory(element)">
+                <mat-icon>delete</mat-icon>
+              </button></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+    </div>
+  </form>
+</div>

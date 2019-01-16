@@ -8,7 +8,7 @@ import {SuperCategory} from './superCategory.model';
 import {CategoryService} from '../category.service';
 export interface PeriodicElement {
   categoryName: string;
- /*  description: string; */
+  description: string;
 
 }
 
@@ -21,7 +21,7 @@ export class SuperCategoryComponent implements OnInit {
   superCategoryForm: FormGroup;
   superCategoryModel: SuperCategory;
   superCategoryData;
-  displayedColumns: string[] = ['categoryName', 'View', 'edit', 'delete'];
+  displayedColumns: string[] = ['categoryName', 'description', 'edit', 'delete'];
   constructor(private fb: FormBuilder, private router: Router, private categoryService: CategoryService ) { }
 
   ngOnInit() {

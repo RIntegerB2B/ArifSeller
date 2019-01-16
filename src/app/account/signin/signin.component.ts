@@ -31,6 +31,7 @@ export class SigninComponent implements OnInit {
     this.signInModel.password = this.signInForm.controls.password.value;
     this.accountService.signIn(this.signInModel).subscribe(data => {
       /* console.log(data); */
+      this.router.navigate(['/category/supercategory']);
     });
   }
 }

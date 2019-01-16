@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { AppSetting } from '../config/appSetting';
 
 import {SuperCategory} from './super-category/superCategory.model';
+import {MainCategory} from './main-category/mainCategory.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,25 @@ getSuperCategory(): Observable<any> {
     return this.httpClient.post<SuperCategory>(url, data);
   }
 
-  deleteSuperCategory(data) {
+  deleteSuperCategory(data): Observable<any> {
     const deleteUrl = 'categoryDelete/';
     const url: string = this.serviceUrl + deleteUrl + data._id;
-    return this.httpClient.delete<SuperCategory[]>(url);
+    return this.httpClient.delete<SuperCategory>(url);
+  }
+  addMainCategory(data: MainCategory): Observable<any> {
+    const categoryUrl = 'mainCategory';
+    const url: string = this.serviceUrl + categoryUrl;
+    return this.httpClient.post<MainCategory>(url, data);
+  }
+  getMainCategory(id): Observable<any> {
+    const categoryUrl = 'superCategorydetail/';
+    const url: string = this.serviceUrl + categoryUrl + id;
+    return this.httpClient.get<MainCategory>(url);
+  }
+  deleteMainCategory(id, data): Observable<any> {
+    const deleteUrl = 'category/';
+    const deleteUrl1 = '/mainCategory/';
+    const url: string = this.serviceUrl + deleteUrl + id + deleteUrl1 + data._id;
+    return this.httpClient.delete<MainCategory>(url);
   }
 }
