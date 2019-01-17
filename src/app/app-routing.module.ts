@@ -12,6 +12,10 @@ const routes: Routes = [{
 {
   path: 'product',
   loadChildren: './product/product.module#ProductModule'
+},
+{
+  path: 'moq',
+  loadChildren: './moq/moq.module#MoqModule'
 }];
 
 @NgModule({

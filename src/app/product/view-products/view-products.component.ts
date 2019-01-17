@@ -28,6 +28,8 @@ export class ViewProductsComponent implements OnInit {
   displayedColumns: string[] = ['primeImage', 'productName', 'productTitle', 'styleCode', 'skuCode', 'view', 'delete'];
   productModel: Product;
   productData;
+  message;
+  action;
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
 
@@ -42,8 +44,12 @@ export class ViewProductsComponent implements OnInit {
     });
   }
   deleteProduct(product) {
+    this.message = 'Product deleted';
     this.productService.deleteProduct(product).subscribe(data => {
       this.productData = new MatTableDataSource<PeriodicElement>(data);
+      this.snackBar.open(this.message, this.action, {
+        duration: 3000,
+      });
     }, err => {
       console.log(err);
     });

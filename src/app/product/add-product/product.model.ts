@@ -8,5 +8,6 @@ export class Product {
     color: string;
     styleCode: string;
     skuCode: string;
-    primeImageName: string;
+    productImageName: [string];
+    mainCategory: [string];
 }

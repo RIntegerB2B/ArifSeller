@@ -3,11 +3,12 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { ProductService } from '../product.service';
-import { PrimeImageData } from './primeImageData.model';
 import { Product } from './product.model';
+import { MainCategory } from '../../category/main-category/mainCategory.model';
+import { MOQ } from '../../moq/create-moq/moq.model';
 
 @Component({
   selector: 'app-add-product',
@@ -17,18 +18,24 @@ import { Product } from './product.model';
 export class AddProductComponent implements OnInit {
   productForm: FormGroup;
   productModel: Product;
+  moqModel: MOQ;
+  mainCategoryModel = new Array();
   message;
   action;
+  productId;
+  moqId;
 
-  fileToUpload: File = null;
+  fileLength;
+  fileToUpload;
+  urls = new Array<string>();
+
   reader: FileReader = new FileReader();
-  portFolioImageBlob: Blob;
-  portFolioImageBytes: Uint8Array;
-  primeImageData: PrimeImageData = new PrimeImageData();
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createForm();
+    this.showMainCategory();
+    this.showMOQ();
   }
   createForm() {
     this.productForm = this.fb.group({
@@ -43,21 +50,33 @@ export class AddProductComponent implements OnInit {
       skuCode: ['']
     });
   }
-  handleFileInput(files: FileList, loadedImage) {
-    this.fileToUpload = files.item(0);
-    this.primeImageData.primeImage = this.fileToUpload = files[0];
-    this.reader.readAsArrayBuffer(this.fileToUpload);
-    this.reader.onload = () => {
-      const fileResult = this.reader.result;
-      this.portFolioImageBytes = new Uint8Array(fileResult);
-      this.portFolioImageBlob = new Blob([this.portFolioImageBytes.buffer]);
-      const reader1 = new FileReader();
-      reader1.readAsDataURL(this.portFolioImageBlob);
-      reader1.onload = (e: Event & { target: { result: string } }) => {
-        loadedImage.src = reader1.result;
-      };
-    };
-
+  handleFileInput(images: any) {
+    this.fileToUpload = images;
+    this.urls = [];
+    const files = images;
+    if (files) {
+      for (const file of files) {
+        this.reader = new FileReader();
+        this.reader.onload = (e: any) => {
+          this.urls.push(e.target.result);
+        };
+        this.reader.readAsDataURL(file);
+      }
+    }
+  }
+  showMOQ() {
+    this.productService.showMoq().subscribe(data => {
+      this.moqModel = data;
+    }, err => {
+      console.log(err);
+    });
+  }
+  showMainCategory() {
+    this.productService.showAllMainCategory().subscribe(data => {
+      this.mainCategoryModel = data;
+    }, err => {
+      console.log(err);
+    });
   }
   addProducts() {
     this.message = 'Product added successfully';
@@ -70,22 +89,38 @@ export class AddProductComponent implements OnInit {
     this.productModel.color = this.productForm.controls.color.value;
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
     this.productModel.skuCode = this.productForm.controls.skuCode.value;
-    this.productModel.primeImageName = this.primeImageData.primeImage.name;
     this.productService.addProduct(this.productModel).subscribe(data => {
+      this.productId = data._id;
+      this.addProductToMoq();
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
     }, error => {
       console.log(error);
     });
-    this.uploadImage(this.productForm.controls.skuCode.value);
+    this.uploadImages(this.productModel.skuCode);
     this.router.navigate(['/product/viewproducts']);
 
   }
-  uploadImage(skucode) {
-    this.productService.uploadprimeImage(this.primeImageData, skucode).subscribe(data => {
+  getMoq(elem) {
+    this.moqId = elem;
+  }
+  uploadImages(skucode) {
+    const formData: any = new FormData();
+    this.fileLength = this.fileToUpload.length;
+    for (let i = 0; i <= this.fileLength; i++) {
+      formData.append('uploads[]', this.fileToUpload[i]);
+    }
+    this.productService.uploadImages(formData, skucode).subscribe(data => {
     }, error => {
       console.log(error);
+    });
+  }
+  addProductToMoq() {
+    this.productService.addMOQ(this.moqId, this.productId).subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
     });
   }
 }
