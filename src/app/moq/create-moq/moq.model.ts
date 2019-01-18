@@ -3,6 +3,6 @@ export class MOQ {
     moqName: string;
     moqDescription: string;
     products: [string];
-    moqQuantity: Number
+    moqQuantity: Number;
 
 }

@@ -1,3 +1,52 @@
-<p>
-  view-single-product works!
-</p>
+<div class="pageBoxLg">
+  <div class="row display-none-small">
+    <div class="col-md-2 ">
+      <div class="col-md-12" *ngFor="let data of productModel?.productImageName">
+        <a (click)="clickImg(data)"><img [src]="data" class="images" style="height: 100px; width: 80px;"></a>
+      </div>
+    </div>
+    <div class="col-md-3 " *ngIf="!primeHide">
+      <img [src]="productModel?.productImageName[0]" style="height: 400px; width: 280px;">
+    </div>
+    <div class="col-md-3" *ngIf="showImages">
+        <img [src]="selectedImg" style="height: 400px; width: 280px;">
+      </div>
+    <div class="col-md-7">
+      <div class="col-md-12">
+          <h1>{{productModel.shortDescription | titlecase}}</h1>
+        </div>
+        <div class="col-md-12">
+            <h5 >Color: {{productModel.color | titlecase}}</h5>
+          </div>
+          <div class="col-md-12">
+              <h5 >₹{{productModel.price }}</h5>
+            </div>
+      <div class="col-md-12">
+        <h2>Product Details</h2>
+          <h5 style="white-space: pre-line">{{productModel.productDescription | titlecase}}</h5>
+        </div>
+        
+    </div>
+  </div>
+ <!--  <div class="row display-none-large">
+      <div *ngIf="!primeHide">
+          <img [src]="productModel?.productImageName[0]" style="height: 200px; width: 180px;">
+        </div>
+        <div *ngIf="showImages">
+            <img [src]="selectedImg" style="height: 450px; width: 280px;">
+        </div>
+      <div class="row" >
+            <div  *ngFor="let data of productModel?.productImageName">
+                <a (click)="clickImg(data)"><img [src]="data" style="height: 130px; width: 100px;"></a>
+              </div>
+        </div>
+        
+     
+      
+      <div class="col-sm-12">
+        <div class="col-sm-12">
+          <h2>{{productModel.productName | titlecase}}</h2>
+        </div>
+      </div>
+    </div> -->
+</div>

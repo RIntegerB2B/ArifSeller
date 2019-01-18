@@ -98,20 +98,20 @@ export class AddProductComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-    this.uploadImages(this.productModel.skuCode);
+    this.uploadImages(this.productModel.skuCode, this.productModel.styleCode);
     this.router.navigate(['/product/viewproducts']);
 
   }
   getMoq(elem) {
     this.moqId = elem;
   }
-  uploadImages(skucode) {
+  uploadImages(skucode, styleCode) {
     const formData: any = new FormData();
     this.fileLength = this.fileToUpload.length;
     for (let i = 0; i <= this.fileLength; i++) {
       formData.append('uploads[]', this.fileToUpload[i]);
     }
-    this.productService.uploadImages(formData, skucode).subscribe(data => {
+    this.productService.uploadImages(formData, styleCode, skucode).subscribe(data => {
     }, error => {
       console.log(error);
     });

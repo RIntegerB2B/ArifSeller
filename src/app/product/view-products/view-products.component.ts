@@ -17,8 +17,6 @@ export interface PeriodicElement {
   view: string;
   delete: string;
 }
-
-
 @Component({
   selector: 'app-view-products',
   templateUrl: './view-products.component.html',
@@ -48,7 +46,7 @@ export class ViewProductsComponent implements OnInit {
     this.productService.deleteProduct(product).subscribe(data => {
       this.productData = new MatTableDataSource<PeriodicElement>(data);
       this.snackBar.open(this.message, this.action, {
-        duration: 3000,
+        duration: 2000,
       });
     }, err => {
       console.log(err);
@@ -56,7 +54,5 @@ export class ViewProductsComponent implements OnInit {
   }
   viewProduct(product) {
     this.router.navigate(['/product/productdetail', product._id ]);
-console.log(product._id);
-
   }
 }

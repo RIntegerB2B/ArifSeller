@@ -18,6 +18,9 @@ export class ViewSingleProductComponent implements OnInit {
   productModel: Product;
   productData;
   productId;
+  primeHide: boolean;
+  showImages: boolean;
+  selectedImg;
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute) {
       this.productId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -28,9 +31,14 @@ export class ViewSingleProductComponent implements OnInit {
   }
 getProductById() {
 this.productService.getProductById(this.productId).subscribe(data => {
-  console.log(data);
+  this.productModel = data;
+  /* console.log(this.productModel.productDescription); */
 }, err => {
   console.log(err);
 });
 }
-}
+clickImg(data) {
+  this.primeHide = true;
+  this.showImages = true;
+  this.selectedImg = data;
+}}
