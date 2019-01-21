@@ -39,10 +39,10 @@ export class CreateMoqComponent implements OnInit {
     this.moqModel.moqDescription = this.moqForm.controls.moqDescription.value;
     this.moqModel.moqQuantity = this.moqForm.controls.moqQuantity.value;
     this.moqService.createMOQ(this.moqModel).subscribe(data => {
-      console.log(data);
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
+      this.router.navigate(['/moq/viewmoq']);
     }, err => {
       console.log(err);
     });

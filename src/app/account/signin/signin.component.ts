@@ -14,6 +14,7 @@ export class SigninComponent implements OnInit {
 
   signInForm: FormGroup;
   signInModel: SignIn;
+  pwdError: boolean;
   constructor(private fb: FormBuilder, private router: Router, private accountService: AccountService ) { }
 
   ngOnInit() {
@@ -30,8 +31,11 @@ export class SigninComponent implements OnInit {
     this.signInModel.userName = this.signInForm.controls.userName.value;
     this.signInModel.password = this.signInForm.controls.password.value;
     this.accountService.signIn(this.signInModel).subscribe(data => {
-      /* console.log(data); */
-      this.router.navigate(['/category/supercategory']);
+      if (data.length === 0) {
+       this.pwdError = true;
+      } else if (data.length !== 0) {
+        this.router.navigate(['/product/viewproducts']);
+      }
     });
   }
 }

@@ -33,9 +33,10 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import {MoqRoutingModule} from './moq-routing.module';
 import { CreateMoqComponent } from './create-moq/create-moq.component';
 import {MoqService} from './moq.service';
+import { ViewMoqComponent } from './view-moq/view-moq.component';
 
 @NgModule({
-  declarations: [CreateMoqComponent],
+  declarations: [CreateMoqComponent, ViewMoqComponent],
   imports: [
     HttpClientModule,
     MoqRoutingModule,

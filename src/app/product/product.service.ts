@@ -36,10 +36,9 @@ export class ProductService {
     const url: string = this.serviceUrl + categoryUrl + moqid + productUrl + productid;
     return this.httpClient.get<MOQ>(url);
   }
-  uploadImages(data , styleCode,  skucode): Observable<any> {
-    const addUrl = 'product/';
-    const addUrl1 = '/images/';
-    const url: string = this.serviceUrl + addUrl + styleCode + addUrl1 + skucode ;
+  uploadImages(data, skucode): Observable<any> {
+    const addUrl = 'productimages/';
+    const url: string = this.serviceUrl + addUrl + skucode ;
     return this.httpClient.put<boolean>(url, data);
   }
 getProducts(): Observable<any> {
@@ -49,9 +48,8 @@ getProducts(): Observable<any> {
 }
 deleteProduct(data): Observable<any> {
   const deleteUrl = 'product/';
-  const deleteUrl1 = '/stylecode/';
-  const deleteUrl2 = '/sku/';
-  const url: string = this.serviceUrl + deleteUrl + data._id + deleteUrl1 + data.styleCode + deleteUrl2 + data.skuCode;
+  const deleteUrl1 = '/sku/';
+  const url: string = this.serviceUrl + deleteUrl + data._id + deleteUrl1 + data.skuCode;
   return this.httpClient.delete<Product>(url);
 }
 getProductById(data): Observable<any> {

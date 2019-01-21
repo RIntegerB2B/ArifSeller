@@ -16,9 +16,3 @@
     -moz-transition: padding 3s;
     -webkit-transition: padding 3s;
   }
-  .images:hover{
-    border:1px solid blue;
-    /* border-radius: 25px; */
-  
-  
-}
