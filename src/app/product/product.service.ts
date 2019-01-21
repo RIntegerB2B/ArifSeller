@@ -53,8 +53,14 @@ deleteProduct(data): Observable<any> {
   return this.httpClient.delete<Product>(url);
 }
 getProductById(data): Observable<any> {
-  const categoryUrl = 'product/';
-  const url: string = this.serviceUrl + categoryUrl + data;
+  const productUrl = 'product/';
+  const url: string = this.serviceUrl + productUrl + data;
+  return this.httpClient.get<Product>(url);
+}
+getRelatedProducts(data): Observable<any> {
+  const productUrl = 'relatedproducts/';
+  const productUrl1 = '/product/';
+  const url: string = this.serviceUrl + productUrl + data.styleCode + productUrl1 + data._id;
   return this.httpClient.get<Product>(url);
 }
 }
