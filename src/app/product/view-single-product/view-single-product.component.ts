@@ -20,25 +20,53 @@ export class ViewSingleProductComponent implements OnInit {
   productId;
   primeHide: boolean;
   showImages: boolean;
+  showRelatedProducts;
   selectedImg;
+  relatedProducts = [];
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute) {
-      this.productId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.productId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
   ngOnInit() {
     this.getProductById();
   }
-getProductById() {
-this.productService.getProductById(this.productId).subscribe(data => {
-  this.productModel = data;
-  /* console.log(this.productModel.productDescription); */
-}, err => {
-  console.log(err);
-});
+  getProductById() {
+    this.productService.getProductById(this.productId).subscribe(data => {
+      if (data.styleCode === '' || data.styleCode === undefined || data.styleCode === null) {
+        this.showRelatedProducts = false;
+        this.productModel = data;
+      } else {
+        this.showRelatedProducts = true;
+        this.productService.getRelatedProducts(data).subscribe(relatedProductData => {
+          relatedProductData.forEach(element => {
+            if (element._id !== this.productId) {
+              this.relatedProducts.push(element);
+            }
+          });
+          this.productModel = relatedProductData.find(e => e._id === this.productId);
+        }, err => {
+          console.log(err);
+        });
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  clickImg(data) {
+    this.primeHide = true;
+    this.showImages = true;
+    this.selectedImg = data;
+  }
+  relatedProduct(element) {
+    this.relatedProducts.push(this.productModel);
+    this.productModel = element;
+    this.primeHide = false;
+    this.showImages = false;
+    const index = this.relatedProducts.indexOf(element);
+    if (index !== -1) {
+      this.relatedProducts.splice(index, 1);
+    }
+  }
 }
-clickImg(data) {
-  this.primeHide = true;
-  this.showImages = true;
-  this.selectedImg = data;
-}}

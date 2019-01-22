@@ -9,8 +9,8 @@
       <img [src]="productModel?.productImageName[0]" style="height: 400px; width: 280px;">
     </div>
     <div class="col-md-3" *ngIf="showImages">
-        <img [src]="selectedImg" style="height: 400px; width: 280px;">
-      </div>
+      <img [src]="selectedImg" style="height: 400px; width: 280px;">
+    </div>
     <div class="col-md-7">
       <div class="col-md-12">
           <h1>{{productModel.shortDescription | titlecase}}</h1>
@@ -23,12 +23,14 @@
             </div>
       <div class="col-md-12">
         <h2>Product Details</h2>
-          <h5 style="white-space: pre-line">{{productModel.productDescription | titlecase}}</h5>
-        </div>
-        
+        <h5 style="white-space: pre-line">{{productModel.productDescription | titlecase}}</h5>
+      </div>
+
     </div>
+
   </div>
- <!--  <div class="row display-none-large">
+
+  <!--  <div class="row display-none-large">
       <div *ngIf="!primeHide">
           <img [src]="productModel?.productImageName[0]" style="height: 200px; width: 180px;">
         </div>
@@ -49,4 +51,22 @@
         </div>
       </div>
     </div> -->
+
+
 </div>
+
+  <div class="row pageBoxLg" *ngIf="showRelatedProducts">
+    <div class="row">
+       <div class="col-md-12">
+          <label class="pageBoxLg-label ">Related Products</label>
+       </div> 
+    </div>
+    <div class="col-md-2 images"  *ngFor="let data of relatedProducts">
+         <div>
+            <a (click)="relatedProduct(data)">  <img  [src]="data.productImageName[0]" style="width: 90px; height: 125px;"> </a>
+         </div> 
+         <div>
+            {{data.shortDescription | titlecase}}
+         </div>
+    </div>
+  </div>
