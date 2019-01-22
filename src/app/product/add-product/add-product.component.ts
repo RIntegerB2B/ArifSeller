@@ -9,7 +9,7 @@ import { ProductService } from '../product.service';
 import { Product } from './product.model';
 import { MainCategory } from '../../category/main-category/mainCategory.model';
 import { MOQ } from '../../moq/create-moq/moq.model';
-import {priceValue} from '../../shared/validation/price-validation';
+import { priceValue } from '../../shared/validation/price-validation';
 
 @Component({
   selector: 'app-add-product',
@@ -19,12 +19,16 @@ import {priceValue} from '../../shared/validation/price-validation';
 export class AddProductComponent implements OnInit {
   productForm: FormGroup;
   productModel: Product;
+  productDetail: Product[];
   moqModel: MOQ;
   mainCategoryModel = new Array();
   message;
   action;
   productId;
   moqId;
+  searchText;
+  showSkuError: boolean;
+  skuFilter;
 
   fileLength;
   fileToUpload;
@@ -37,6 +41,7 @@ export class AddProductComponent implements OnInit {
     this.createForm();
     this.showMainCategory();
     this.showMOQ();
+    this.getProducts();
   }
   createForm() {
     this.productForm = this.fb.group({
@@ -48,7 +53,8 @@ export class AddProductComponent implements OnInit {
       price: ['', priceValue],
       color: [''],
       styleCode: [''],
-      skuCode: ['']
+      skuCode: [''],
+      skuCodeValue: ['']
     });
   }
   handleFileInput(images: any) {
@@ -75,10 +81,26 @@ export class AddProductComponent implements OnInit {
   showMainCategory() {
     this.productService.showAllMainCategory().subscribe(data => {
       this.mainCategoryModel = data;
-      console.log('main category', data);
     }, err => {
       console.log(err);
     });
+  }
+  getProducts() {
+    this.productService.getProducts().subscribe(data => {
+      this.productDetail = data;
+    }, err => {
+      console.log(err);
+    });
+  }
+  skuCodeVerify(elem) {
+    this.searchText = elem;
+    this.skuFilter = this.productDetail.filter(data => data.skuCode.indexOf(this.searchText) !== -1);
+    console.log(typeof(this.skuFilter.length));
+    if (this.skuFilter.length !== 0) {
+this.showSkuError = true;
+    } else if (this.skuFilter.length === 0) {
+      this.showSkuError = false;
+    }
   }
   addProducts() {
     this.message = 'Product added successfully';
@@ -93,7 +115,7 @@ export class AddProductComponent implements OnInit {
     this.productModel.skuCode = this.productForm.controls.skuCode.value;
     this.productService.addProduct(this.productModel).subscribe(data => {
       this.productId = data._id;
-      this.addProductToMoq();
+      /* this.addProductToMoq(); */
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
@@ -112,7 +134,7 @@ export class AddProductComponent implements OnInit {
     for (let i = 0; i <= this.fileLength; i++) {
       formData.append('uploads[]', this.fileToUpload[i]);
     }
-    this.productService.uploadImages(formData,  skucode).subscribe(data => {
+    this.productService.uploadImages(formData, skucode).subscribe(data => {
     }, error => {
       console.log(error);
     });

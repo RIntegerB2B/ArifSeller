@@ -65,7 +65,7 @@ import { SharedRoutingModule } from './shared-routing.module';
     MatTableModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedRoutingModule
+    SharedRoutingModule,
   ]
 })
 export class SharedModule { }
