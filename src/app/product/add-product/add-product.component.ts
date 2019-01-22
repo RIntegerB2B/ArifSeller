@@ -74,6 +74,7 @@ export class AddProductComponent implements OnInit {
   showMainCategory() {
     this.productService.showAllMainCategory().subscribe(data => {
       this.mainCategoryModel = data;
+      console.log('main category', data);
     }, err => {
       console.log(err);
     });

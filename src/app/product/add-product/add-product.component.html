@@ -73,6 +73,16 @@
             </div>
           </div> -->
           <div class="form-group col-md-12">
+            <div class="textContainer">
+              <select #selectElem1 (change)="slectedCategory(selectElem1.value)" class="hideLabel form-control">
+                <option> Select the Category</option>
+                <option *ngFor="let data of mainCategoryModel" [value]="data._id" >
+                  {{data.mainCategoryName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
               <button mat-raised-button color="accent" type="submit"  (click) ="addProducts()" [disabled]='!productForm.valid'>Save</button> <br>
             </div>
         </div>

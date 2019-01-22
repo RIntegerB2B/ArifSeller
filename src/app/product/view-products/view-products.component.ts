@@ -36,6 +36,7 @@ export class ViewProductsComponent implements OnInit {
   }
   getProducts() {
     this.productService.getProducts().subscribe(data => {
+      console.log('product data', data);
       this.productData = new MatTableDataSource<PeriodicElement>(data);
     }, err => {
       console.log(err);
