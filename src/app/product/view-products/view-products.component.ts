@@ -36,11 +36,11 @@ export class ViewProductsComponent implements OnInit {
   }
   getProducts() {
     this.productService.getProducts().subscribe(data => {
-     /*  data.forEach(element => {
+      this.productData = new MatTableDataSource<PeriodicElement>(data);
+       /*  data.forEach(element => {
         console.log('single object');
         this.productModel.push(element);
       }); */
-      this.productData = new MatTableDataSource<PeriodicElement>(data);
     }, err => {
       console.log(err);
     });

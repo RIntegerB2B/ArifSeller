@@ -9,6 +9,7 @@ import { ProductService } from '../product.service';
 import { Product } from './product.model';
 import { MainCategory } from '../../category/main-category/mainCategory.model';
 import { MOQ } from '../../moq/create-moq/moq.model';
+import {priceValue} from '../../shared/validation/price-validation';
 
 @Component({
   selector: 'app-add-product',
@@ -44,7 +45,7 @@ export class AddProductComponent implements OnInit {
       productName: [''],
       productDescription: [''],
       shortDescription: [''],
-      price: [''],
+      price: ['', priceValue],
       color: [''],
       styleCode: [''],
       skuCode: ['']
