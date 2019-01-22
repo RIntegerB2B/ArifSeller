@@ -24,7 +24,7 @@ export interface PeriodicElement {
 })
 export class ViewProductsComponent implements OnInit {
   displayedColumns: string[] = ['primeImage', 'productName', 'productTitle', 'styleCode', 'skuCode', 'view', 'delete'];
-  productModel: Product;
+  productModel: Product[];
   productData;
   message;
   action;
@@ -36,7 +36,10 @@ export class ViewProductsComponent implements OnInit {
   }
   getProducts() {
     this.productService.getProducts().subscribe(data => {
-      console.log('product data', data);
+     /*  data.forEach(element => {
+        console.log('single object');
+        this.productModel.push(element);
+      }); */
       this.productData = new MatTableDataSource<PeriodicElement>(data);
     }, err => {
       console.log(err);
