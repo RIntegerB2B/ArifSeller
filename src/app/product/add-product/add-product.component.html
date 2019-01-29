@@ -1,5 +1,6 @@
 <form [formGroup]="productForm">
   <mat-tab-group class="mat-tab-fill-height">
+    <!-- Product details-->
     <mat-tab label="Product">
       <div class="container-fluid">
         <mat-card class="example-card">
@@ -90,24 +91,28 @@
         </mat-card>
       </div>
     </mat-tab>
+    <!-- Category -->
     <mat-tab label="Category">
       <div class="container-fluid">
         <mat-card class="p-0">
           <mat-card-title class="">
             <div class="card-title-text">Add Category</div>
-            <mat-divider></mat-divider>
           </mat-card-title>
           <mat-card-content>
             <div fxLayout="row wrap">
-              <div fxFlex="100" class="p-5">
+              <div  fxFlex="50" class="p-5">
                 <div class="pb-1">
+                    <div class="col-md-6">
                   <mat-form-field class="full-width">
-                    <input matInput placeholder="Product Title" formControlName="productTitle" value="">
+                          
+                            <mat-select #selectElem1 placeholder="Select the Category" (change)="slectedCategory(selectElem1.value)" multiple >
+                              <mat-option *ngFor="let data of mainCategoryModel" [value]="data._id" >
+                                {{data.mainCategoryName}}
+                              </mat-option>
+                            </mat-select>
+                       
                   </mat-form-field>
-                  <small *ngIf="productForm.controls['productTitle'].errors?.required" class="form-error-msg">
-                    Product Title is
-                    <strong>required</strong>
-                  </small>
+                </div>
                 </div>
               </div>
             </div>

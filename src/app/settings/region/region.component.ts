@@ -60,10 +60,12 @@ export class RegionComponent implements OnInit {
     this.regionModel.regionName = this.addRegionForm.controls.regionName.value;
     this.regionModel.currency = this.addRegionForm.controls.currency.value;
     this.settingsService.addRegion(this.regionModel).subscribe(data => {
+      this.regionDetail = data;
       this.regionData = new MatTableDataSource<PeriodicElement>(data);
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
+      this.addRegionForm.reset();
     }, err => {
       console.log(err);
     });
@@ -71,6 +73,16 @@ export class RegionComponent implements OnInit {
   showCurrency(elem) {
     this.selectedCurrency = this.regions.filter(data => data.regionName.indexOf(elem) !== -1);
 this.currencyValue = this.selectedCurrency[0].currency;
+if (elem === '') {
+  this.showRegionName = false;
+} else {
+  this.regionNameFilter = this.regionDetail.filter(data => data.regionName.indexOf(elem) !== -1);
+  if (this.regionNameFilter.length !== 0) {
+this.showRegionName = true;
+  } else if (this.regionNameFilter.length === 0 ) {
+    this.showRegionName = false;
+  }
+}
   }
  /*  regionVerify(elem) {
     if (elem === '') {
@@ -86,6 +98,7 @@ this.currencyValue = this.selectedCurrency[0].currency;
   } */
   deleteRegion(element) {
     this.settingsService.deleteRegion(element).subscribe(data => {
+      this.regionDetail = data;
       this.regionData = new MatTableDataSource<PeriodicElement>(data);
     }, err => {
       console.log(err);
