@@ -1,104 +1,125 @@
-<div class="pageBoxLg ">
-  <label class="pageBoxLg-label ">Add Products</label>
-  <form [formGroup]="productForm" novalidate style="padding-top:60px">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label>Product Images</label>
-          <div>
-            <img *ngFor="let url of urls" [src]="url" style="width: 180px; height: 245px;" />
-          </div>
-          <div>
-            <input type="file" name="file" class="btn btnPink btn-block" id="file" multiple (change)="handleFileInput($event.target.files)">
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label>Product Details</label>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Product Title" formControlName="productTitle">
-              <mat-error *ngIf="productForm.controls['productTitle'].errors?.required">
-                Product Title is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Product Name" formControlName="productName">
-              <mat-error *ngIf="productForm.controls['productName'].errors?.required">
-                Product Name is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <textarea matInput placeholder="Product Description" formControlName="productDescription"></textarea>
-            </mat-form-field>
-          </div>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <textarea matInput placeholder="Short Description" formControlName="shortDescription"></textarea>
-            </mat-form-field>
-          </div>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Price" formControlName="price">
-              <mat-error *ngIf="!productForm.controls['price'].errors?.required">
-                Enter the valid
-                <strong>Number</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Color" formControlName="color">
+<form [formGroup]="productForm">
+  <mat-tab-group class="mat-tab-fill-height">
+    <mat-tab label="Product">
+      <div class="container-fluid">
+        <mat-card class="example-card">
+          <div class="row">
+            <div class="col-md-6">
+              <label>
+                <input type="file" (change)="handleFileInput($event.target.files)" multiple>
+              </label>
+              <div class="row">
+                <div class="col-md-6 pb-2" *ngFor="let url of urls">
+                  <mat-card>
+                    <img class="img-fluid" [src]="url" />
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-card class="p-0">
+                <mat-card-title class="">
+                  <div class="card-title-text">Add Product Information</div>
+                  <mat-divider></mat-divider>
+                </mat-card-title>
+                <mat-card-content>
+                  <div fxLayout="row wrap">
+                    <div fxFlex="100" class="p-5">
+                      <div class="pb-1">
+                        <mat-form-field class="full-width">
+                          <input matInput placeholder="Product Title" formControlName="productTitle" value="">
+                        </mat-form-field>
+                        <small *ngIf="productForm.controls['productTitle'].errors?.required" class="form-error-msg">
+                          Product Title is
+                          <strong>required</strong>
+                        </small>
+                      </div>
 
-            </mat-form-field>
-          </div>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Style Code" formControlName="styleCode">
-            </mat-form-field>
-          </div>
-          <div class="form-group col-md-12">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
-                required #skuvalue>
-                
-            </mat-form-field>
-            <div *ngIf="showSkuError">
-                SKU Code 
-                 <strong>exists</strong>
+                      <div class="pb-1">
+                        <mat-form-field class="full-width">
+                          <input matInput placeholder="Product Name" formControlName="productName" value="">
+                        </mat-form-field>
+                        <small *ngIf="productForm.controls['productName'].errors?.required" class="form-error-msg">
+                          Product
+                          Name is
+                          <strong>required</strong>
+                        </small>
+                      </div>
+
+                      <div class="pb-1">
+                        <mat-form-field class="example-full-width">
+                          <textarea matInput placeholder="Product Description" formControlName="productDescription"></textarea>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="pb-1">
+                        <mat-form-field class="example-full-width">
+                          <textarea matInput placeholder="Short Description" formControlName="shortDescription"></textarea>
+                        </mat-form-field>
+
+                      </div>
+                      <div class="pb-1">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Color" formControlName="color">
+
+                        </mat-form-field>
+
+                      </div>
+                      <div class="pb-1">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Style Code" formControlName="styleCode">
+                        </mat-form-field>
+
+                      </div>
+                      <div class="pb-1">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
+                            required #skuvalue>
+
+                        </mat-form-field>
+                        <small *ngIf="showSkuError">
+                          SKU Code
+                          <strong>exists</strong> </small>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
             </div>
           </div>
-          <!--  <div class="form-group col-md-12">
-            <div class="textContainer">
-              <select #selectElem1 (change)="getMoq(selectElem1.value)" class="hideLabel form-control">
-                <option> Select MOQ</option>
-                <option *ngFor="let data of moqModel" [value]="data._id" >
-                  {{data.moqName}}
-                </option>
-              </select>
-            </div>
-          </div> -->
-          <div class="form-group col-md-12">
-            <div class="textContainer">
-              <select #selectElem1 (change)="selectedCategory(selectElem1.value)" class="hideLabel form-control">
-                <option> Select the Category</option>
-                <option *ngFor="let data of mainCategoryModel" [value]="data._id">
-                  {{data.mainCategoryName}}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group col-md-12">
-            <button mat-raised-button color="accent" type="submit" (click)="addProducts()" [disabled]='!productForm.valid'>Save</button>
-            <br>
-          </div>
-        </div>
+        </mat-card>
       </div>
-    </div>
-  </form>
-</div>
+    </mat-tab>
+    <mat-tab label="Category">
+      <div class="container-fluid">
+        <mat-card class="p-0">
+          <mat-card-title class="">
+            <div class="card-title-text">Add Category</div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content>
+            <div fxLayout="row wrap">
+              <div fxFlex="100" class="p-5">
+                <div class="pb-1">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Product Title" formControlName="productTitle" value="">
+                  </mat-form-field>
+                  <small *ngIf="productForm.controls['productTitle'].errors?.required" class="form-error-msg">
+                    Product Title is
+                    <strong>required</strong>
+                  </small>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Region Information">
+      <h1>content</h1>
+      <!-- <button mat-raised-button color="primary" 
+      [disabled]="productForm.invalid">Submit</button> -->
+    </mat-tab>
+  </mat-tab-group>
+</form>
