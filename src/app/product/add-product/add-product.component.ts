@@ -40,7 +40,7 @@ export class AddProductComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.showMainCategory();
-    this.showMOQ();
+    /* this.showMOQ(); */
     this.getProducts();
   }
   createForm() {
@@ -71,13 +71,13 @@ export class AddProductComponent implements OnInit {
       }
     }
   }
-  showMOQ() {
+  /* showMOQ() {
     this.productService.showMoq().subscribe(data => {
       this.moqModel = data;
     }, err => {
       console.log(err);
     });
-  }
+  } */
   showMainCategory() {
     this.productService.showAllMainCategory().subscribe(data => {
       this.mainCategoryModel = data;
@@ -93,14 +93,16 @@ export class AddProductComponent implements OnInit {
     });
   }
   skuCodeVerify(elem) {
-    this.searchText = elem;
-    this.skuFilter = this.productDetail.filter(data => data.skuCode.indexOf(this.searchText) !== -1);
-    console.log(typeof(this.skuFilter.length));
+    this.skuFilter = this.productDetail.filter(data => data.skuCode.indexOf(elem) !== -1);
     if (this.skuFilter.length !== 0) {
 this.showSkuError = true;
     } else if (this.skuFilter.length === 0) {
       this.showSkuError = false;
     }
+  }
+  selectedCategory(categoryVal) {
+    console.log(categoryVal);
+
   }
   addProducts() {
     this.message = 'Product added successfully';

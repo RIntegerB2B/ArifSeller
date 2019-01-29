@@ -22,10 +22,11 @@ const routes: Routes = [
       path: 'moq',
       loadChildren: './moq/moq.module#MoqModule'
     },
-    /* {
-      path: 'shared',
-      loadChildren: './shared/shared.module#SharedModule'
-    } */]
+    {
+      path: 'settings',
+      loadChildren: './settings/settings.module#SettingsModule'
+    }
+    ]
   }
 ];
 

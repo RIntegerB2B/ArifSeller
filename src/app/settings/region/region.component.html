@@ -1,0 +1,67 @@
+<div class="pageBoxLg ">
+    <label class="pageBoxLg-label ">Add Region</label>
+  <form [formGroup]="addRegionForm" novalidate style="padding-top:60px">
+    <div class="container-fluid">
+        
+      <div class="row">
+          <div class="form-group col-md-5">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Region Name" formControlName="regionName" (keyup)="regionVerify(region.value)" #region>
+              <mat-error *ngIf="addRegionForm.controls['regionName'].errors?.required">
+               Region Name is
+                <strong>required</strong>
+              </mat-error>
+              <div *ngIf="showRegionName">
+                Region Name already exists
+              </div>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-md-5">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Currency" formControlName="currency">
+              <mat-error *ngIf="addRegionForm.controls['currency'].errors?.required">
+                Currency is
+                <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-md-2">
+            <button mat-raised-button color="accent" type="submit" (click)="addRegion()" [disabled]='!addRegionForm.valid'>Save</button>
+            <br>
+          </div> 
+      </div>
+      <div class="row">  
+          <div class="col-md-12 mx-auto">
+        <table mat-table [dataSource]="regionData" class="container-fluid ">
+          <ng-container matColumnDef="regionName">
+            
+            <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label">  Region Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.regionName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="currency"  >
+              <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label"> Currency</th>
+              <td mat-cell *matCellDef="let element"> {{element.currency}} </td>
+            </ng-container>
+       
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label"> Edit </th>
+            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary"
+              (click)="edit( )">
+               <mat-icon>edit</mat-icon>
+             </button></td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef class="pageBoxLg-label"> Delete</th>
+              <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary"
+                (click)="deleteRegion(element)">
+                 <mat-icon>delete</mat-icon>
+               </button></td>
+            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+          </div>
+      </div>
+    </div>
+  </form>
+</div>

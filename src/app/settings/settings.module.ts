@@ -32,16 +32,15 @@ import {
   MatSortModule
 } from '@angular/material';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import {ProductRoutingModule} from './product-routing.module';
-import { AddProductComponent } from './add-product/add-product.component';
-import {ProductService} from './product.service';
-import { ViewProductsComponent } from './view-products/view-products.component';
-import { ViewSingleProductComponent } from './view-single-product/view-single-product.component';
+import {SettingRoutingModule} from './setting-routing.module';
+import {SettingsService} from './settings.service';
+import { RegionComponent } from './region/region.component';
+
 @NgModule({
-  declarations: [AddProductComponent, ViewProductsComponent, ViewSingleProductComponent],
+  declarations: [RegionComponent],
   imports: [
     HttpClientModule,
-    ProductRoutingModule,
+    SettingRoutingModule,
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -67,7 +66,7 @@ import { ViewSingleProductComponent } from './view-single-product/view-single-pr
   ],
   providers:
    [
-    ProductService
+    SettingsService
    ]
 })
-export class ProductModule { }
+export class SettingsModule { }

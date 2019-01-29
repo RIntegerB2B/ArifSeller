@@ -19,7 +19,7 @@
             <h5 >Color: {{productModel.color | titlecase}}</h5>
           </div>
           <div class="col-md-12">
-              <h5>₹{{productModel.price }}</h5>
+              <h5>{{productModel.price | currency:'INR' }}</h5>
             </div>
       <div class="col-md-12">
         <h2>Product Details</h2>

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource , MatSort} from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material';
 
@@ -23,6 +23,8 @@ export interface PeriodicElement {
   styleUrls: ['./view-products.component.css']
 })
 export class ViewProductsComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['primeImage', 'productName', 'productTitle', 'styleCode', 'skuCode', 'view', 'delete'];
   productModel: Product[];
   productData;
@@ -37,13 +39,14 @@ export class ViewProductsComponent implements OnInit {
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.productData = new MatTableDataSource<PeriodicElement>(data);
-       /*  data.forEach(element => {
-        console.log('single object');
-        this.productModel.push(element);
-      }); */
+      this.productData.sort = this.sort;
+      this.productData.paginator = this.paginator;
     }, err => {
       console.log(err);
     });
+  }
+  applyFilter(filterValue: string) {
+    this.productData.filter = filterValue.trim().toLowerCase();
   }
   deleteProduct(product) {
     this.message = 'Product deleted';
