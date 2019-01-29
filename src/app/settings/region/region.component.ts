@@ -27,7 +27,13 @@ export class RegionComponent implements OnInit {
   regionData;
   regionNameFilter;
   showRegionName: boolean;
+  currencyValue;
+  selectedCurrency;
   displayedColumns: string[] = ['regionName', 'currency', 'edit', 'delete'];
+  regions = [ { 'regionName': 'India', 'currency': '₹'},
+  { 'regionName': 'UAE', 'currency': 'د.إ'},
+  { 'regionName': 'Singapore', 'currency': '$'},
+  { 'regionName': 'Malaysia', 'currency': 'RM'}];
   constructor(private fb: FormBuilder, private router: Router, private settingsService: SettingsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -62,7 +68,11 @@ export class RegionComponent implements OnInit {
       console.log(err);
     });
   }
-  regionVerify(elem) {
+  showCurrency(elem) {
+    this.selectedCurrency = this.regions.filter(data => data.regionName.indexOf(elem) !== -1);
+this.currencyValue = this.selectedCurrency[0].currency;
+  }
+ /*  regionVerify(elem) {
     if (elem === '') {
       this.showRegionName = false;
     } else {
@@ -73,7 +83,7 @@ export class RegionComponent implements OnInit {
         this.showRegionName = false;
       }
     }
-  }
+  } */
   deleteRegion(element) {
     this.settingsService.deleteRegion(element).subscribe(data => {
       this.regionData = new MatTableDataSource<PeriodicElement>(data);
