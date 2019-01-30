@@ -41,8 +41,7 @@
                           <input matInput placeholder="Product Name" formControlName="productName" value="">
                         </mat-form-field>
                         <small *ngIf="productForm.controls['productName'].errors?.required" class="form-error-msg">
-                          Product
-                          Name is
+                          Product Name is
                           <strong>required</strong>
                         </small>
                       </div>
@@ -74,13 +73,13 @@
                       </div>
                       <div class="pb-1">
                         <mat-form-field class="example-full-width">
-                          <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
-                            required #skuvalue>
+                          <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)" required #skuvalue>
 
                         </mat-form-field>
                         <small *ngIf="showSkuError">
                           SKU Code
-                          <strong>exists</strong> </small>
+                          <strong>exists</strong>
+                        </small>
                       </div>
                     </div>
                   </div>
@@ -95,24 +94,39 @@
     <mat-tab label="Category">
       <div class="container-fluid">
         <mat-card class="p-0">
-          <mat-card-title class="">
-            <div class="card-title-text">Add Category</div>
-          </mat-card-title>
+
           <mat-card-content>
-            <div fxLayout="row wrap">
-              <div  fxFlex="50" class="p-5">
-                <div class="pb-1">
-                    <div class="col-md-6">
-                  <mat-form-field class="full-width">
-                          
-                            <mat-select #selectElem1 placeholder="Select the Category" (change)="slectedCategory(selectElem1.value)" multiple >
-                              <mat-option *ngFor="let data of mainCategoryModel" [value]="data._id" >
-                                {{data.mainCategoryName}}
-                              </mat-option>
-                            </mat-select>
-                       
-                  </mat-form-field>
+
+            <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+              <div fxFlex="35" fxFlex.xs="100">
+                <mat-card-title class="">
+                  <small> Super Category</small>
+                </mat-card-title>
+                <div *ngFor="let data of superCategoryModel; let i = index">
+                  <mat-card (click)="selectedSuperCategory(data)" [class.active]="data === category">
+                    {{data.categoryName | titlecase}}
+                  </mat-card>
                 </div>
+              </div>
+    <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategory">
+                <mat-card-title class="">
+                  <small> Main Category</small>
+                </mat-card-title>
+                <div *ngFor="let data of mainCategoryModel">
+                    <mat-card (click)="selectedCategory(data)" [class.active]="data.mainCategoryName  === mainCategory">
+                        {{data.mainCategoryName | titlecase}}
+                      </mat-card>
+                </div>
+              </div>
+              <div fxFlex="30" fxFlex.xs="100" *ngIf="showCategory">
+                <mat-card-title class="">
+                  <small>Selected Category</small>
+                </mat-card-title>
+                <div >
+                  <mat-card>
+                      {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
+                  </mat-card>
+                 
                 </div>
               </div>
             </div>

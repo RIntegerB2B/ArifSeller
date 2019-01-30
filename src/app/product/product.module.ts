@@ -31,9 +31,10 @@ import {
   MatTableModule,
   MatSortModule,
   MatTabsModule,
-  MatCardModule
+  MatTreeModule
 } from '@angular/material';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {ProductRoutingModule} from './product-routing.module';
 import { AddProductComponent } from './add-product/add-product.component';
 import {ProductService} from './product.service';
@@ -67,7 +68,9 @@ import { ViewSingleProductComponent } from './view-single-product/view-single-pr
     MatTableModule,
     MatSortModule,
     MatTabsModule,
-    MatCardModule
+    MatCheckboxModule,
+    FlexLayoutModule,
+    MatTreeModule
       ],
   providers:
    [

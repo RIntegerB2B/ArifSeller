@@ -6,6 +6,7 @@ import { AppSetting } from '../config/appSetting';
 
 import {Product} from './add-product/product.model';
 import {MainCategory} from '../category/main-category/mainCategory.model';
+import {SuperCategory} from '../category/super-category/superCategory.model';
 import {MOQ} from '../moq/create-moq/moq.model';
 
 @Injectable({
@@ -19,6 +20,11 @@ export class ProductService {
     const categoryUrl = 'moqs';
     const url: string = this.serviceUrl + categoryUrl;
     return this.httpClient.get<MOQ>(url);
+  }
+  showAllSuperCategory(): Observable<any> {
+    const categoryUrl = 'categoryDetails';
+    const url: string = this.serviceUrl + categoryUrl;
+    return this.httpClient.get<SuperCategory>(url);
   }
   showAllMainCategory(): Observable<any> {
     const categoryUrl = 'showMainCategory';

@@ -9,6 +9,7 @@ import { ProductService } from '../product.service';
 import { Product } from './product.model';
 import { MainCategory } from '../../category/main-category/mainCategory.model';
 import { MOQ } from '../../moq/create-moq/moq.model';
+import {SuperCategory} from '../../category/super-category/superCategory.model';
 import { priceValue } from '../../shared/validation/price-validation';
 
 @Component({
@@ -22,6 +23,8 @@ export class AddProductComponent implements OnInit {
   productDetail: Product[];
   moqModel: MOQ;
   mainCategoryModel = new Array();
+  superCategoryModel: SuperCategory[];
+  filteredSuperCategory = new Array();
   message;
   action;
   productId;
@@ -29,6 +32,13 @@ export class AddProductComponent implements OnInit {
   searchText;
   showSkuError: boolean;
   skuFilter;
+  categories = [];
+  superCategoryName;
+  mainCategoryName;
+  showMainCategory: boolean;
+  showCategory: boolean;
+  category;
+  mainCategory;
 
   fileLength;
   fileToUpload;
@@ -39,7 +49,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.showMainCategory();
+    this.showSuperCategory();
     /* this.showMOQ(); */
     this.getProducts();
   }
@@ -78,12 +88,19 @@ export class AddProductComponent implements OnInit {
       console.log(err);
     });
   } */
-  showMainCategory() {
-    this.productService.showAllMainCategory().subscribe(data => {
-      this.mainCategoryModel = data;
+  showSuperCategory() {
+    this.productService.showAllSuperCategory().subscribe(data => {
+      this.superCategoryModel = data;
     }, err => {
       console.log(err);
     });
+  }
+  selectedSuperCategory(val) {
+    this.category = val;
+    this.showMainCategory = true;
+    this.superCategoryName = val.categoryName;
+  this.filteredSuperCategory =  this.superCategoryModel.filter(data => data._id === val._id);
+    this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
   }
   getProducts() {
     this.productService.getProducts().subscribe(data => {
@@ -92,17 +109,33 @@ export class AddProductComponent implements OnInit {
       console.log(err);
     });
   }
+
+  selectedCategory(categoryVal) {
+this.mainCategory = categoryVal.mainCategoryName;
+this.showCategory = true;
+   /*  this.showCategory = true;
+    if (e.checked === true) {
+      this.categories.push(categoryVal);
+    } else if (e.checked === false) {
+      const index = this.categories.indexOf(categoryVal);
+      if (index > -1) {
+        this.categories.splice(index, 1);
+      }
+    } */
+  }
+  deleteCategory(data) {
+    const index = this.categories.indexOf(data);
+    if (index > -1) {
+      this.categories.splice(index, 1);
+    }
+      }
   skuCodeVerify(elem) {
     this.skuFilter = this.productDetail.filter(data => data.skuCode.indexOf(elem) !== -1);
     if (this.skuFilter.length !== 0) {
-this.showSkuError = true;
+      this.showSkuError = true;
     } else if (this.skuFilter.length === 0) {
       this.showSkuError = false;
     }
-  }
-  selectedCategory(categoryVal) {
-    console.log(categoryVal);
-
   }
   addProducts() {
     this.message = 'Product added successfully';
