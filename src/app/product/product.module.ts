@@ -31,7 +31,7 @@ import {
   MatTableModule,
   MatSortModule,
   MatTabsModule,
-  MatTreeModule
+  MatTreeModule,
 } from '@angular/material';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -70,7 +70,8 @@ import { ViewSingleProductComponent } from './view-single-product/view-single-pr
     MatTabsModule,
     MatCheckboxModule,
     FlexLayoutModule,
-    MatTreeModule
+    MatTreeModule,
+    MatRadioModule
       ],
   providers:
    [

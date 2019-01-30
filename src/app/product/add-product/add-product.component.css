@@ -17,6 +17,6 @@
     -webkit-transition: padding 3s;
   }
   .active  {
-    background-color:burlywood;
+    background-color: burlywood;
     color: white;
   }

@@ -12,6 +12,13 @@ import { MOQ } from '../../moq/create-moq/moq.model';
 import {SuperCategory} from '../../category/super-category/superCategory.model';
 import { priceValue } from '../../shared/validation/price-validation';
 
+export interface PeriodicElement {
+  /*  primeImage: string; */
+  moqName: string;
+  moqDescription: string;
+  moqQuantity: string;
+}
+
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -39,18 +46,21 @@ export class AddProductComponent implements OnInit {
   showCategory: boolean;
   category;
   mainCategory;
+  moqName;
 
   fileLength;
   fileToUpload;
   urls = new Array<string>();
 
   reader: FileReader = new FileReader();
+  displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity'];
+  moqData;
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createForm();
     this.showSuperCategory();
-    /* this.showMOQ(); */
+    this.showMOQ();
     this.getProducts();
   }
   createForm() {
@@ -81,13 +91,17 @@ export class AddProductComponent implements OnInit {
       }
     }
   }
-  /* showMOQ() {
+  showMOQ() {
     this.productService.showMoq().subscribe(data => {
       this.moqModel = data;
+      this.moqData = new MatTableDataSource<PeriodicElement>(data);
     }, err => {
       console.log(err);
     });
-  } */
+  }
+  selectedMOQ(data) {
+    this.moqName = data.moqName;
+  }
   showSuperCategory() {
     this.productService.showAllSuperCategory().subscribe(data => {
       this.superCategoryModel = data;

@@ -73,7 +73,8 @@
                       </div>
                       <div class="pb-1">
                         <mat-form-field class="example-full-width">
-                          <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)" required #skuvalue>
+                          <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
+                            required #skuvalue>
 
                         </mat-form-field>
                         <small *ngIf="showSkuError">
@@ -108,25 +109,25 @@
                   </mat-card>
                 </div>
               </div>
-    <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategory">
+              <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategory">
                 <mat-card-title class="">
                   <small> Main Category</small>
                 </mat-card-title>
                 <div *ngFor="let data of mainCategoryModel">
-                    <mat-card (click)="selectedCategory(data)" [class.active]="data.mainCategoryName  === mainCategory">
-                        {{data.mainCategoryName | titlecase}}
-                      </mat-card>
+                  <mat-card (click)="selectedCategory(data)" [class.active]="data.mainCategoryName  === mainCategory">
+                    {{data.mainCategoryName | titlecase}}
+                  </mat-card>
                 </div>
               </div>
               <div fxFlex="30" fxFlex.xs="100" *ngIf="showCategory">
                 <mat-card-title class="">
                   <small>Selected Category</small>
                 </mat-card-title>
-                <div >
+                <div>
                   <mat-card>
-                      {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
+                    {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
                   </mat-card>
-                 
+
                 </div>
               </div>
             </div>
@@ -134,11 +135,48 @@
         </mat-card>
       </div>
     </mat-tab>
-
+    <!--Region-->
     <mat-tab label="Region Information">
       <h1>content</h1>
-      <!-- <button mat-raised-button color="primary" 
-      [disabled]="productForm.invalid">Submit</button> -->
+    </mat-tab>
+
+    <!--MOQ-->
+    <mat-tab label="MOQ">
+      <div class="container-fluid">
+        <mat-card class="p-0">
+          <mat-card-content>
+            <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+              <div fxFlex="35" fxFlex.xs="100">
+                <mat-radio-group class="example-radio-group">
+                  <div *ngFor="let data of moqModel">
+                    <mat-card (click)="selectedMOQ(data)" [class.active]="data.moqName  === moqName">
+
+                      <mat-radio-button class="example-radio-button" [value]="data">
+                        {{data.moqName}}
+                      </mat-radio-button>
+
+                      <div>
+                        <small>Description: {{data.moqDescription}}</small>
+                      </div>
+                      <div>
+                        <small>Quantity: {{data.moqDescription}}</small>
+                      </div>
+                    </mat-card>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <div fxFlex="10" fxFlex.xs="100">
+
+              </div>
+              <div fxFlex="35" fxFlex.xs="100">
+                <mat-card-title class="">
+                  <small> Selected MOQ: {{moqName}}</small>
+                </mat-card-title>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </form>
