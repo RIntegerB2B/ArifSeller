@@ -6,16 +6,8 @@
       <div class="row">
           <div class="form-group col-md-4">
             <mat-form-field class="example-full-width">
-              <!-- <input matInput placeholder="Region Name" formControlName="regionName" (keyup)="regionVerify(region.value)" #region>
-              <mat-error *ngIf="addRegionForm.controls['regionName'].errors?.required">
-               Region Name is
-                <strong>required</strong>
-              </mat-error>
-              <div *ngIf="showRegionName">
-                Region Name already exists
-              </div> -->
               <mat-select #selectedregion placeholder="Region Name" formControlName="regionName" (selectionChange)="showCurrency(selectedregion.value)">
-  <mat-option *ngFor="let data of regions" [value]="data.regionName">{{data.regionName}}</mat-option>
+  <mat-option *ngFor="let data of region" [value]="data">{{data.country}}</mat-option>
                  </mat-select>
                 
             </mat-form-field>
