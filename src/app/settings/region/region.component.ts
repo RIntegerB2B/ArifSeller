@@ -10,10 +10,12 @@ import { SettingsService } from '../settings.service';
 
 
 
+
 export interface PeriodicElement {
   regionName: string;
   currency: string;
 }
+
 
 @Component({
   selector: 'app-region',
@@ -33,18 +35,25 @@ export class RegionComponent implements OnInit {
   selectedCurrency;
   displayedColumns: string[] = ['regionName', 'currency', 'edit', 'delete'];
 selectedRegion;
-   region = require('../../shared/country-currency.json');
+   region;
   constructor(private fb: FormBuilder, private router: Router, private settingsService: SettingsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createForm();
     this.getRegions();
+    this.getJSONRegion();
   }
   createForm() {
     this.addRegionForm = this.fb.group({
       regionName: [''],
       currency: ['']
     });
+  }
+  getJSONRegion() {
+  this.settingsService.getCurrency().subscribe(data => {
+    this.region = data;
+     console.log(data);
+   });
   }
   getRegions() {
     this.settingsService.getAllRegions().subscribe(data => {
@@ -85,7 +94,6 @@ this.showRegionName = true;
       console.log(err);
     });
   }
- 
   deleteRegion(element) {
     this.settingsService.deleteRegion(element).subscribe(data => {
       this.regionDetail = data;

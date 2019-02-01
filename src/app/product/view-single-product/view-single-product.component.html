@@ -13,18 +13,24 @@
     </div>
     <div class="col-md-7">
       <div class="col-md-12">
-          <h1>{{productModel.shortDescription | titlecase}}</h1>
-        </div>
-        <div class="col-md-12">
-            <h5 >Color: {{productModel.color | titlecase}}</h5>
-          </div>
-          <div class="col-md-12">
-              <h5>{{productModel.price | currency:'INR' }}</h5>
-            </div>
+        <h3>Product Name</h3>
+        <h5>{{productModel.productName | titlecase}}</h5>
+      </div>
       <div class="col-md-12">
+        <h3>Product Category</h3>
+      </div>
+      <div class="col-md-12">
+        <h3>Product SKU</h3>
+        <h5>{{productModel.skuCode | titlecase}}</h5>
+      </div>
+      <div class="col-md-12">
+        <h3>Product Price</h3>
+        <h5>{{productModel.price }}</h5>
+      </div>
+      <!-- <div class="col-md-12">
         <h2>Product Details</h2>
         <h5 style="white-space: pre-line">{{productModel.productDescription | titlecase}}</h5>
-      </div>
+      </div> -->
 
     </div>
 
@@ -55,18 +61,18 @@
 
 </div>
 
-  <div class="row pageBoxLg" *ngIf="showRelatedProducts">
-    <div class="row">
-       <div class="col-md-12">
-          <label class="pageBoxLg-label ">Related Products</label>
-       </div> 
-    </div>
-    <div class="col-md-2 images"  *ngFor="let data of relatedProducts">
-         <div>
-            <a (click)="relatedProduct(data)">  <img  [src]="data.productImageName[0]" style="width: 90px; height: 125px;"> </a>
-         </div> 
-         <div>
-            {{data.shortDescription | titlecase}}
-         </div>
+<div class="row pageBoxLg" *ngIf="showRelatedProducts">
+  <div class="row">
+    <div class="col-md-12">
+      <label class="pageBoxLg-label ">Related Products</label>
     </div>
   </div>
+  <div class="col-md-2 images" *ngFor="let data of relatedProducts">
+    <div>
+      <a (click)="relatedProduct(data)"> <img [src]="data.productImageName[0]" style="width: 90px; height: 125px;"> </a>
+    </div>
+    <div>
+      {{data.shortDescription | titlecase}}
+    </div>
+  </div>
+</div>

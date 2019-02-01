@@ -44,6 +44,7 @@ export class AddProductComponent implements OnInit {
   mainCategoryName;
   showMainCategory: boolean;
   showCategory: boolean;
+  showSelectedMOQ: boolean;
   category;
   mainCategory;
   moqName;
@@ -66,11 +67,10 @@ export class AddProductComponent implements OnInit {
   createForm() {
     this.productForm = this.fb.group({
       id: [''],
-      productTitle: [''],
       productName: [''],
       productDescription: [''],
-      shortDescription: [''],
       price: ['', priceValue],
+      size: [''],
       color: [''],
       styleCode: [''],
       skuCode: [''],
@@ -100,6 +100,7 @@ export class AddProductComponent implements OnInit {
     });
   }
   selectedMOQ(data) {
+    this.showSelectedMOQ = true;
     this.moqName = data.moqName;
   }
   showSuperCategory() {
@@ -127,15 +128,6 @@ export class AddProductComponent implements OnInit {
   selectedCategory(categoryVal) {
 this.mainCategory = categoryVal.mainCategoryName;
 this.showCategory = true;
-   /*  this.showCategory = true;
-    if (e.checked === true) {
-      this.categories.push(categoryVal);
-    } else if (e.checked === false) {
-      const index = this.categories.indexOf(categoryVal);
-      if (index > -1) {
-        this.categories.splice(index, 1);
-      }
-    } */
   }
   deleteCategory(data) {
     const index = this.categories.indexOf(data);
@@ -154,10 +146,8 @@ this.showCategory = true;
   addProducts() {
     this.message = 'Product added successfully';
     this.productModel = new Product();
-    this.productModel.productTitle = this.productForm.controls.productTitle.value;
     this.productModel.productName = this.productForm.controls.productName.value;
     this.productModel.productDescription = this.productForm.controls.productDescription.value;
-    this.productModel.shortDescription = this.productForm.controls.shortDescription.value;
     this.productModel.price = this.productForm.controls.price.value;
     this.productModel.color = this.productForm.controls.color.value;
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
