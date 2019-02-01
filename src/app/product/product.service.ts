@@ -7,6 +7,7 @@ import { AppSetting } from '../config/appSetting';
 import {Product} from './add-product/product.model';
 import {MainCategory} from '../category/main-category/mainCategory.model';
 import {MOQ} from '../moq/create-moq/moq.model';
+import {Region} from '../product/add-product/region.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,11 @@ getProducts(): Observable<any> {
   const categoryUrl = 'product';
   const url: string = this.serviceUrl + categoryUrl;
   return this.httpClient.get<Product>(url);
+}
+getAllRegions(): Observable<any> {
+  const categoryUrl = 'regions';
+  const url: string = this.serviceUrl + categoryUrl;
+  return this.httpClient.get<Region>(url);
 }
 deleteProduct(data): Observable<any> {
   const deleteUrl = 'product/';

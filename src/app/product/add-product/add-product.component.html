@@ -1,4 +1,4 @@
-<form [formGroup]="productForm">
+<form [formGroup]="productForm" (ngSubmit)="addProducts(productForm)">
   <mat-tab-group class="mat-tab-fill-height">
     <mat-tab label="Product">
       <div class="container-fluid">
@@ -40,8 +40,7 @@
                           <input matInput placeholder="Product Name" formControlName="productName" value="">
                         </mat-form-field>
                         <small *ngIf="productForm.controls['productName'].errors?.required" class="form-error-msg">
-                          Product
-                          Name is
+                          Product Name is
                           <strong>required</strong>
                         </small>
                       </div>
@@ -102,7 +101,7 @@
               <div fxFlex="100" class="p-5">
                 <div class="pb-1">
                   <mat-form-field class="full-width">
-                    <input matInput placeholder="Product Title" formControlName="productTitle" value="">
+                    <input matInput placeholder="Category" formControlName="productTitle" value="">
                   </mat-form-field>
                   <small *ngIf="productForm.controls['productTitle'].errors?.required" class="form-error-msg">
                     Product Title is
@@ -115,11 +114,84 @@
         </mat-card>
       </div>
     </mat-tab>
-
     <mat-tab label="Region Information">
-      <h1>content</h1>
-      <!-- <button mat-raised-button color="primary" 
-      [disabled]="productForm.invalid">Submit</button> -->
+      <mat-card class="p-5">
+        <mat-card-title class="">
+          <div class="card-title-text">Add Region Information</div>
+          <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content>
+          <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+            <div fxFlex="25" fxFlex.xs="100">
+              <div *ngFor="let region of regionDetail; let i = index">
+                <section>
+                  <mat-checkbox [checked]="selectedValue === i" (change)="selectedValue = i" (change)="addNewRegion($event, region)">
+                    {{region?.regionName}}
+                  </mat-checkbox>
+                </section>
+                <!-- <button type="button" (click)="addRegion(i)">{{region.regionName}}</button> -->
+              </div>
+            </div>
+            <div fxFlex="25" formArrayName="confirmRegion">
+              <div *ngIf="countryError">
+                Region is already exit
+              </div>
+              <div *ngFor="let region of regionForms.controls;
+                let i = index">
+                <div *ngIf="productForm.controls.confirmRegion.controls[i].controls.regionName.value=== regionSelectName">
+                  <div [formGroupName]="i" class="pb-1">
+                    <mat-form-field class="full-width">
+                      <input matInput [readOnly]="true" placeholder="Region Name" formControlName="regionName">
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Price" formControlName="regionPrice">
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Quantity" formControlName="regionQuantity">
+                    </mat-form-field>
+                    <button mat-raised-button color="accent" (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
+                      productForm.controls.confirmRegion.controls[i].controls.regionName.value)"
+                      type="button">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="50">
+              <div fxLayout="row" class="p-2 listRow" *ngIf="confirmRegion?.length > 0">
+                <div fxFlex="25">
+                  <b>Region Name</b>
+                </div>
+                <div fxFlex="25">
+                  <b>Region Price</b>
+                </div>
+                <div fxFlex="25">
+                  <b>Region Quantity</b>
+                </div>
+                <div fxFlex="25">
+                  <b>Delete</b>
+                </div>
+              </div>
+              <div fxLayout="row" class="p-2 alertRow" *ngFor="let data of confirmRegion">
+                <div fxFlex="25">
+                  {{data.regionName}}
+                </div>
+                <div fxFlex="25">
+                  {{data.regionPrice}}
+                </div>
+                <div fxFlex="25">
+                  {{data.regionQuantity}}
+                </div>
+                <div fxFlex="25">
+                  <a (click)="deleteCountry(data)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <button mat-raised-button color="accent" type="submit">Submit</button> <br>
     </mat-tab>
   </mat-tab-group>
 </form>

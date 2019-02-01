@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ReactiveFormsModule} from '@angular/forms';
 import {
   MatSidenavModule,
@@ -30,15 +29,17 @@ import {
   MatPaginatorModule,
   MatTableModule,
   MatSortModule,
-  MatTabsModule,
-  MatCardModule
+  MatTabsModule
+
 } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import {ProductRoutingModule} from './product-routing.module';
 import { AddProductComponent } from './add-product/add-product.component';
 import {ProductService} from './product.service';
 import { ViewProductsComponent } from './view-products/view-products.component';
 import { ViewSingleProductComponent } from './view-single-product/view-single-product.component';
+
 @NgModule({
   declarations: [AddProductComponent, ViewProductsComponent, ViewSingleProductComponent],
   imports: [
@@ -67,7 +68,9 @@ import { ViewSingleProductComponent } from './view-single-product/view-single-pr
     MatTableModule,
     MatSortModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatCheckboxModule,
+    FlexLayoutModule
       ],
   providers:
    [
