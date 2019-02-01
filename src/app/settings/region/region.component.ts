@@ -34,12 +34,8 @@ export class RegionComponent implements OnInit {
   currencyValue;
   selectedCurrency;
   displayedColumns: string[] = ['regionName', 'currency', 'edit', 'delete'];
-<<<<<<< HEAD
 selectedRegion;
    region;
-=======
-  selectedRegion;
->>>>>>> a9645bec1a38b673d145f831acf26ab8a99ec5e8
   constructor(private fb: FormBuilder, private router: Router, private settingsService: SettingsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
