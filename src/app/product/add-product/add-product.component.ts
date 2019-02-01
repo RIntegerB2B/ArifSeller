@@ -9,10 +9,18 @@ import { ProductService } from '../product.service';
 import { Product } from './product.model';
 import { MainCategory } from '../../category/main-category/mainCategory.model';
 import { MOQ } from '../../moq/create-moq/moq.model';
+import {SuperCategory} from '../../category/super-category/superCategory.model';
 import { priceValue } from '../../shared/validation/price-validation';
 import { SettingsService } from './../../settings/settings.service';
 import { Region } from './region.model';
 
+
+export interface PeriodicElement {
+  /*  primeImage: string; */
+  moqName: string;
+  moqDescription: string;
+  moqQuantity: string;
+}
 
 @Component({
   selector: 'app-add-product',
@@ -23,8 +31,11 @@ export class AddProductComponent implements OnInit {
   productForm: FormGroup;
   productModel: Product;
   productDetail: Product[];
+  regionDetail: Region[];
   moqModel: MOQ;
   mainCategoryModel = new Array();
+  superCategoryModel: SuperCategory[];
+  filteredSuperCategory = new Array();
   message;
   action;
   productId;
@@ -32,7 +43,16 @@ export class AddProductComponent implements OnInit {
   searchText;
   showSkuError: boolean;
   skuFilter;
-  regionDetail: Region[] = [];
+  categories = [];
+  superCategoryName;
+  mainCategoryName;
+  showMainCategory: boolean;
+  showCategory: boolean;
+  showSelectedMOQ: boolean;
+  category;
+  mainCategory;
+  moqName;
+
   fileLength;
   selectRegion: number;
   fileToUpload;
@@ -44,17 +64,18 @@ export class AddProductComponent implements OnInit {
   confirmRegion: any = [];
   countryFilter = [];
   countryError;
+  priceError: boolean;
   selecteValue: any = [];
   reader: FileReader = new FileReader();
-  constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar,
-    private settingsService: SettingsService
-  ) { }
+  displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity'];
+  moqData;
+  constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getRegions();
     this.createForm();
-    this.showMainCategory();
-    /* this.showMOQ(); */
+    this.showSuperCategory();
+    this.showMOQ();
     this.getProducts();
     /* this.addProducts(); */
   }
@@ -69,6 +90,7 @@ export class AddProductComponent implements OnInit {
       color: [''],
       styleCode: [''],
       skuCode: [''],
+      size: [''],
       skuCodeValue: [''],
       region: [''],
       confirmRegion: this.fb.array([
@@ -79,12 +101,16 @@ export class AddProductComponent implements OnInit {
   get regionForms() {
     return this.productForm.get('confirmRegion') as FormArray;
   }
-  selectMethod() {
+  selectedMOQ(data) {
+    this.moqName = data.moqName;
+    this.showSelectedMOQ = true;
+  }
+  selectAllRegion() {
     for (let i = 0; i <= this.regionDetail.length - 1; i++) {
       const data = this.fb.group({
         regionName: [this.regionDetail[i].regionName],
-        regionPrice: [''],
-        regionQuantity: ['']
+        regionPrice: ['', Validators.required],
+        regionQuantity: ['', Validators.required]
       });
       this.regionForms.push(data);
     }
@@ -98,6 +124,13 @@ export class AddProductComponent implements OnInit {
       this.countryError = false;
       this.confirmRegion.push(test);
     }
+  }
+  selectedSuperCategory(val) {
+    this.category = val;
+    this.showMainCategory = true;
+    this.superCategoryName = val.categoryName;
+  this.filteredSuperCategory =  this.superCategoryModel.filter(data => data._id === val._id);
+    this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
   }
   deleteCountry(data) {
     this.countryError = false;
@@ -132,25 +165,26 @@ export class AddProductComponent implements OnInit {
       }
     }
   }
-  /* showMOQ() {
+  showMOQ() {
     this.productService.showMoq().subscribe(data => {
       this.moqModel = data;
-    }, err => {
-      console.log(err);
-    });
-  } */
-  getRegions() {
-    this.productService.getAllRegions().subscribe(data => {
-      this.regionDetail = data;
-      console.log(this.regionDetail);
-      this.selectMethod();
+      this.moqData = new MatTableDataSource<PeriodicElement>(data);
     }, err => {
       console.log(err);
     });
   }
-  showMainCategory() {
-    this.productService.showAllMainCategory().subscribe(data => {
-      this.mainCategoryModel = data;
+  getRegions() {
+    this.productService.getAllRegions().subscribe(data => {
+      this.regionDetail = data;
+      console.log(this.regionDetail);
+      this.selectAllRegion();
+    }, err => {
+      console.log(err);
+    });
+  }
+  showSuperCategory() {
+    this.productService.showAllSuperCategory().subscribe(data => {
+      this.superCategoryModel = data;
     }, err => {
       console.log(err);
     });
@@ -162,6 +196,26 @@ export class AddProductComponent implements OnInit {
       console.log(err);
     });
   }
+
+  selectedCategory(categoryVal) {
+  this.mainCategory = categoryVal.mainCategoryName;
+  this.showCategory = true;
+   /*  this.showCategory = true;
+    if (e.checked === true) {
+      this.categories.push(categoryVal);
+    } else if (e.checked === false) {
+      const index = this.categories.indexOf(categoryVal);
+      if (index > -1) {
+        this.categories.splice(index, 1);
+      }
+    } */
+  }
+  deleteCategory(data) {
+    const index = this.categories.indexOf(data);
+    if (index > -1) {
+      this.categories.splice(index, 1);
+    }
+      }
   skuCodeVerify(elem) {
     this.skuFilter = this.productDetail.filter(data => data.skuCode.indexOf(elem) !== -1);
     if (this.skuFilter.length !== 0) {
@@ -170,21 +224,17 @@ export class AddProductComponent implements OnInit {
       this.showSkuError = false;
     }
   }
-  selectedCategory(categoryVal) {
-    console.log(categoryVal);
-
-  }
   addProducts() {
     this.message = 'Product added successfully';
     this.productModel = new Product();
-    this.productModel.productTitle = this.productForm.controls.productTitle.value;
+    /* this.productModel.productTitle = this.productForm.controls.productTitle.value; */
     this.productModel.productName = this.productForm.controls.productName.value;
-    this.productModel.productDescription = this.productForm.controls.productDescription.value;
     this.productModel.shortDescription = this.productForm.controls.shortDescription.value;
-    this.productModel.price = this.productForm.controls.price.value;
-    this.productModel.color = this.productForm.controls.color.value;
+    /* this.productModel.price = this.productForm.controls.price.value; */
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
+    this.productModel.color = this.productForm.controls.color.value;
     this.productModel.skuCode = this.productForm.controls.skuCode.value;
+    this.productModel.productDescription = this.productForm.controls.productDescription.value;
     this.productModel.region = this.confirmRegion;
     console.log(this.productModel);
     this.productService.addProduct(this.productModel).subscribe(data => {

@@ -24,7 +24,7 @@ export interface PeriodicElement {
   styleUrls: ['./view-moq.component.css']
 })
 export class ViewMoqComponent implements OnInit {
-  displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity', 'productQuantity', 'view', 'delete'];
+  displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity', 'productQuantity',  'delete'];
   moqForm: FormGroup;
   moqModel: MOQ[];
   moqData;

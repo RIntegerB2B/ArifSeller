@@ -1,5 +1,6 @@
-<form [formGroup]="productForm" (ngSubmit)="addProducts(productForm)">
+<form [formGroup]="productForm">
   <mat-tab-group class="mat-tab-fill-height">
+    <!-- Product details-->
     <mat-tab label="Product">
       <div class="container-fluid">
         <mat-card class="example-card">
@@ -25,7 +26,7 @@
                 <mat-card-content>
                   <div fxLayout="row wrap">
                     <div fxFlex="100" class="p-5">
-                      <div class="pb-1">
+                      <!-- <div class="pb-1">
                         <mat-form-field class="full-width">
                           <input matInput placeholder="Product Title" formControlName="productTitle" value="">
                         </mat-form-field>
@@ -33,52 +34,77 @@
                           Product Title is
                           <strong>required</strong>
                         </small>
-                      </div>
+                      </div> -->
 
                       <div class="pb-1">
                         <mat-form-field class="full-width">
-                          <input matInput placeholder="Product Name" formControlName="productName" value="">
+                          <input matInput placeholder="Product Name" formControlName="productName" required>
+                          <mat-error *ngIf="productForm.controls['productName'].errors?.required">
+                            Password is
+                            <strong>required</strong>
+                          </mat-error>    
                         </mat-form-field>
-                        <small *ngIf="productForm.controls['productName'].errors?.required" class="form-error-msg">
-                          Product Name is
-                          <strong>required</strong>
-                        </small>
+                        
                       </div>
+                      
 
                       <div class="pb-1">
                         <mat-form-field class="example-full-width">
-                          <textarea matInput placeholder="Product Description" formControlName="productDescription"></textarea>
-                        </mat-form-field>
-                      </div>
-
-                      <div class="pb-1">
-                        <mat-form-field class="example-full-width">
-                          <textarea matInput placeholder="Short Description" formControlName="shortDescription"></textarea>
-                        </mat-form-field>
-
-                      </div>
-                      <div class="pb-1">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Color" formControlName="color">
+                          <input matInput placeholder="Color" formControlName="color" required>
+                          <mat-error *ngIf="productForm.controls['color'].errors?.required">
+                            Color is
+                            <strong>required</strong>
+                          </mat-error>
 
                         </mat-form-field>
 
                       </div>
+
                       <div class="pb-1">
                         <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Style Code" formControlName="styleCode">
+                          <input matInput placeholder="Style Code"
+                          formControlName="styleCode" required>
+                          <mat-error *ngIf="productForm.controls['styleCode'].errors?.required">
+                            Style Code is
+                            <strong>required</strong>
+                          </mat-error>
                         </mat-form-field>
 
                       </div>
                       <div class="pb-1">
                         <mat-form-field class="example-full-width">
-                          <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
+                          <input matInput placeholder="SKU Code" 
+                          formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
                             required #skuvalue>
-
+                            <mat-error *ngIf="productForm.controls['skuCode'].errors?.required">
+                              SKU Code is
+                              <strong>required</strong>
+                            </mat-error>
                         </mat-form-field>
                         <small *ngIf="showSkuError">
                           SKU Code
-                          <strong>exists</strong> </small>
+                          <strong>exists</strong>
+                        </small>
+                      </div>
+                      <div class="pb-1">
+                        <mat-form-field class="example-full-width">
+                          <textarea matInput placeholder="Product Description" 
+                          formControlName="productDescription" required></textarea>
+                          <mat-error *ngIf="productForm.controls['productDescription'].errors?.required">
+                            Product Description is
+                            <strong>required</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="pb-1">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Size" formControlName="size" required>
+                          <mat-error *ngIf="productForm.controls['size'].errors?.required">
+                            SKU Code is
+                            <strong>required</strong>
+                          </mat-error>
+                        </mat-form-field>
+
                       </div>
                     </div>
                   </div>
@@ -87,26 +113,49 @@
             </div>
           </div>
         </mat-card>
+        <button mat-raised-button color="accent" type="submit">Submit</button> <br>
       </div>
     </mat-tab>
+    <!-- Category -->
     <mat-tab label="Category">
       <div class="container-fluid">
         <mat-card class="p-0">
-          <mat-card-title class="">
-            <div class="card-title-text">Add Category</div>
-            <mat-divider></mat-divider>
-          </mat-card-title>
+
           <mat-card-content>
-            <div fxLayout="row wrap">
-              <div fxFlex="100" class="p-5">
-                <div class="pb-1">
-                  <mat-form-field class="full-width">
-                    <input matInput placeholder="Category" formControlName="productTitle" value="">
-                  </mat-form-field>
-                  <small *ngIf="productForm.controls['productTitle'].errors?.required" class="form-error-msg">
-                    Product Title is
-                    <strong>required</strong>
-                  </small>
+
+            <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+              <div fxFlex="35" fxFlex.xs="100">
+                <mat-card-title class="">
+                  <small> Super Category</small>
+                </mat-card-title>
+                <div *ngFor="let data of superCategoryModel; let i = index">
+                  <mat-card (click)="selectedSuperCategory(data)"
+                   [class.active]="data === category">
+                    {{data.categoryName | titlecase}}
+                  </mat-card>
+                </div>
+              </div>
+              <div fxFlex="35" fxFlex.xs="100"
+               *ngIf="showMainCategory">
+                <mat-card-title class="">
+                  <small> Main Category</small>
+                </mat-card-title>
+                <div *ngFor="let data of mainCategoryModel">
+                  <mat-card (click)="selectedCategory(data)" 
+                  [class.active]="data.mainCategoryName  === mainCategory">
+                    {{data.mainCategoryName | titlecase}}
+                  </mat-card>
+                </div>
+              </div>
+              <div fxFlex="30" fxFlex.xs="100" *ngIf="showCategory">
+                <div>
+                  <mat-card-title class="">
+                    <small>Selected Category</small>
+                  </mat-card-title>
+                  <mat-card>
+                    {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
+                  </mat-card>
+
                 </div>
               </div>
             </div>
@@ -114,6 +163,7 @@
         </mat-card>
       </div>
     </mat-tab>
+    <!--Region-->
     <mat-tab label="Region Information">
       <mat-card class="p-5">
         <mat-card-title class="">
@@ -141,17 +191,19 @@
                 <div *ngIf="productForm.controls.confirmRegion.controls[i].controls.regionName.value=== regionSelectName">
                   <div [formGroupName]="i" class="pb-1">
                     <mat-form-field class="full-width">
-                      <input matInput [readOnly]="true" placeholder="Region Name" formControlName="regionName">
+                      <input matInput [readOnly]="true" placeholder="Region Name"
+                       formControlName="regionName">
                     </mat-form-field>
                     <mat-form-field class="full-width">
-                      <input matInput placeholder="Price" formControlName="regionPrice">
+                      <input matInput placeholder="Price" formControlName="regionPrice" required>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Quantity" formControlName="regionQuantity">
                     </mat-form-field>
-                    <button mat-raised-button color="accent" (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
+                    <button mat-raised-button type="button" color="accent"
+                     (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
                       productForm.controls.confirmRegion.controls[i].controls.regionName.value)"
-                      type="button">Save</button>
+                      type="button">ADD</button>
                   </div>
                 </div>
               </div>
@@ -191,7 +243,45 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <button mat-raised-button color="accent" type="submit">Submit</button> <br>
+      
+    </mat-tab>
+
+    <!--MOQ-->
+    <mat-tab label="MOQ">
+      <div class="container-fluid">
+        <mat-card class="p-0">
+          <mat-card-content>
+            <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+              <div fxFlex="35" fxFlex.xs="100">
+                <mat-radio-group class="example-radio-group">
+                  <div *ngFor="let data of moqModel">
+                    <mat-card (click)="selectedMOQ(data)" 
+                    [class.active]="data.moqName  === moqName">
+                      <mat-radio-button class="example-radio-button" [value]="data">
+                        {{data.moqName}}
+                      </mat-radio-button>
+                      <div>
+                        <small>Description: {{data.moqDescription}}</small>
+                      </div>
+                      <div>
+                        <small>Quantity: {{data.moqDescription}}</small>
+                      </div>
+                    </mat-card>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <div fxFlex="10" fxFlex.xs="100">
+
+              </div>
+              <div fxFlex="35" fxFlex.xs="100" *ngIf="showSelectedMOQ">
+                <mat-card-title class="">
+                  <small> Selected MOQ: {{moqName}}</small>
+                </mat-card-title>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </form>

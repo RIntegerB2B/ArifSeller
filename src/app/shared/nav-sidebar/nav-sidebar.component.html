@@ -9,10 +9,10 @@
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
-      <mat-accordion multi="true" [displayMode]="displayMode">
+      <mat-accordion multi="true">
 
         <mat-expansion-panel class="no-shadow">
-          <mat-expansion-panel-header fxLayout="row" [expandedHeight]="expandHeight" [collapsedHeight]="collapseHeight">
+          <mat-expansion-panel-header fxLayout="row">
             <mat-panel-title>
             Category
             </mat-panel-title>
@@ -27,7 +27,7 @@
           </mat-nav-list>
         </mat-expansion-panel>
         <mat-expansion-panel class="no-shadow">
-          <mat-expansion-panel-header fxLayout="row" [expandedHeight]="expandHeight" [collapsedHeight]="collapseHeight">
+          <mat-expansion-panel-header fxLayout="row">
             <mat-panel-title>
              Product
             </mat-panel-title>
@@ -42,7 +42,7 @@
           </mat-nav-list>
         </mat-expansion-panel>
         <mat-expansion-panel class="no-shadow">
-            <mat-expansion-panel-header fxLayout="row" [expandedHeight]="expandHeight" [collapsedHeight]="collapseHeight">
+            <mat-expansion-panel-header fxLayout="row">
               <mat-panel-title>
               Settings
               </mat-panel-title>
@@ -53,6 +53,23 @@
               </mat-list-item>
             </mat-nav-list>
           </mat-expansion-panel>
+          <mat-expansion-panel class="no-shadow">
+              <mat-expansion-panel-header fxLayout="row">
+                <mat-panel-title>
+               MOQ
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-nav-list class="ml-0" dense>
+                <mat-list-item routerLink="/moq/createmoq">
+                  <a> Add MOQ</a>
+                </mat-list-item>
+              </mat-nav-list>
+              <mat-nav-list class="ml-0" dense>
+                  <mat-list-item routerLink="/moq/viewmoq">
+                    <a> View MOQ</a>
+                  </mat-list-item>
+                </mat-nav-list>
+            </mat-expansion-panel>
       </mat-accordion>
     </mat-sidenav>
     <mat-sidenav-content>

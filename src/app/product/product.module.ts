@@ -68,9 +68,9 @@ import { ViewSingleProductComponent } from './view-single-product/view-single-pr
     MatTableModule,
     MatSortModule,
     MatTabsModule,
-    MatCardModule,
     MatCheckboxModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatRadioModule
       ],
   providers:
    [
