@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,9 @@ import { MainCategory } from '../../category/main-category/mainCategory.model';
 import { MOQ } from '../../moq/create-moq/moq.model';
 import {SuperCategory} from '../../category/super-category/superCategory.model';
 import { priceValue } from '../../shared/validation/price-validation';
+import { SettingsService } from './../../settings/settings.service';
+import { Region } from './region.model';
+
 
 export interface PeriodicElement {
   /*  primeImage: string; */
@@ -28,6 +31,7 @@ export class AddProductComponent implements OnInit {
   productForm: FormGroup;
   productModel: Product;
   productDetail: Product[];
+  regionDetail: Region[];
   moqModel: MOQ;
   mainCategoryModel = new Array();
   superCategoryModel: SuperCategory[];
@@ -50,19 +54,30 @@ export class AddProductComponent implements OnInit {
   moqName;
 
   fileLength;
+  selectRegion: number;
   fileToUpload;
   urls = new Array<string>();
-
+  localArray: any = [];
+  selected: string;
+  regionSelectName;
+  arryValue: any = [];
+  confirmRegion: any = [];
+  countryFilter = [];
+  countryError;
+  priceError: boolean;
+  selecteValue: any = [];
   reader: FileReader = new FileReader();
   displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity'];
   moqData;
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.getRegions();
     this.createForm();
     this.showSuperCategory();
     this.showMOQ();
     this.getProducts();
+    /* this.addProducts(); */
   }
   createForm() {
     this.productForm = this.fb.group({
@@ -74,9 +89,66 @@ export class AddProductComponent implements OnInit {
       color: [''],
       styleCode: [''],
       skuCode: [''],
-      skuCodeValue: ['']
+      skuCodeValue: [''],
+      region: [''],
+      confirmRegion: this.fb.array([
+      ])
     });
   }
+
+  get regionForms() {
+    return this.productForm.get('confirmRegion') as FormArray;
+  }
+  selectedMOQ(data) {
+    this.moqName = data.moqName;
+    this.showSelectedMOQ = true;
+  }
+  selectAllRegion() {
+    for (let i = 0; i <= this.regionDetail.length - 1; i++) {
+      const data = this.fb.group({
+        regionName: [this.regionDetail[i].regionName],
+        regionPrice: ['', Validators.required],
+        regionQuantity: ['', Validators.required]
+      });
+      this.regionForms.push(data);
+    }
+  }
+  selectedCountry(test, inputRegionName)   {
+    this.countryFilter =
+     this.confirmRegion.filter(data => data.regionName.indexOf(inputRegionName) !== -1);
+    if (this.countryFilter.length !== 0) {
+      this.countryError = true;
+    } else {
+      this.countryError = false;
+      this.confirmRegion.push(test);
+    }
+  }
+  selectedSuperCategory(val) {
+    this.category = val;
+    this.showMainCategory = true;
+    this.superCategoryName = val.categoryName;
+  this.filteredSuperCategory =  this.superCategoryModel.filter(data => data._id === val._id);
+    this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
+  }
+  deleteCountry(data) {
+    this.countryError = false;
+    const index = this.confirmRegion.indexOf(data);
+    if (index > -1) {
+      this.confirmRegion.splice(index, 1);
+    }
+  }
+
+  addNewRegion(e, region) {
+    this.countryError = false;
+    this.countryFilter =
+     this.confirmRegion.filter(data => data.regionName.indexOf(region.regionName) !== -1);
+    if (e.checked === true)     {
+    this.regionSelectName = region.regionName;
+  } else {
+    this.regionSelectName = '';
+  }
+  }
+
   handleFileInput(images: any) {
     this.fileToUpload = images;
     this.urls = [];
@@ -99,9 +171,14 @@ export class AddProductComponent implements OnInit {
       console.log(err);
     });
   }
-  selectedMOQ(data) {
-    this.showSelectedMOQ = true;
-    this.moqName = data.moqName;
+  getRegions() {
+    this.productService.getAllRegions().subscribe(data => {
+      this.regionDetail = data;
+      console.log(this.regionDetail);
+      this.selectAllRegion();
+    }, err => {
+      console.log(err);
+    });
   }
   showSuperCategory() {
     this.productService.showAllSuperCategory().subscribe(data => {
@@ -109,13 +186,6 @@ export class AddProductComponent implements OnInit {
     }, err => {
       console.log(err);
     });
-  }
-  selectedSuperCategory(val) {
-    this.category = val;
-    this.showMainCategory = true;
-    this.superCategoryName = val.categoryName;
-  this.filteredSuperCategory =  this.superCategoryModel.filter(data => data._id === val._id);
-    this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
   }
   getProducts() {
     this.productService.getProducts().subscribe(data => {
@@ -151,18 +221,22 @@ this.showCategory = true;
     this.productModel.price = this.productForm.controls.price.value;
     this.productModel.color = this.productForm.controls.color.value;
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
+    this.productModel.color = this.productForm.controls.color.value;
     this.productModel.skuCode = this.productForm.controls.skuCode.value;
+    this.productModel.productDescription = this.productForm.controls.productDescription.value;
+    this.productModel.region = this.confirmRegion;
+    console.log(this.productModel);
     this.productService.addProduct(this.productModel).subscribe(data => {
       this.productId = data._id;
       /* this.addProductToMoq(); */
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
-      this.router.navigate(['product/viewproducts']);
+      /* this.router.navigate(['product/viewproducts']); */
     }, error => {
       console.log(error);
     });
-    this.uploadImages(this.productModel.skuCode);
+ /*    this.uploadImages(this.productModel.skuCode); */
   }
   getMoq(elem) {
     this.moqId = elem;

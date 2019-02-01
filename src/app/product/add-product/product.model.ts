@@ -1,3 +1,4 @@
+import { Region } from './region.model';
 export class Product {
     _id: string;
     productTitle: string;
@@ -10,4 +11,5 @@ export class Product {
     skuCode: string;
     productImageName: [string];
     mainCategory: [string];
+    region: [Region];
 }
