@@ -113,8 +113,8 @@ export class AddProductComponent implements OnInit {
     for (let i = 0; i <= this.regionDetail.length - 1; i++) {
       const data = this.fb.group({
         regionName: [this.regionDetail[i].regionName],
-        regionPrice: ['', Validators.required],
-        regionQuantity: ['', Validators.required]
+        regionPrice: ['', priceValue],
+        regionQuantity: ['', priceValue]
       });
       this.regionForms.push(data);
     }

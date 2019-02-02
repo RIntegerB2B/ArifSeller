@@ -245,11 +245,24 @@
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Price" formControlName="regionPrice" required>
                       <mat-error *ngIf="region.controls.regionPrice.errors?.required">
-                        Show error
+                        Price is 
+                        <strong>required</strong>
                       </mat-error>
+                      <mat-error *ngIf="!region.controls.regionPrice.errors?.required">
+                          Enter the valid 
+                          <strong>Price</strong>
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="full-width">
-                      <input matInput placeholder="Quantity" formControlName="regionQuantity">
+                      <input matInput placeholder="Quantity" formControlName="regionQuantity" required>
+                      <mat-error *ngIf="region.controls.regionQuantity.errors?.required">
+                          Quantity is 
+                          <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="!region.controls.regionQuantity.errors?.required">
+                            Enter the valid 
+                            <strong>Quantity</strong>
+                          </mat-error>
                     </mat-form-field>
                     <button mat-raised-button color="accent" [disabled]="productForm.controls.confirmRegion.controls[i].controls.regionPrice.invalid || 
                     productForm.controls.confirmRegion.controls[i].controls.regionQuantity.invalid
