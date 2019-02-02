@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-12">
+      <label class="productHeading">
+        Product Name
+      </label>
+    </div>
+    <div class="col-md-12 col-12">
+      <h4 class="p-2">
+        {{productModel?.productName}}
+      </h4>
+    </div>
+    <div class="col-md-6 col-6">
+      <label class="productHeading">
+        Product Category
+      </label>
+    </div>
+    <div class="col-md-6 col-6">
+      <h4 class="p-2">
+        {{mainCatergoryName}}
+      </h4>
+    </div>
+    <div class="col-md-6 col-6">
+      <label class="productHeading">
+        Product SKU
+      </label>
+    </div>
+    <div class="col-md-6 col-6">
+      <h6 class="p-2">
+        {{productModel?.skuCode}}
+      </h6>
+    </div>
+    <div class="col-md-12">
+      <label class="productHeading">
+        Product Price
+      </label>
+    </div>
+    <div class="col-md-12">
+      <div class="row p-2 regionMainRow">
+        <div class="col-3 col-sm-3 col-md-3">
+          Region Name 
+        </div>
+        <div class="col-3 col-sm-3  col-md-3">
+          Price
+        </div>
+        <div class="col-3 col-sm-3  col-md-3">
+          Quantity
+        </div>
+      </div>
+      <div class="row p-2 regionRow" *ngFor="let data of productModel?.region">
+        <div class="col-3 col-sm-3 col-md-3">
+          {{data?.regionName}}
+        </div>
+        <div class="col-3 col-sm-3  col-md-3">
+          {{data?.regionPrice}}
+        </div>
+        <div class="col-3 col-sm-3  col-md-3">
+          {{data?.regionQuantity}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-6">
+      <label class="productHeading">
+        Product Description
+      </label>
+    </div>
+    <div class="col-md-6 col-6">
+      <h6 style="white-space: pre-line; line-height: 20px">
+        {{productModel?.productDescription}}
+      </h6>
+    </div>
+    <div class="col-md-6 col-6">
+      <label class="productHeading">
+        Product Size
+      </label>
+    </div>
+    <div class="col-md-6 col-6">
+      <h6><label>Length</label>: {{productModel?.length}}</h6>
+      <h6><label>Breadth</label>: {{productModel?.breadth}}</h6>
+      <h6><label>Height</label>: {{productModel?.height}}</h6>
+    </div>
+    <div class="col-md-6 col-6">
+      <label class="productHeading">
+        Product Details
+      </label>
+    </div>
+    <div class="col-md-6 col-6">
+      <h6><label>Material</label>: {{productModel?.material}}</h6>
+      <h6><label>WaterProof</label>: {{productModel?.waterProof}}</h6>
+      <h6><label>LaptopSize</label>: {{productModel?.laptopSize}}</h6>
+      <h6><label>Closure</label>: {{productModel?.closure}}</h6>
+      <h6><label>Compartments</label>: {{productModel?.compartments}}</h6>
+      <h6><label>Pockets</label>: {{productModel?.pockets}}</h6>
+    </div>
+  </div>
+</div>

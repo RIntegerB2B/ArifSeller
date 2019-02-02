@@ -14,10 +14,16 @@ body {
   margin-right: 1rem;
   margin-left: 0 !important;
 }
-/* image view */
+/* image product view start */
 .listRow {
   padding: 16px 23px;
   margin: 0;
+  background-color: #eceff1;
+  color: #373e41;
+}
+.regionMainRow
+{
+  padding: 16px 23px;
   background-color: #eceff1;
   color: #373e41;
 }
@@ -37,12 +43,24 @@ body {
 .pointerImage {
   cursor: pointer;
 }
+.regionRow
+{
+  background-color: rgba(51, 102, 255, 0.2);
+  margin-bottom: 1%;
+}
 .alertRow {
   border-left: 8px solid #ff4081;
   background-color: rgba(51, 102, 255, 0.2);
   cursor: pointer;
   margin-bottom: 2px;
 }
+
+.productHeading{
+  color: #878787;
+  font-size: 12px;
+  display: block;
+}
+/*  image product view end  */
 
 .gridRow {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);

@@ -39,9 +39,10 @@ import { AddProductComponent } from './add-product/add-product.component';
 import {ProductService} from './product.service';
 import { ViewProductsComponent } from './view-products/view-products.component';
 import { ViewSingleProductComponent } from './view-single-product/view-single-product.component';
+import { ProductDetailsViewComponent } from './product-details-view/product-details-view.component';
 
 @NgModule({
-  declarations: [AddProductComponent, ViewProductsComponent, ViewSingleProductComponent],
+  declarations: [AddProductComponent, ViewProductsComponent, ViewSingleProductComponent, ProductDetailsViewComponent],
   imports: [
     HttpClientModule,
     ProductRoutingModule,

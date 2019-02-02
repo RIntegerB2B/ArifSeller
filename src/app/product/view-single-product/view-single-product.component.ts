@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ProductService } from '../product.service';
 import { Product } from '../add-product/product.model';
+import { MainCategory } from './../product-details-view/mainCategory.model';
 
 @Component({
   selector: 'app-view-single-product',
@@ -20,11 +21,14 @@ export class ViewSingleProductComponent implements OnInit {
   productId;
   primeHide: boolean;
   showImages: boolean;
+  mainCategory: MainCategory[];
   showRelatedProducts;
   selectedImg;
   selectedSmallImg: any;
   relatedProducts = [];
   color = 'red';
+  mainCatergoryName: string;
+
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute) {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -33,6 +37,7 @@ export class ViewSingleProductComponent implements OnInit {
   ngOnInit() {
     this.getProductById();
   }
+
   getProductById() {
     this.productService.getProductById(this.productId).subscribe(data => {
       if (data.styleCode === '' || data.styleCode === undefined || data.styleCode === null) {
@@ -51,11 +56,24 @@ export class ViewSingleProductComponent implements OnInit {
           console.log(err);
         });
       }
+      this.getCategory();
     }, err => {
       console.log(err);
     });
   }
 
+  getCategory()  {
+    this.productService.showAllMainCategory().subscribe(data => {
+      this.mainCategory = data;
+      this.mainCategory.forEach(element => {
+        if (element._id === this.productModel.mainCategory)         {
+          this.mainCatergoryName = element.mainCategoryName;
+        }
+      });
+    }, err => {
+      console.log(err);
+    });
+  }
   clickImg(data) {
     this.primeHide = true;
     this.showImages = true;
