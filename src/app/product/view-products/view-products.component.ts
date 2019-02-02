@@ -52,6 +52,8 @@ export class ViewProductsComponent implements OnInit {
     this.message = 'Product deleted';
     this.productService.deleteProduct(product).subscribe(data => {
       this.productData = new MatTableDataSource<PeriodicElement>(data);
+      this.productData.sort = this.sort;
+      this.productData.paginator = this.paginator;
       this.snackBar.open(this.message, this.action, {
         duration: 2000,
       });

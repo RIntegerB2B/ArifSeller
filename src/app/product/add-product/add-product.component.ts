@@ -43,7 +43,7 @@ export class AddProductComponent implements OnInit {
   searchText;
   showSkuError: boolean;
   skuFilter;
-  categories = [];
+  categories;
   superCategoryName;
   mainCategoryName;
   showMainCategory: boolean;
@@ -69,6 +69,7 @@ export class AddProductComponent implements OnInit {
   reader: FileReader = new FileReader();
   displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity'];
   moqData;
+  waterProofValue = ['Yes', 'No'];
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -91,6 +92,15 @@ export class AddProductComponent implements OnInit {
       skuCode: [''],
       skuCodeValue: [''],
       region: [''],
+      length: [''],
+      breadth: [''],
+      height: [''],
+      material: [''],
+      waterProof: [''],
+      laptopSize: [''],
+      closure: [''],
+      compartments: [''],
+      pockets: [''],
       confirmRegion: this.fb.array([
       ])
     });
@@ -99,16 +109,12 @@ export class AddProductComponent implements OnInit {
   get regionForms() {
     return this.productForm.get('confirmRegion') as FormArray;
   }
-  selectedMOQ(data) {
-    this.moqName = data.moqName;
-    this.showSelectedMOQ = true;
-  }
   selectAllRegion() {
     for (let i = 0; i <= this.regionDetail.length - 1; i++) {
       const data = this.fb.group({
         regionName: [this.regionDetail[i].regionName],
-        regionPrice: ['', Validators.required],
-        regionQuantity: ['', Validators.required]
+        regionPrice: ['', priceValue],
+        regionQuantity: ['', priceValue]
       });
       this.regionForms.push(data);
     }
@@ -197,6 +203,7 @@ export class AddProductComponent implements OnInit {
 
   selectedCategory(categoryVal) {
 this.mainCategory = categoryVal.mainCategoryName;
+this.categories = categoryVal._id;
 this.showCategory = true;
   }
   deleteCategory(data) {
@@ -213,6 +220,11 @@ this.showCategory = true;
       this.showSkuError = false;
     }
   }
+  selectedMOQ(data) {
+    this.moqId = data._id;
+    this.moqName = data.moqName;
+    this.showSelectedMOQ = true;
+  }
   addProducts() {
     this.message = 'Product added successfully';
     this.productModel = new Product();
@@ -221,13 +233,26 @@ this.showCategory = true;
     this.productModel.price = this.productForm.controls.price.value;
     this.productModel.color = this.productForm.controls.color.value;
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
-    this.productModel.color = this.productForm.controls.color.value;
     this.productModel.skuCode = this.productForm.controls.skuCode.value;
-    this.productModel.productDescription = this.productForm.controls.productDescription.value;
+    // category
+    this.productModel.mainCategory = this.categories;
+    // size
+    this.productModel.length = this.productForm.controls.length.value;
+    this.productModel.breadth = this.productForm.controls.breadth.value;
+    this.productModel.height = this.productForm.controls.height.value;
+    // detials
+    this.productModel.material = this.productForm.controls.material.value;
+    this.productModel.waterProof = this.productForm.controls.waterProof.value;
+    this.productModel.laptopSize = this.productForm.controls.laptopSize.value;
+    this.productModel.closure = this.productForm.controls.closure.value;
+    this.productModel.compartments = this.productForm.controls.compartments.value;
+    this.productModel.pockets = this.productForm.controls.pockets.value;
     this.productModel.region = this.confirmRegion;
     console.log(this.productModel);
     this.productService.addProduct(this.productModel).subscribe(data => {
+      console.log('saved product', data);
       this.productId = data._id;
+      this.uploadImages(this.productModel.skuCode);
       this.addProductToMoq();
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
@@ -236,10 +261,6 @@ this.showCategory = true;
     }, error => {
       console.log(error);
     });
-    this.uploadImages(this.productModel.skuCode);
-  }
-  getMoq(elem) {
-    this.moqId = elem;
   }
   uploadImages(skucode) {
     const formData: any = new FormData();
