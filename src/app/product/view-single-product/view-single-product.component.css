@@ -21,6 +21,14 @@
     /* border-radius: 25px; */ 
 }
 
-.active {
-  border: red;
+.activeImg {
+  border: 2px solid  #3f51b5;
+}
+
+.relatedSection {
+    font-size: 19px;
+    line-height: 30px;
+    padding: 1% 1%;
+    background: #fff;
+    border-bottom: solid 1px lightgrey;
 }
