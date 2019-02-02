@@ -22,7 +22,9 @@ export class ViewSingleProductComponent implements OnInit {
   showImages: boolean;
   showRelatedProducts;
   selectedImg;
+  selectedSmallImg: any;
   relatedProducts = [];
+  color = 'red';
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute) {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -57,6 +59,7 @@ export class ViewSingleProductComponent implements OnInit {
   clickImg(data) {
     this.primeHide = true;
     this.showImages = true;
+    this.selectedSmallImg = data;
     this.selectedImg = data;
   }
   relatedProduct(element) {

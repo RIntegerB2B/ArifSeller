@@ -81,18 +81,18 @@ export class AddProductComponent implements OnInit {
   }
   createForm() {
     this.productForm = this.fb.group({
-      id: [''],
-      productTitle: [''],
-      productName: [''],
-      productDescription: [''],
-      shortDescription: [''],
-      price: ['', priceValue],
-      color: [''],
-      styleCode: [''],
-      skuCode: [''],
-      size: [''],
-      skuCodeValue: [''],
-      region: [''],
+      id: ['', Validators.required],
+      productTitle: ['', Validators.required],
+      productName: ['', Validators.required],
+      productDescription: ['', Validators.required],
+      shortDescription: ['', Validators.required],
+      price: ['', priceValue, Validators.required],
+      color: ['' , Validators.required],
+      styleCode: ['', Validators.required],
+      skuCode: ['' , Validators.required],
+      size: ['' , Validators.required],
+      skuCodeValue: ['' , Validators.required],
+      region: ['', Validators.required],
       confirmRegion: this.fb.array([
       ])
     });
@@ -129,7 +129,7 @@ export class AddProductComponent implements OnInit {
     this.category = val;
     this.showMainCategory = true;
     this.superCategoryName = val.categoryName;
-  this.filteredSuperCategory =  this.superCategoryModel.filter(data => data._id === val._id);
+    this.filteredSuperCategory =  this.superCategoryModel.filter(data => data._id === val._id);
     this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
   }
   deleteCountry(data) {
@@ -239,15 +239,15 @@ export class AddProductComponent implements OnInit {
     console.log(this.productModel);
     this.productService.addProduct(this.productModel).subscribe(data => {
       this.productId = data._id;
-      /* this.addProductToMoq(); */
+      this.addProductToMoq();
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
-      /* this.router.navigate(['product/viewproducts']); */
+      this.router.navigate(['product/viewproducts']);
     }, error => {
       console.log(error);
     });
- /*    this.uploadImages(this.productModel.skuCode); */
+    this.uploadImages(this.productModel.skuCode);
   }
   getMoq(elem) {
     this.moqId = elem;

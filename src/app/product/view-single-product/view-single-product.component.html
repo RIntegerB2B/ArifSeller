@@ -1,4 +1,4 @@
-<div class="pageBoxLg">
+<!-- <div class="pageBoxLg">
   <div class="row display-none-small">
     <div class="col-md-2 ">
       <div class="col-md-12" *ngFor="let data of productModel?.productImageName">
@@ -29,30 +29,6 @@
     </div>
 
   </div>
-
-  <!--  <div class="row display-none-large">
-      <div *ngIf="!primeHide">
-          <img [src]="productModel?.productImageName[0]" style="height: 200px; width: 180px;">
-        </div>
-        <div *ngIf="showImages">
-            <img [src]="selectedImg" style="height: 450px; width: 280px;">
-        </div>
-      <div class="row" >
-            <div  *ngFor="let data of productModel?.productImageName">
-                <a (click)="clickImg(data)"><img [src]="data" style="height: 130px; width: 100px;"></a>
-              </div>
-        </div>
-        
-     
-      
-      <div class="col-sm-12">
-        <div class="col-sm-12">
-          <h2>{{productModel.productName | titlecase}}</h2>
-        </div>
-      </div>
-    </div> -->
-
-
 </div>
 
   <div class="row pageBoxLg" *ngIf="showRelatedProducts">
@@ -69,4 +45,74 @@
             {{data.shortDescription | titlecase}}
          </div>
     </div>
+  </div> -->
+
+<!-- <div fxLayout="row wrap" 
+fxLayoutAlign="flex-start">
+  <div fxFlex="100">
+    <div fxFlex="50" fxFlex.lt-sm="100"
+    fxLayoutGap="5px"
+    >
+    <div class="row">
+        <div fxFlex="100">
+            <div class="pageBox"
+            fxFlex="auto">
+            <div  *ngIf="!primeHide">
+                <img [src]="productModel?.productImageName[0]"
+                 class="img-fluid"
+                >
+              </div>
+              <div *ngIf="showImages">
+                <img [src]="selectedImg" class="img-fluid" >
+              </div>
+           </div>
+          </div>
+          <div fxFlex="100">
+              <div class="pageBoxSmall"
+              fxFlex="auto" *ngFor="let data of productModel?.productImageName">
+               <a ><img (mouseover)="clickImg(data)"
+                [ngClass] = "{'active' : selectedSmallImg === data}"
+                 [src]="data" class="img-fluid"></a>
+             </div>
+         </div>  
+    </div>
+    
+    </div>
+    <div fxFlex="50"
+     fxFlex.gt-sm="50" 
+    fxLayoutGap="5px"
+    >
+     
+    </div>
   </div>
+</div> -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        <mat-card>
+          <div *ngIf="!primeHide">
+            <img [src]="productModel?.productImageName[0]" class="img-fluid">
+          </div>
+          <div *ngIf="showImages">
+            <img [src]="selectedImg" class="img-fluid">
+          </div>
+        </mat-card>
+        </div>
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3" 
+        *ngFor="let data of productModel?.productImageName"
+        >
+        <mat-card><a><img (mouseover)="clickImg(data)"
+           [ngClass]="{'active' : selectedSmallImg === data}"
+           [src]="data" 
+           class="img-fluid"></a>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+      <mat-card>Simple card</mat-card>
+    </div>
+  </div>
+</div>

@@ -18,7 +18,9 @@
   }
   .images:hover{
     border:1px solid blue;
-    /* border-radius: 25px; */
-  
-  
+    /* border-radius: 25px; */ 
+}
+
+.active {
+  border: red;
 }

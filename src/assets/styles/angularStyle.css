@@ -54,3 +54,11 @@
     background: 0 0;
     border: none;
   }
+
+  /* image view */
+
+  .mat-card{
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
