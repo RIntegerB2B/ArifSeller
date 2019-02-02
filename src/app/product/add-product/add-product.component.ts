@@ -43,7 +43,7 @@ export class AddProductComponent implements OnInit {
   searchText;
   showSkuError: boolean;
   skuFilter;
-  categories = [];
+  categories = new Array();
   superCategoryName;
   mainCategoryName;
   showMainCategory: boolean;
@@ -69,6 +69,7 @@ export class AddProductComponent implements OnInit {
   reader: FileReader = new FileReader();
   displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity'];
   moqData;
+  waterProofValue = ['Yes', 'No'];
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -91,6 +92,15 @@ export class AddProductComponent implements OnInit {
       skuCode: [''],
       skuCodeValue: [''],
       region: [''],
+      length: [''],
+      breadth: [''],
+      height: [''],
+      material: [''],
+      waterProof: [''],
+      laptopSize: [''],
+      closure: [''],
+      compartments: [''],
+      pockets: [''],
       confirmRegion: this.fb.array([
       ])
     });
@@ -197,6 +207,8 @@ export class AddProductComponent implements OnInit {
 
   selectedCategory(categoryVal) {
 this.mainCategory = categoryVal.mainCategoryName;
+this.categories.push(categoryVal._id);
+console.log(categoryVal._id);
 this.showCategory = true;
   }
   deleteCategory(data) {
@@ -221,9 +233,20 @@ this.showCategory = true;
     this.productModel.price = this.productForm.controls.price.value;
     this.productModel.color = this.productForm.controls.color.value;
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
-    this.productModel.color = this.productForm.controls.color.value;
     this.productModel.skuCode = this.productForm.controls.skuCode.value;
-    this.productModel.productDescription = this.productForm.controls.productDescription.value;
+    // category
+   /*  this.productModel.mainCategory = this.categories; */
+    // size
+    this.productModel.length = this.productForm.controls.length.value;
+    this.productModel.breadth = this.productForm.controls.breadth.value;
+    this.productModel.height = this.productForm.controls.height.value;
+    // detials
+    this.productModel.material = this.productForm.controls.material.value;
+    this.productModel.waterProof = this.productForm.controls.waterProof.value;
+    this.productModel.laptopSize = this.productForm.controls.laptopSize.value;
+    this.productModel.closure = this.productForm.controls.closure.value;
+    this.productModel.compartments = this.productForm.controls.compartments.value;
+    this.productModel.pockets = this.productForm.controls.pockets.value;
     this.productModel.region = this.confirmRegion;
     console.log(this.productModel);
     this.productService.addProduct(this.productModel).subscribe(data => {

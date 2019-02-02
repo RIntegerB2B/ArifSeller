@@ -29,7 +29,7 @@ import {
   MatPaginatorModule,
   MatTableModule,
   MatSortModule,
-  MatTabsModule
+  MatTabsModule,
 
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -70,7 +70,8 @@ import { ViewSingleProductComponent } from './view-single-product/view-single-pr
     MatTabsModule,
     MatCheckboxModule,
     FlexLayoutModule,
-    MatRadioModule
+    MatRadioModule,
+    MatExpansionModule
       ],
   providers:
    [
