@@ -81,18 +81,16 @@ export class AddProductComponent implements OnInit {
   }
   createForm() {
     this.productForm = this.fb.group({
-      id: ['', Validators.required],
-      productTitle: ['', Validators.required],
-      productName: ['', Validators.required],
-      productDescription: ['', Validators.required],
-      shortDescription: ['', Validators.required],
-      price: ['', priceValue, Validators.required],
-      color: ['' , Validators.required],
-      styleCode: ['', Validators.required],
-      skuCode: ['' , Validators.required],
-      size: ['' , Validators.required],
-      skuCodeValue: ['' , Validators.required],
-      region: ['', Validators.required],
+      id: [''],
+      productName: [''],
+      productDescription: [''],
+      price: ['', priceValue],
+      size: [''],
+      color: [''],
+      styleCode: [''],
+      skuCode: [''],
+      skuCodeValue: [''],
+      region: [''],
       confirmRegion: this.fb.array([
       ])
     });
@@ -198,17 +196,8 @@ export class AddProductComponent implements OnInit {
   }
 
   selectedCategory(categoryVal) {
-  this.mainCategory = categoryVal.mainCategoryName;
-  this.showCategory = true;
-   /*  this.showCategory = true;
-    if (e.checked === true) {
-      this.categories.push(categoryVal);
-    } else if (e.checked === false) {
-      const index = this.categories.indexOf(categoryVal);
-      if (index > -1) {
-        this.categories.splice(index, 1);
-      }
-    } */
+this.mainCategory = categoryVal.mainCategoryName;
+this.showCategory = true;
   }
   deleteCategory(data) {
     const index = this.categories.indexOf(data);
@@ -227,10 +216,10 @@ export class AddProductComponent implements OnInit {
   addProducts() {
     this.message = 'Product added successfully';
     this.productModel = new Product();
-    /* this.productModel.productTitle = this.productForm.controls.productTitle.value; */
     this.productModel.productName = this.productForm.controls.productName.value;
-    this.productModel.shortDescription = this.productForm.controls.shortDescription.value;
-    /* this.productModel.price = this.productForm.controls.price.value; */
+    this.productModel.productDescription = this.productForm.controls.productDescription.value;
+    this.productModel.price = this.productForm.controls.price.value;
+    this.productModel.color = this.productForm.controls.color.value;
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
     this.productModel.color = this.productForm.controls.color.value;
     this.productModel.skuCode = this.productForm.controls.skuCode.value;

@@ -5,7 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { AppSetting } from '../config/appSetting';
 
 import {Region} from './region/region.model';
-
+import {RegionCurrency} from './currency/country-currency';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +13,10 @@ export class SettingsService {
   serviceUrl: string = AppSetting.serviceUrl;
 
   constructor(private httpClient: HttpClient) { }
+  getCurrency(): Observable<RegionCurrency[]> {
+    const url = '../../assets/currency.json';
+    return this.httpClient.get<RegionCurrency[]>(url);
+  }
   getAllRegions(): Observable<any> {
     const categoryUrl = 'regions';
     const url: string = this.serviceUrl + categoryUrl;
