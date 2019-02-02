@@ -10,7 +10,7 @@ export class Product {
     styleCode: string;
     skuCode: string;
     productImageName: [string];
-    mainCategory: [string];
+    mainCategory: string;
     region: [Region];
     // size
     length: Number;
