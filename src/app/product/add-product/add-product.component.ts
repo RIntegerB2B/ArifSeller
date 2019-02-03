@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -13,6 +13,7 @@ import {SuperCategory} from '../../category/super-category/superCategory.model';
 import { priceValue } from '../../shared/validation/price-validation';
 import { SettingsService } from './../../settings/settings.service';
 import { Region } from './region.model';
+import { MatTabChangeEvent, MatTab } from '@angular/material';
 
 
 export interface PeriodicElement {
@@ -28,6 +29,8 @@ export interface PeriodicElement {
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
+  selectedIndex = 0;
+  matTab: MatTab;
   productForm: FormGroup;
   productModel: Product;
   productDetail: Product[];
@@ -105,7 +108,23 @@ export class AddProductComponent implements OnInit {
       ])
     });
   }
-
+  selectedIndexChange(val: number ) {
+    this.selectedIndex = val;
+  }
+  selectNextTab(tab)   {
+      if (tab !== 4 )     {
+    this.selectedIndex = tab + 1;
+  }   else {
+    this.selectedIndex = 4;
+  }
+  }
+  selectPreviousTab(tab)   {
+    if (tab !== 0) {
+    this.selectedIndex = tab - 1;
+  } else {
+    this.selectedIndex = 0;
+  }
+  }
   get regionForms() {
     return this.productForm.get('confirmRegion') as FormArray;
   }

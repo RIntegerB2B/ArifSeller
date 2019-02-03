@@ -1,113 +1,111 @@
 <form [formGroup]="productForm" (ngSubmit)="addProducts()">
-  <mat-tab-group class="mat-tab-fill-height">
+  <mat-tab-group class="mat-tab-fill-height" dynamicHeight (selectedIndexChange)="selectedIndexChange($event)"
+    [selectedIndex]="selectedIndex">
     <!-- Product details-->
     <mat-tab label="Product">
       <div class="container-fluid">
-        <mat-card class="example-card">
-          <div class="row">
-            <div class="col-md-6">
-              <label>
-                <input type="file" (change)="handleFileInput($event.target.files)" multiple>
-              </label>
-              <div class="row">
-                <div class="col-md-6 pb-2" *ngFor="let url of urls">
-                  <mat-card>
-                    <img class="img-fluid" [src]="url" />
-                  </mat-card>
-                </div>
+        <div class="row rowBox">
+          <div class="col-md-6">
+            <label>
+              <input type="file" (change)="handleFileInput($event.target.files)" multiple>
+            </label>
+            <div class="row">
+              <div class="col-md-6 pb-2" *ngFor="let url of urls">
+                <mat-card>
+                  <img class="img-fluid" [src]="url" />
+                </mat-card>
               </div>
             </div>
-            <div class="col-md-6">
-              <mat-card class="p-0">
-                <mat-card-title class="">
-                  <div class="card-title-text"> Product Information</div>
-                  <mat-divider></mat-divider>
-                </mat-card-title>
-                <mat-card-content>
-                  <div fxLayout="row wrap">
-                    <div fxFlex="100" class="p-5">
-                      <div class="pb-1">
-                        <mat-form-field class="full-width">
-                          <input matInput placeholder="Product Name" formControlName="productName" required>
-                          <mat-error *ngIf="productForm.controls['productName'].errors?.required">
-                            Product Name is
-                            <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-card class="p-0">
+              <mat-card-title class="">
+                <div class="card-title-text"> Product Information</div>
+                <mat-divider></mat-divider>
+              </mat-card-title>
+              <mat-card-content>
+                <div fxLayout="row wrap">
+                  <div fxFlex="100" class="p-5">
+                    <div class="pb-1">
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="Product Name" formControlName="productName" required>
+                        <mat-error *ngIf="productForm.controls['productName'].errors?.required">
+                          Product Name is
+                          <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
 
-                      </div>
+                    </div>
 
-                      <div class="pb-1">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="Style Code" formControlName="styleCode" required>
-                          <mat-error *ngIf="productForm.controls['styleCode'].errors?.required">
-                            Style Code is
-                            <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
+                    <div class="pb-1">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Style Code" formControlName="styleCode" required>
+                        <mat-error *ngIf="productForm.controls['styleCode'].errors?.required">
+                          Style Code is
+                          <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
 
-                      </div>
-                      <div class="pb-1">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
-                            required #skuvalue>
-                          <mat-error *ngIf="productForm.controls['skuCode'].errors?.required">
-                            SKU Code is
-                            <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
-                        <small *ngIf="showSkuError">
-                          SKU Code
-                          <strong>exists</strong>
-                        </small>
-                      </div>
-                      <div class="pb-1">
-                        <mat-form-field class="example-full-width">
-                          <textarea matInput placeholder="Product Description" formControlName="productDescription"
-                            required></textarea>
-                          <mat-error *ngIf="productForm.controls['productDescription'].errors?.required">
-                            Product Description is
-                            <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
-                      <div class="pb-1">
-                        <label>Size </label>
-                        <mat-form-field>
-                          <input matInput placeholder="Length" formControlName="length">
-                          <mat-error *ngIf="productForm.controls['length'].errors?.required">
-                            Length is
-                            <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
-                        <mat-form-field>
-                          <input matInput placeholder="Breadth" formControlName="breadth">
-                          <mat-error *ngIf="productForm.controls['breadth'].errors?.required">
-                            Breadth is
-                            <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
-                        <mat-form-field>
-                          <input matInput placeholder="Height" formControlName="height">
-                          <mat-error *ngIf="productForm.controls['height'].errors?.required">
-                            Height is
-                            <strong>required</strong>
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
+                    </div>
+                    <div class="pb-1">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
+                          required #skuvalue>
+                        <mat-error *ngIf="productForm.controls['skuCode'].errors?.required">
+                          SKU Code is
+                          <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                      <small *ngIf="showSkuError">
+                        SKU Code
+                        <strong>exists</strong>
+                      </small>
+                    </div>
+                    <div class="pb-1">
+                      <mat-form-field class="example-full-width">
+                        <textarea matInput placeholder="Product Description" formControlName="productDescription"
+                          required></textarea>
+                        <mat-error *ngIf="productForm.controls['productDescription'].errors?.required">
+                          Product Description is
+                          <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="pb-1">
+                      <label>Size </label>
+                      <mat-form-field>
+                        <input matInput placeholder="Length" formControlName="length">
+                        <mat-error *ngIf="productForm.controls['length'].errors?.required">
+                          Length is
+                          <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input matInput placeholder="Breadth" formControlName="breadth">
+                        <mat-error *ngIf="productForm.controls['breadth'].errors?.required">
+                          Breadth is
+                          <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input matInput placeholder="Height" formControlName="height">
+                        <mat-error *ngIf="productForm.controls['height'].errors?.required">
+                          Height is
+                          <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                   </div>
-                </mat-card-content>
-              </mat-card>
-            </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
           </div>
-        </mat-card>
-        <button mat-raised-button color="accent" type="submit">Submit</button> <br>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="Details">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row rowBox">
           <div class="col-md-12">
             <mat-card class="p-0">
               <mat-card-title class="">
@@ -165,188 +163,218 @@
             </mat-card>
           </div>
         </div>
-        <button mat-raised-button color="accent" type="submit">Submit</button> <br>
       </div>
     </mat-tab>
     <!-- Category -->
     <mat-tab label="Category">
       <div class="container-fluid">
-        <mat-card class="p-0">
+        <div class="row rowBox">
+          <div class="col-md-12">
+            <mat-card class="p-0">
+              <mat-card-content>
+                <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+                  <div fxFlex="35" fxFlex.xs="100">
+                    <mat-card-title class="">
+                      <small> Super Category</small>
+                    </mat-card-title>
+                    <div *ngFor="let data of superCategoryModel; let i = index">
+                      <mat-card (click)="selectedSuperCategory(data)" [class.active]="data === category">
+                        {{data.categoryName | titlecase}}
+                      </mat-card>
+                    </div>
+                  </div>
+                  <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategory">
+                    <mat-card-title class="">
+                      <small> Main Category</small>
+                    </mat-card-title>
+                    <div *ngFor="let data of mainCategoryModel">
+                      <mat-card (click)="selectedCategory(data)" [class.active]="data.mainCategoryName  === mainCategory">
+                        {{data.mainCategoryName | titlecase}}
+                      </mat-card>
+                    </div>
+                  </div>
+                  <div fxFlex="30" fxFlex.xs="100" *ngIf="showCategory">
+                    <div>
+                      <mat-card-title class="">
+                        <small>Selected Category</small>
+                      </mat-card-title>
+                      <mat-card>
+                        {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
+                      </mat-card>
 
-          <mat-card-content>
-
-            <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
-              <div fxFlex="35" fxFlex.xs="100">
-                <mat-card-title class="">
-                  <small> Super Category</small>
-                </mat-card-title>
-                <div *ngFor="let data of superCategoryModel; let i = index">
-                  <mat-card (click)="selectedSuperCategory(data)" [class.active]="data === category">
-                    {{data.categoryName | titlecase}}
-                  </mat-card>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategory">
-                <mat-card-title class="">
-                  <small> Main Category</small>
-                </mat-card-title>
-                <div *ngFor="let data of mainCategoryModel">
-                  <mat-card (click)="selectedCategory(data)" [class.active]="data.mainCategoryName  === mainCategory">
-                    {{data.mainCategoryName | titlecase}}
-                  </mat-card>
-                </div>
-              </div>
-              <div fxFlex="30" fxFlex.xs="100" *ngIf="showCategory">
-                <div>
-                  <mat-card-title class="">
-                    <small>Selected Category</small>
-                  </mat-card-title>
-                  <mat-card>
-                    {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
-                  </mat-card>
-
-                </div>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
       </div>
     </mat-tab>
     <!--Region-->
     <mat-tab label="Price">
-      <mat-card class="p-5">
-        <mat-card-title class="">
-          <div class="card-title-text"> Region Information</div>
-          <mat-divider></mat-divider>
-        </mat-card-title>
-        <mat-card-content>
-          <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
-            <div fxFlex="25" fxFlex.xs="100">
-              <div *ngFor="let region of regionDetail; let i = index">
-                <section>
-                  <mat-checkbox [checked]="selectedValue === i" (change)="selectedValue = i" (change)="addNewRegion($event, region)">
-                    {{region?.regionName}}
-                  </mat-checkbox>
-                </section>
-                <!-- <button type="button" (click)="addRegion(i)">{{region.regionName}}</button> -->
-              </div>
-            </div>
-            <div fxFlex="25" formArrayName="confirmRegion">
-              <div *ngIf="countryError">
-                Region is already exit
-              </div>
-              <div *ngFor="let region of regionForms.controls;
+      <div class="container-fluid">
+        <div class="row rowBox">
+          <div class="col-md-12">
+            <mat-card>
+              <mat-card-title class="">
+                <div class="card-title-text"> Region Information</div>
+                <mat-divider></mat-divider>
+              </mat-card-title>
+              <mat-card-content>
+                <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+                  <div fxFlex="25" fxFlex.xs="100">
+                    <div *ngFor="let region of regionDetail; let i = index">
+                      <section>
+                        <mat-checkbox [checked]="selectedValue === i" (change)="selectedValue = i" (change)="addNewRegion($event, region)">
+                          {{region?.regionName}}
+                        </mat-checkbox>
+                      </section>
+                      <!-- <button type="button" (click)="addRegion(i)">{{region.regionName}}</button> -->
+                    </div>
+                  </div>
+                  <div fxFlex="25" formArrayName="confirmRegion">
+                    <div *ngIf="countryError">
+                      Region is already exit
+                    </div>
+                    <div *ngFor="let region of regionForms.controls;
                 let i = index">
-                <div *ngIf="productForm.controls.confirmRegion.controls[i].controls.regionName.value=== regionSelectName">
-                  <div [formGroupName]="i" class="pb-1">
-                    <mat-form-field class="full-width">
-                      <input matInput [readOnly]="true" placeholder="Region Name" formControlName="regionName">
-                    </mat-form-field>
-                    <mat-form-field class="full-width">
-                      <input matInput placeholder="Price" formControlName="regionPrice" required>
-                      <mat-error *ngIf="region.controls.regionPrice.errors?.required">
-                        Price is 
-                        <strong>required</strong>
-                      </mat-error>
-                      <mat-error *ngIf="!region.controls.regionPrice.errors?.required">
-                          Enter the valid 
-                          <strong>Price</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="full-width">
-                      <input matInput placeholder="Quantity" formControlName="regionQuantity" required>
-                      <mat-error *ngIf="region.controls.regionQuantity.errors?.required">
-                          Quantity is 
-                          <strong>required</strong>
-                        </mat-error>
-                        <mat-error *ngIf="!region.controls.regionQuantity.errors?.required">
-                            Enter the valid 
-                            <strong>Quantity</strong>
-                          </mat-error>
-                    </mat-form-field>
-                    <button mat-raised-button color="accent" [disabled]="productForm.controls.confirmRegion.controls[i].controls.regionPrice.invalid || 
+                      <div *ngIf="productForm.controls.confirmRegion.controls[i].controls.regionName.value=== regionSelectName">
+                        <div [formGroupName]="i" class="pb-1">
+                          <mat-form-field class="full-width">
+                            <input matInput [readOnly]="true" placeholder="Region Name" formControlName="regionName">
+                          </mat-form-field>
+                          <mat-form-field class="full-width">
+                            <input matInput placeholder="Price" formControlName="regionPrice" required>
+                            <mat-error *ngIf="region.controls.regionPrice.errors?.required">
+                              Price is
+                              <strong>required</strong>
+                            </mat-error>
+                            <mat-error *ngIf="!region.controls.regionPrice.errors?.required">
+                              Enter the valid
+                              <strong>Price</strong>
+                            </mat-error>
+                          </mat-form-field>
+                          <mat-form-field class="full-width">
+                            <input matInput placeholder="Quantity" formControlName="regionQuantity" required>
+                            <mat-error *ngIf="region.controls.regionQuantity.errors?.required">
+                              Quantity is
+                              <strong>required</strong>
+                            </mat-error>
+                            <mat-error *ngIf="!region.controls.regionQuantity.errors?.required">
+                              Enter the valid
+                              <strong>Quantity</strong>
+                            </mat-error>
+                          </mat-form-field>
+                          <button mat-raised-button color="accent" [disabled]="productForm.controls.confirmRegion.controls[i].controls.regionPrice.invalid || 
                     productForm.controls.confirmRegion.controls[i].controls.regionQuantity.invalid
                     "
-                      (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
+                            (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
                       productForm.controls.confirmRegion.controls[i].controls.regionName.value)"
-                      type="button">ADD</button>
+                            type="button">ADD</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex="50">
+                    <div fxLayout="row" class="p-2 listRow" *ngIf="confirmRegion?.length > 0">
+                      <div fxFlex="25">
+                        <b>Region Name</b>
+                      </div>
+                      <div fxFlex="25">
+                        <b>Region Price</b>
+                      </div>
+                      <div fxFlex="25">
+                        <b>Region Quantity</b>
+                      </div>
+                      <div fxFlex="25">
+                        <b>Delete</b>
+                      </div>
+                    </div>
+                    <div fxLayout="row" class="p-2 alertRow" *ngFor="let data of confirmRegion">
+                      <div fxFlex="25">
+                        {{data.regionName}}
+                      </div>
+                      <div fxFlex="25">
+                        {{data.regionPrice}}
+                      </div>
+                      <div fxFlex="25">
+                        {{data.regionQuantity}}
+                      </div>
+                      <div fxFlex="25">
+                        <a (click)="deleteCountry(data)">
+                          <mat-icon>delete</mat-icon>
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div fxFlex="50">
-              <div fxLayout="row" class="p-2 listRow" *ngIf="confirmRegion?.length > 0">
-                <div fxFlex="25">
-                  <b>Region Name</b>
-                </div>
-                <div fxFlex="25">
-                  <b>Region Price</b>
-                </div>
-                <div fxFlex="25">
-                  <b>Region Quantity</b>
-                </div>
-                <div fxFlex="25">
-                  <b>Delete</b>
-                </div>
-              </div>
-              <div fxLayout="row" class="p-2 alertRow" *ngFor="let data of confirmRegion">
-                <div fxFlex="25">
-                  {{data.regionName}}
-                </div>
-                <div fxFlex="25">
-                  {{data.regionPrice}}
-                </div>
-                <div fxFlex="25">
-                  {{data.regionQuantity}}
-                </div>
-                <div fxFlex="25">
-                  <a (click)="deleteCountry(data)">
-                    <mat-icon>delete</mat-icon>
-                  </a>
-                </div>
-              </div>
-            </div>
+              </mat-card-content>
+            </mat-card>
           </div>
-        </mat-card-content>
-      </mat-card>
-
+        </div>
+      </div>
     </mat-tab>
 
     <!--MOQ-->
     <mat-tab label="MOQ">
       <div class="container-fluid">
-        <mat-card class="p-0">
-          <mat-card-content>
-            <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
-              <div fxFlex="35" fxFlex.xs="100">
-                <mat-radio-group class="example-radio-group">
-                  <div *ngFor="let data of moqModel">
-                    <mat-card (click)="selectedMOQ(data)" [class.active]="data.moqName  === moqName">
-                      <mat-radio-button class="example-radio-button" [value]="data">
-                        {{data.moqName}}
-                      </mat-radio-button>
-                      <div>
-                        <small>Description: {{data.moqDescription}}</small>
+        <div class="row rowBox">
+          <div class="col-md-12">
+            <mat-card class="p-0">
+              <mat-card-content>
+                <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+                  <div fxFlex="35" fxFlex.xs="100">
+                    <mat-radio-group class="example-radio-group">
+                      <div *ngFor="let data of moqModel">
+                        <mat-card (click)="selectedMOQ(data)" [class.active]="data.moqName  === moqName">
+                          <mat-radio-button class="example-radio-button" [value]="data">
+                            {{data.moqName}}
+                          </mat-radio-button>
+                          <div>
+                            <small>Description: {{data.moqDescription}}</small>
+                          </div>
+                          <div>
+                            <small>Quantity: {{data.moqDescription}}</small>
+                          </div>
+                        </mat-card>
                       </div>
-                      <div>
-                        <small>Quantity: {{data.moqDescription}}</small>
-                      </div>
-                    </mat-card>
+                    </mat-radio-group>
                   </div>
-                </mat-radio-group>
-              </div>
-              <div fxFlex="10" fxFlex.xs="100">
+                  <div fxFlex="10" fxFlex.xs="100">
 
-              </div>
-              <div fxFlex="35" fxFlex.xs="100" *ngIf="showSelectedMOQ">
-                <mat-card-title class="">
-                  <small> Selected MOQ: {{moqName}}</small>
-                </mat-card-title>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
+                  </div>
+                  <div fxFlex="35" fxFlex.xs="100" *ngIf="showSelectedMOQ">
+                    <mat-card-title class="">
+                      <small> Selected MOQ: {{moqName}}</small>
+                    </mat-card-title>
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center"
+                fxLayout.xs="column" >
+                  
+                    <button mat-raised-button color="primary" type="submit">Submit</button>
+              
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-6">
+        <div class="float-left">
+          <button mat-raised-button type="button" color="accent" [hidden]="selectedIndex === 0" (click)="selectPreviousTab(selectedIndex)">back</button>
+        </div>
+      </div>
+      <div class="col-md-6 col-6">
+        <div class="float-right">
+          <button mat-raised-button type="button" color="accent" [hidden]="selectedIndex === 4" (click)="selectNextTab(selectedIndex)">next</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>
