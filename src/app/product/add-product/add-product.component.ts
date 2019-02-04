@@ -239,7 +239,11 @@ this.showCategory = true;
       this.showSkuError = false;
     }
   }
-  selectedMOQ(data) {
+  selectedMOQ(event, data) {
+    console.log(event);
+    if (event.checked === false) {
+      console.log('unchecked');
+    }
     this.moqId = data._id;
     this.moqName = data.moqName;
     this.showSelectedMOQ = true;

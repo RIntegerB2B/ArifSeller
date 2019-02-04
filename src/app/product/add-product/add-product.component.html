@@ -327,8 +327,8 @@
                   <div fxFlex="35" fxFlex.xs="100">
                     <mat-radio-group class="example-radio-group">
                       <div *ngFor="let data of moqModel">
-                        <mat-card (click)="selectedMOQ(data)" [class.active]="data.moqName  === moqName">
-                          <mat-radio-button class="example-radio-button" [value]="data">
+                        <mat-card  [class.active]="data.moqName  === moqName">
+                          <mat-radio-button class="example-radio-button" [value]="data" (change)="selectedMOQ($event, data)">
                             {{data.moqName}}
                           </mat-radio-button>
                           <div>
@@ -348,6 +348,7 @@
                     <mat-card-title class="">
                       <small> Selected MOQ: {{moqName}}</small>
                     </mat-card-title>
+                    
                   </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="center center"

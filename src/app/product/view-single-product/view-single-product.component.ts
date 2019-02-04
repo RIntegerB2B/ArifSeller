@@ -40,6 +40,7 @@ export class ViewSingleProductComponent implements OnInit {
 
   getProductById() {
     this.productService.getProductById(this.productId).subscribe(data => {
+      console.log('single product', data);
       if (data.styleCode === '' || data.styleCode === undefined || data.styleCode === null) {
         this.showRelatedProducts = false;
         this.productModel = data;
