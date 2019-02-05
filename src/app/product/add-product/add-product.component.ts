@@ -271,16 +271,14 @@ this.showCategory = true;
     this.productModel.compartments = this.productForm.controls.compartments.value;
     this.productModel.pockets = this.productForm.controls.pockets.value;
     this.productModel.region = this.confirmRegion;
-    console.log(this.productModel);
     this.productService.addProduct(this.productModel).subscribe(data => {
-      console.log('saved product', data);
       this.productId = data._id;
-      this.uploadImages(this.productModel.skuCode);
-      this.addProductToMoq();
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
-      this.router.navigate(['product/viewproducts']);
+      this.uploadImages(this.productModel.skuCode);
+    /*   this.addProductToMoq(); */
+
     }, error => {
       console.log(error);
     });
@@ -292,11 +290,15 @@ this.showCategory = true;
       formData.append('uploads[]', this.fileToUpload[i]);
     }
     this.productService.uploadImages(formData, skucode).subscribe(data => {
+      this.redirect();
     }, error => {
       console.log(error);
     });
   }
-  addProductToMoq() {
+  redirect() {
+     this.router.navigate(['product/viewproducts']);
+}
+addProductToMoq() {
     this.productService.addMOQ(this.moqId, this.productId).subscribe(data => {
       console.log(data);
     }, err => {

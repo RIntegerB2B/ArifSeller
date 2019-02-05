@@ -40,7 +40,7 @@ export class MainCategoryComponent implements OnInit {
     this.mainCategoryForm = this.fb.group({
       id: [''],
       categoryName: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['']
     });
   }
   getSuperCategory() {

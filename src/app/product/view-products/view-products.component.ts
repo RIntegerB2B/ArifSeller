@@ -38,6 +38,7 @@ export class ViewProductsComponent implements OnInit {
   }
   getProducts() {
     this.productService.getProducts().subscribe(data => {
+      console.log('products', data);
       this.productData = new MatTableDataSource<PeriodicElement>(data);
       this.productData.sort = this.sort;
       this.productData.paginator = this.paginator;

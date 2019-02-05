@@ -46,7 +46,7 @@ export class ProductService {
   uploadImages(data, skucode): Observable<any> {
     const addUrl = 'productimages/';
     const url: string = this.serviceUrl + addUrl + skucode ;
-    return this.httpClient.put<boolean>(url, data);
+    return this.httpClient.put<Product>(url, data);
   }
 getProducts(): Observable<any> {
   const categoryUrl = 'product';

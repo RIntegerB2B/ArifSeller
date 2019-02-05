@@ -28,7 +28,7 @@
         </div>
         <div class="form-group col-sm-12 col-md-4">
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Main Category Description" formControlName="description" required #desc>
+            <input matInput placeholder="Main Category Description" formControlName="description"  #desc>
             <button mat-button matSuffix mat-icon-button aria-label="Main Category Description">
             </button>
             <mat-error *ngIf="mainCategoryForm.controls['description'].errors?.required">

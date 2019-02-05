@@ -20,8 +20,11 @@ export interface PeriodicElement {
 export class SuperCategoryComponent implements OnInit {
   superCategoryForm: FormGroup;
   superCategoryModel: SuperCategory;
+  categoryFilter;
+  superCategoryFilter: SuperCategory[];
   superCategoryData;
   displayedColumns: string[] = ['categoryName', 'description', 'edit', 'delete'];
+  showCategoryName: boolean;
   constructor(private fb: FormBuilder, private router: Router, private categoryService: CategoryService ) { }
 
   ngOnInit() {
@@ -32,12 +35,13 @@ export class SuperCategoryComponent implements OnInit {
     this.superCategoryForm = this.fb.group({
       id: [''],
       categoryName: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['']
     });
   }
   getSuperCategory() {
     this.categoryService.getSuperCategory().subscribe(data => {
       this.superCategoryModel = data;
+      this.superCategoryFilter = data;
       this.superCategoryData = new MatTableDataSource<PeriodicElement>(data);
     });
   }
@@ -55,5 +59,13 @@ export class SuperCategoryComponent implements OnInit {
     this.categoryService.deleteSuperCategory(value).subscribe(deleteData => {
       this.superCategoryData = new MatTableDataSource<PeriodicElement>(deleteData);
     });
+  }
+  categoryVerify(val) {
+    this.categoryFilter = this.superCategoryFilter.filter(data => data.categoryName.indexOf(val) !== -1);
+    if (this.categoryFilter.length !== 0) {
+    this.showCategoryName = true;
+    } else if (this.categoryFilter.length === 0) {
+      this.showCategoryName = false;
+    }
   }
 }
