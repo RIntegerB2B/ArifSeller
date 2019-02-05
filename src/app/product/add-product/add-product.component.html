@@ -1,6 +1,5 @@
-<form [formGroup]="productForm" (ngSubmit)="addProducts()">
-  <mat-tab-group class="mat-tab-fill-height" dynamicHeight (selectedIndexChange)="selectedIndexChange($event)"
-    [selectedIndex]="selectedIndex">
+<form [formGroup]="productForm" (ngSubmit)="validateProducts()">
+  <mat-tab-group class="mat-tab-fill-height" dynamicHeight (selectedIndexChange)="selectedIndexChange($event)" [selectedIndex]="selectedIndex">
     <!-- Product details-->
     <mat-tab label="Product">
       <div class="container-fluid">
@@ -9,6 +8,9 @@
             <label>
               <input type="file" (change)="handleFileInput($event.target.files)" multiple>
             </label>
+            <div class="alert alert-danger" *ngIf="imageError">
+              <h4>Please Select the images</h4>
+            </div>
             <div class="row">
               <div class="col-md-6 pb-2" *ngFor="let url of urls">
                 <mat-card>
@@ -49,8 +51,7 @@
                     </div>
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
-                          required #skuvalue>
+                        <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)" required #skuvalue>
                         <mat-error *ngIf="productForm.controls['skuCode'].errors?.required">
                           SKU Code is
                           <strong>required</strong>
@@ -63,8 +64,7 @@
                     </div>
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        <textarea matInput placeholder="Product Description" formControlName="productDescription"
-                          required></textarea>
+                        <textarea matInput placeholder="Product Description" formControlName="productDescription"></textarea>
                         <mat-error *ngIf="productForm.controls['productDescription'].errors?.required">
                           Product Description is
                           <strong>required</strong>
@@ -268,10 +268,8 @@
                           </mat-form-field>
                           <button mat-raised-button color="accent" [disabled]="productForm.controls.confirmRegion.controls[i].controls.regionPrice.invalid || 
                     productForm.controls.confirmRegion.controls[i].controls.regionQuantity.invalid
-                    "
-                            (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
-                      productForm.controls.confirmRegion.controls[i].controls.regionName.value)"
-                            type="button">ADD</button>
+                    " (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
+                      productForm.controls.confirmRegion.controls[i].controls.regionName.value)" type="button">ADD</button>
                         </div>
                       </div>
                     </div>
@@ -327,7 +325,7 @@
                   <div fxFlex="35" fxFlex.xs="100">
                     <mat-radio-group class="example-radio-group">
                       <div *ngFor="let data of moqModel">
-                        <mat-card  [class.active]="data.moqName  === moqName">
+                        <mat-card [class.active]="data.moqName  === moqName">
                           <mat-radio-button class="example-radio-button" [value]="data" (change)="selectedMOQ($event, data)">
                             {{data.moqName}}
                           </mat-radio-button>
@@ -348,14 +346,13 @@
                     <mat-card-title class="">
                       <small> Selected MOQ: {{moqName}}</small>
                     </mat-card-title>
-                    
+
                   </div>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="center center"
-                fxLayout.xs="column" >
-                  
-                    <button mat-raised-button color="primary" type="submit">Submit</button>
-              
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayout.xs="column">
+
+                  <button mat-raised-button color="primary" type="submit">Submit</button>
+
                 </div>
               </mat-card-content>
             </mat-card>
