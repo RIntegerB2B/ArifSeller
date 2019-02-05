@@ -12,6 +12,7 @@ export class Product {
     productImageName: [string];
     mainCategory: string;
     region: [Region];
+    moq: string;
     // size
     length: Number;
     breadth: Number;

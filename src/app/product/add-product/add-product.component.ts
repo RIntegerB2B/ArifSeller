@@ -240,10 +240,6 @@ this.showCategory = true;
     }
   }
   selectedMOQ(event, data) {
-    console.log(event);
-    if (event.checked === false) {
-      console.log('unchecked');
-    }
     this.moqId = data._id;
     this.moqName = data.moqName;
     this.showSelectedMOQ = true;
@@ -257,6 +253,7 @@ this.showCategory = true;
     this.productModel.color = this.productForm.controls.color.value;
     this.productModel.styleCode = this.productForm.controls.styleCode.value;
     this.productModel.skuCode = this.productForm.controls.skuCode.value;
+    this.productModel.moq = this.moqId;
     // category
     this.productModel.mainCategory = this.categories;
     // size
@@ -277,7 +274,6 @@ this.showCategory = true;
         duration: 3000,
       });
       this.uploadImages(this.productModel.skuCode);
-    /*   this.addProductToMoq(); */
 
     }, error => {
       console.log(error);
@@ -298,11 +294,4 @@ this.showCategory = true;
   redirect() {
      this.router.navigate(['product/viewproducts']);
 }
-addProductToMoq() {
-    this.productService.addMOQ(this.moqId, this.productId).subscribe(data => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-    });
-  }
 }
