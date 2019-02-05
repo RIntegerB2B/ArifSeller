@@ -33,7 +33,7 @@ export class RegionComponent implements OnInit {
   showRegionName: boolean;
   currencyValue;
   selectedCurrency;
-  displayedColumns: string[] = ['regionName', 'currency', 'edit', 'delete'];
+  displayedColumns: string[] = ['regionName', 'currency',  'delete'];
 selectedRegion;
    region;
   constructor(private fb: FormBuilder, private router: Router, private settingsService: SettingsService, private snackBar: MatSnackBar) { }
@@ -64,7 +64,7 @@ selectedRegion;
     });
   }
   showCurrency(val) {
-    this.currencyValue = val.currency;
+    this.currencyValue = val.currency_code;
     this.selectedRegion = val.country;
 /* this.currencyValue = this.selectedCurrency[0].currency;
 if (elem === '') {

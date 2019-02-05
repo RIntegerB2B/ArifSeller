@@ -14,9 +14,9 @@ export class Product {
     region: [Region];
     moq: string;
     // size
-    length: Number;
-    breadth: Number;
-    height: Number;
+    length: string;
+    breadth: string;
+    height: string;
     // details
     material: string;
     waterProof: string;

@@ -28,6 +28,7 @@ export interface PeriodicElement {
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
+
 export class AddProductComponent implements OnInit {
   selectedIndex = 0;
   matTab: MatTab;

@@ -41,7 +41,7 @@
 
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Style Code" formControlName="styleCode" required>
+                        <input matInput placeholder="Style Code" formControlName="styleCode" required appUpperCase>
                         <mat-error *ngIf="productForm.controls['styleCode'].errors?.required">
                           Style Code is
                           <strong>required</strong>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)" required #skuvalue>
+                        <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"  appUpperCase required #skuvalue>
                         <mat-error *ngIf="productForm.controls['skuCode'].errors?.required">
                           SKU Code is
                           <strong>required</strong>
@@ -72,7 +72,7 @@
                       </mat-form-field>
                     </div>
                     <div class="pb-1">
-                      <label>Size </label>
+                      <label>Size (inch)</label>
                       <mat-form-field>
                         <input matInput placeholder="Length" formControlName="length">
                         <mat-error *ngIf="productForm.controls['length'].errors?.required">
