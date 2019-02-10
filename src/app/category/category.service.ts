@@ -26,7 +26,11 @@ getSuperCategory(): Observable<any> {
     const url: string = this.serviceUrl + categoryUrl;
     return this.httpClient.post<SuperCategory>(url, data);
   }
-
+updateSuperCategory( edit: SuperCategory): Observable<any> {
+  const Caturl = 'category/';
+  const url: string = this.serviceUrl + Caturl  + edit._id ;
+  return this.httpClient.put<SuperCategory>(url, edit);
+}
   deleteSuperCategory(data): Observable<any> {
     const deleteUrl = 'categoryDelete/';
     const url: string = this.serviceUrl + deleteUrl + data._id;
@@ -41,6 +45,12 @@ getSuperCategory(): Observable<any> {
     const categoryUrl = 'superCategorydetail/';
     const url: string = this.serviceUrl + categoryUrl + id;
     return this.httpClient.get<MainCategory>(url);
+  }
+  updateMainCategory( id, edit: MainCategory): Observable<any> {
+    const Caturl = 'category/';
+    const CatUrl1 = '/mainCategory/';
+    const url: string = this.serviceUrl + Caturl  +  id + CatUrl1 + edit._id ;
+    return this.httpClient.put<MainCategory>(url, edit);
   }
   deleteMainCategory(id, data): Observable<any> {
     const deleteUrl = 'category/';

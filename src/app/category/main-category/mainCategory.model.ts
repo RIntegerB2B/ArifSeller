@@ -3,6 +3,7 @@ export class MainCategory {
     mainCategoryName: string;
     mainCategoryDescription: string;
     mainCategoryVerify: boolean;
+    editing: boolean;
     constructor(
         mainCategoryName: string,
         mainCategoryDescription: string

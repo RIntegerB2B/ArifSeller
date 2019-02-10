@@ -61,7 +61,7 @@
 
         </div>
       </div>
-      <div class="col-md-12 mx-auto">
+     <!--  <div class="col-md-12 mx-auto">
         <table mat-table [dataSource]="mainCategoryData" class="container-fluid">
           <ng-container matColumnDef="categoryName">
 
@@ -88,6 +88,85 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+      </div> -->
+      <div>
+        <div class="row gridRowHeader display-none-small">
+            
+          <div class="col-md-5 vcenterHeader">
+            <div class="form-group">
+              <label>Category Name</label>
+            </div>
+          </div>
+          <div class="col-md-5 vcenterHeader">
+            <div class="form-group">
+              <label>Category Description</label>
+            </div>
+          </div>
+          <div class="col-md-2 vcenterHeader">
+            <div>
+              <label>Edit</label>
+            </div>
+          </div>
+        </div> 
+        <!--data-->
+
+       <div *ngFor="let cat of mainCategoryData">
+          <div class="row gridRow" *ngIf="!cat.editing">
+            
+            <div class="col-sm-12  display-none-large">
+              <label class="gridLabel">Category Name:</label>
+            </div>
+            
+            <div class="col-sm-12 col-md-5 vcenter form-group">
+              {{cat.mainCategoryName}}
+            </div>
+            <div class="col-sm-12  display-none-large">
+              <label class="gridLabel">Category Description:</label>
+            </div>
+            <div class="col-sm-12 col-md-5 vcenter form-group">
+              {{cat.mainCategoryDescription}}
+            </div>
+            <div class="col-md-2 vcenter display-none-small">
+              <a class="gridEdit" (click)="editGridRow(cat)">Edit</a>
+            </div>
+            <div class="editImage display-none-large" (click)="editGridRow(cat)">
+              <i class="fa fa-edit "></i>
+            </div>
+
+          </div>
+          <div class="row gridRow gridRowEditPadding" *ngIf="cat.editing">
+            
+
+            <input class="form-control"  hidden type="text" formControlName="_id" [value]="cat._id" #mainCatId />
+
+            <div class="col-md-4 col-sm-12 form-group">
+              <input class="form-control" type="text" formControlName="uName" [value]="cat.mainCategoryName" #mainCatName/>
+            </div>
+
+            <div class="col-md-4 col-sm-12 form-group">
+              <input class="form-control" type="text" formControlName="uDesc" [value]="cat.mainCategoryDescription" #mainCatDesc/>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 col-sm-4 form-group">
+                <input type="button" class="btn btn-success" value="Update" (click)="update( mainCatId,mainCatName,mainCatDesc)"
+                />
+              </div>
+
+              <div class="col-md-4 col-sm-4 form-group">
+                <input type="button" class="btn btn-danger" value="Delete" (click)="deleteMainCategory(cat)" />
+              </div>
+
+              <div class="col-md-4 col-sm-4 form-group">
+                <input type="button" class="btn btnPink" value="Cancel" (click)="cancel(cat)" />
+              </div>
+
+            </div>
+          </div>
+        </div> 
+        <!--data closing-->
+
+        <!--clossing-->
       </div>
 
     </div>

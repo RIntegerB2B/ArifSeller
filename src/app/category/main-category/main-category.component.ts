@@ -41,7 +41,10 @@ export class MainCategoryComponent implements OnInit {
     this.mainCategoryForm = this.fb.group({
       id: [''],
       categoryName: ['', Validators.required],
-      description: ['']
+      description: [''],
+      _id: [''],
+      uName: [''],
+      uDesc: ['']
     });
   }
   getSuperCategory() {
@@ -77,14 +80,37 @@ export class MainCategoryComponent implements OnInit {
         data.mainCategoryVerify = false;
       }
     });
-    console.log(this.mainCategoryValue);
   }
   getCategory(id) {
     this.headCatSelected = id;
     this.categoryService.getMainCategory(id).subscribe(data => {
-      this.mainCategoryData = new MatTableDataSource<PeriodicElement>(data.mainCategory);
+      this.mainCategoryData = data.mainCategory;
     }, error => {
       console.log(error);
+    });
+  }
+  editGridRow(cat) {
+    console.log(cat);
+    cat.editing = true;
+  }
+  cancel(cat) {
+    cat.editing = false;
+  }
+  update(id, name, desc) {
+    this.message = 'Main Category updated';
+    this.mainCategoryModel = new MainCategory(
+      name.value,
+      desc.value
+    );
+    this.mainCategoryModel._id = id.value;
+    this.categoryService.updateMainCategory(this.headCatSelected, this.mainCategoryModel).subscribe(data => {
+      this.mainCategoryData = data[0].mainCategory;
+      console.log(this.mainCategoryData);
+      this.snackBar.open(this.message, this.action, {
+        duration: 3000,
+      });
+    }, err => {
+      console.log(err);
     });
   }
   deleteMainCategory(elem) {
@@ -93,7 +119,7 @@ export class MainCategoryComponent implements OnInit {
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
-      this.mainCategoryData = new MatTableDataSource<PeriodicElement>(data);
+      this.mainCategoryData = data;
     }, error => {
       console.log(error);
     });
