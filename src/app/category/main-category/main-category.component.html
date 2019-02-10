@@ -5,30 +5,34 @@
       <div class="row">
         <div class="form-group col-sm-12 col-md-2">
           <div class="textContainer">
-            <select #selectElem (change)="setNewUser(selectElem.value)" class="hideLabel form-control">
-              <option>Select super category</option>
-              <option *ngFor="let category of superCategoryModel" [value]="category._id">
-                {{category.categoryName}}
-              </option>
-            </select>
+            <mat-form-field class="example-full-width">
+              <mat-select #selectElem (selectionChange)="setNewUser(selectElem.value)" placeholder="Select super category">
+                <mat-option *ngFor="let category of superCategoryModel" [value]="category">
+                  {{category.categoryName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
         </div>
         <div class="form-group col-sm-12 col-md-4">
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Main Category Name" formControlName="categoryName" required #name>
-            <button mat-button matSuffix mat-icon-button aria-label="Main Category Name">
-            </button>
+            <input matInput placeholder="Main Category Name" formControlName="categoryName" (keyup)="mainCategoryVerify(name.value)"
+              required #name>
             <mat-error *ngIf="mainCategoryForm.controls['categoryName'].errors?.required">
               Main Category Name is
               <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
+          <div *ngFor="let data of mainCategoryValue">
+            <div *ngIf="data.mainCategoryVerify">
+              <small>Main Category Name already <strong>exists</strong></small>
+            </div>
+          </div>
         </div>
         <div class="form-group col-sm-12 col-md-4">
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Main Category Description" formControlName="description"  #desc>
+            <input matInput placeholder="Main Category Description" formControlName="description" #desc>
             <button mat-button matSuffix mat-icon-button aria-label="Main Category Description">
             </button>
             <mat-error *ngIf="mainCategoryForm.controls['description'].errors?.required">

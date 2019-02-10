@@ -57,10 +57,13 @@
                           <strong>required</strong>
                         </mat-error>
                       </mat-form-field>
-                      <small *ngIf="showSkuError">
-                        SKU Code
-                        <strong>exists</strong>
-                      </small>
+                      <div *ngFor="let data of productDetail">
+                          <small *ngIf="data.skuCodeVerify">
+                              SKU Code
+                              <strong>exists</strong>
+                            </small>
+                      </div>
+                      
                     </div>
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
@@ -183,6 +186,9 @@
                       </mat-card>
                     </div>
                   </div>
+                  <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategoryError">
+<h4>No results found</h4>
+                  </div>
                   <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategory">
                     <mat-card-title class="">
                       <small> Main Category</small>
@@ -201,7 +207,6 @@
                       <mat-card>
                         {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
                       </mat-card>
-
                     </div>
                   </div>
                 </div>

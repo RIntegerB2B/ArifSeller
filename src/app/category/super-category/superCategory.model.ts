@@ -2,6 +2,7 @@ export class SuperCategory {
     _id: string;
     categoryName: string;
     categoryDescription: string;
+    checkCategoryName: boolean;
     constructor(
         categoryName: string,
         categoryDescription: string

@@ -11,7 +11,6 @@ import { Product } from '../add-product/product.model';
 export interface PeriodicElement {
   primeImage: string;
   productName: string;
-  productTitle: string;
   styleCode: string;
   skuCode: string;
   view: string;
@@ -25,7 +24,7 @@ export interface PeriodicElement {
 export class ViewProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['primeImage', 'productName', 'productTitle', 'styleCode', 'skuCode', 'view', 'delete'];
+  displayedColumns: string[] = ['primeImage', 'productName',  'styleCode', 'skuCode', 'view', 'delete'];
   productModel: Product[];
   productData;
   message;

@@ -51,6 +51,7 @@ export class AddProductComponent implements OnInit {
   superCategoryName;
   mainCategoryName;
   showMainCategory: boolean;
+  showMainCategoryError: boolean;
   showCategory: boolean;
   showSelectedMOQ: boolean;
   category;
@@ -152,10 +153,18 @@ export class AddProductComponent implements OnInit {
   }
   selectedSuperCategory(val) {
     this.category = val;
-    this.showMainCategory = true;
     this.superCategoryName = val.categoryName;
     this.filteredSuperCategory = this.superCategoryModel.filter(data => data._id === val._id);
     this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
+    if (this.mainCategoryModel.length !== 0) {
+      this.showMainCategory = true;
+      this.showMainCategoryError = false;
+      this.showCategory = false;
+    } else {
+      this.showMainCategory = false;
+      this.showMainCategoryError = true;
+      this.showCategory = false;
+    }
   }
   deleteCountry(data) {
     this.countryError = false;
@@ -202,7 +211,6 @@ export class AddProductComponent implements OnInit {
   getRegions() {
     this.productService.getAllRegions().subscribe(data => {
       this.regionDetail = data;
-      console.log(this.regionDetail);
       this.selectAllRegion();
     }, err => {
       console.log(err);
@@ -235,12 +243,13 @@ export class AddProductComponent implements OnInit {
     }
   }
   skuCodeVerify(elem) {
-    this.skuFilter = this.productDetail.filter(data => data.skuCode.indexOf(elem) !== -1);
-    if (this.skuFilter.length !== 0) {
-      this.showSkuError = true;
-    } else if (this.skuFilter.length === 0) {
-      this.showSkuError = false;
-    }
+    this.productDetail.forEach(element => {
+      if (element.skuCode === elem) {
+element.skuCodeVerify = true;
+      } else {
+        element.skuCodeVerify = false;
+      }
+    });
   }
   selectedMOQ(event, data) {
     this.moqId = data._id;
@@ -248,7 +257,6 @@ export class AddProductComponent implements OnInit {
     this.showSelectedMOQ = true;
   }
   validateProducts() {
-    console.log(this.fileToUpload);
     if (this.productForm.controls.productName.value === '' || this.productForm.controls.skuCode.value === ''
       || this.fileToUpload === undefined || this.productForm.controls.styleCode.value === '') {
       this.selectedIndex = 0;

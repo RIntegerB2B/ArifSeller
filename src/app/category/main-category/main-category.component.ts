@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { CategoryService } from '../category.service';
 import { SuperCategory } from '../super-category/superCategory.model';
@@ -23,6 +23,7 @@ export interface PeriodicElement {
 export class MainCategoryComponent implements OnInit {
   superCategoryModel: SuperCategory;
   mainCategoryModel: MainCategory;
+  mainCategoryValue: MainCategory[];
   mainCategoryForm: FormGroup;
   headerCatSelectedData;
   mainCategoryData;
@@ -48,8 +49,9 @@ export class MainCategoryComponent implements OnInit {
       this.superCategoryModel = data;
     });
   }
-  setNewUser(id) {
-    this.headerCatSelectedData = id;
+  setNewUser(category) {
+    this.headerCatSelectedData = category._id;
+    this.mainCategoryValue = category.mainCategory;
   }
   addMainCategory() {
     this.message = 'Main Category Added';
@@ -67,6 +69,16 @@ export class MainCategoryComponent implements OnInit {
     });
     this.mainCategoryForm.reset();
   }
+  mainCategoryVerify(val) {
+    this.mainCategoryValue.forEach(data => {
+      if (data.mainCategoryName === val) {
+        data.mainCategoryVerify = true;
+      } else {
+        data.mainCategoryVerify = false;
+      }
+    });
+    console.log(this.mainCategoryValue);
+  }
   getCategory(id) {
     this.headCatSelected = id;
     this.categoryService.getMainCategory(id).subscribe(data => {
@@ -77,13 +89,13 @@ export class MainCategoryComponent implements OnInit {
   }
   deleteMainCategory(elem) {
     this.message = 'Main Category deleted';
-this.categoryService.deleteMainCategory(this.headCatSelected, elem).subscribe(data => {
-  this.snackBar.open(this.message, this.action, {
-    duration: 3000,
-  });
-  this.mainCategoryData = new MatTableDataSource<PeriodicElement>(data);
-}, error => {
-  console.log(error);
-});
+    this.categoryService.deleteMainCategory(this.headCatSelected, elem).subscribe(data => {
+      this.snackBar.open(this.message, this.action, {
+        duration: 3000,
+      });
+      this.mainCategoryData = new MatTableDataSource<PeriodicElement>(data);
+    }, error => {
+      console.log(error);
+    });
   }
 }

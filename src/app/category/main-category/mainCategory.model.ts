@@ -2,6 +2,7 @@ export class MainCategory {
     _id: string;
     mainCategoryName: string;
     mainCategoryDescription: string;
+    mainCategoryVerify: boolean;
     constructor(
         mainCategoryName: string,
         mainCategoryDescription: string

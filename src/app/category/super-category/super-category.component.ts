@@ -25,6 +25,8 @@ export class SuperCategoryComponent implements OnInit {
   superCategoryData;
   displayedColumns: string[] = ['categoryName', 'description', 'edit', 'delete'];
   showCategoryName: boolean;
+  categoryValue = [];
+  cat;
   constructor(private fb: FormBuilder, private router: Router, private categoryService: CategoryService ) { }
 
   ngOnInit() {
@@ -51,21 +53,25 @@ export class SuperCategoryComponent implements OnInit {
       this.superCategoryForm.controls.description.value,
     );
     this.categoryService.addSuperCategory(this.superCategoryModel).subscribe(data => {
+      this.superCategoryFilter = data;
       this.superCategoryData = new MatTableDataSource<PeriodicElement>(data);
     });
     /* this.superCategoryForm.reset(); */
   }
   deleteSuperCategory(value) {
     this.categoryService.deleteSuperCategory(value).subscribe(deleteData => {
+      this.superCategoryFilter = deleteData;
       this.superCategoryData = new MatTableDataSource<PeriodicElement>(deleteData);
     });
   }
   categoryVerify(val) {
-    this.categoryFilter = this.superCategoryFilter.filter(data => data.categoryName.indexOf(val) !== -1);
-    if (this.categoryFilter.length !== 0) {
-    this.showCategoryName = true;
-    } else if (this.categoryFilter.length === 0) {
-      this.showCategoryName = false;
-    }
+    this.superCategoryFilter.forEach(element => {
+      if (element.categoryName === val ) {
+        element.checkCategoryName = true;
+        this.cat = element.checkCategoryName;
+      } else {
+        element.checkCategoryName = false;
+      }
+    });
   }
 }

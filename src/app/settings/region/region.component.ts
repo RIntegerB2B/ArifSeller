@@ -66,17 +66,13 @@ selectedRegion;
   showCurrency(val) {
     this.currencyValue = val.currency_code;
     this.selectedRegion = val.country;
-/* this.currencyValue = this.selectedCurrency[0].currency;
-if (elem === '') {
-  this.showRegionName = false;
-} else {
-  this.regionNameFilter = this.regionDetail.filter(data => data.regionName.indexOf(elem) !== -1);
-  if (this.regionNameFilter.length !== 0) {
-this.showRegionName = true;
-  } else if (this.regionNameFilter.length === 0 ) {
-    this.showRegionName = false;
+this.regionDetail.forEach(element => {
+  if (element.regionName === val.country ) {
+element.checkRegionName = true;
+  } else {
+    element.checkRegionName = false;
   }
-} */
+});
   }
   addRegion() {
     this.message = 'New Region created';

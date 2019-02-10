@@ -9,6 +9,7 @@ export class Product {
     color: string;
     styleCode: string;
     skuCode: string;
+    skuCodeVerify: boolean;
     productImageName: [string];
     mainCategory: string;
     region: [Region];
