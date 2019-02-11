@@ -1,5 +1,5 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="warn" class="example-toolbar">
+  <mat-toolbar color="primary" class="example-toolbar ">
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
@@ -38,6 +38,18 @@
             </mat-list-item>
             <mat-list-item>
               <a routerLink="/product/viewproducts">Manage Product</a>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="no-shadow">
+          <mat-expansion-panel-header fxLayout="row">
+            <mat-panel-title>
+            Inventory
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list class="ml-0" dense>
+            <mat-list-item routerLink="/inventory/inventoryhealth">
+              <a> Inventory Health</a>
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>

@@ -25,6 +25,10 @@ const routes: Routes = [
     {
       path: 'settings',
       loadChildren: './settings/settings.module#SettingsModule'
+    },
+    {
+      path: 'inventory',
+      loadChildren: './inventory/inventory.module#InventoryModule'
     }
     ]
   }

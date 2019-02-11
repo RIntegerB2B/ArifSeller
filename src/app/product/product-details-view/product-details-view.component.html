@@ -70,15 +70,15 @@
       </h6>
     </div>
     <div class="col-md-6 col-6" >
-      <label class="productHeading" *ngIf="productModel?.length !== null || productModel?.breadth !== null ||
-      productModel?.height !== null">
+      <label class="productHeading" *ngIf="productModel?.length !== '' || productModel?.breadth !== '' ||
+      productModel?.height !== ''">
         Product Size
       </label>
     </div>
     <div class="col-md-6 col-6">
-      <h6 *ngIf="productModel?.length !== null"><label >Length</label>: {{productModel?.length}}</h6>
-      <h6 *ngIf="productModel?.breadth !== null"><label>Breadth</label>: {{productModel?.breadth}}</h6>
-      <h6 *ngIf="productModel?.height !== null"><label>Height</label>: {{productModel?.height}}</h6>
+      <h6 *ngIf="productModel?.length !== ''"><label >Length</label>: {{productModel?.length}}</h6>
+      <h6 *ngIf="productModel?.breadth !== ''"><label>Breadth</label>: {{productModel?.breadth}}</h6>
+      <h6 *ngIf="productModel?.height !== ''"><label>Height</label>: {{productModel?.height}}</h6>
     </div>
     <div class="col-md-6 col-6">
       <label class="productHeading" *ngIf="productModel?.material !== '' || productModel?.waterProof !== '' ||
