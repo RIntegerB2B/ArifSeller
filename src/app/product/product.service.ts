@@ -75,4 +75,11 @@ getRelatedProducts(data): Observable<any> {
   const url: string = this.serviceUrl + productUrl + data.styleCode + productUrl1 + data._id;
   return this.httpClient.get<Product>(url);
 }
+
+editRegionDetails(elem, data, regionDetails: Region): Observable<any> {
+  const addUrl = 'product/';
+  const addurl1 = '/region/';
+  const url: string = this.serviceUrl + addUrl + elem  + addurl1 + data;
+  return this.httpClient.put<Product>(url, regionDetails);
+}
 }

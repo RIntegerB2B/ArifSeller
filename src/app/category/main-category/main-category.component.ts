@@ -8,8 +8,6 @@ import { MatSnackBar } from '@angular/material';
 import { CategoryService } from '../category.service';
 import { SuperCategory } from '../super-category/superCategory.model';
 import { MainCategory } from './mainCategory.model';
-
-
 export interface PeriodicElement {
   categoryName: string;
   description: string;

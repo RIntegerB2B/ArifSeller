@@ -1,3 +1,4 @@
+<form [formGroup]="editProductForm" >
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 col-12">
@@ -47,17 +48,61 @@
           Quantity
         </div>
       </div>
-      <div class="row p-2 regionRow" *ngFor="let data of productModel?.region">
-        <div class="col-3 col-sm-3 col-md-3">
-          {{data?.regionName}}
+      <div  *ngFor="let data of productModel?.region">
+        <div class="row p-2 regionRow" *ngIf="!data.qtyediting">
+            <div class="col-3 col-sm-3 col-md-3">
+                {{data?.regionName}}
+              </div>
+              <div *ngIf="!data.qtyediting" class="col-3 col-sm-3  col-md-3">
+                {{data?.regionPrice}}
+              </div>
+              <div *ngIf="!data.qtyediting" class="col-3 col-sm-3  col-md-3">
+                {{data?.regionQuantity}}
+              </div>
+             
+              <div  class="col-3 col-sm-3  col-md-3">
+                  <button mat-icon-button mat-sm-button color="primary" matTooltip="Edit  Price or Quantity"
+                  (click)="editQty(data)">
+                  <mat-icon>  edit </mat-icon>
+                  </button>
+                </div>
         </div>
-        <div class="col-3 col-sm-3  col-md-3">
-          {{data?.regionPrice}}
-        </div>
-        <div class="col-3 col-sm-3  col-md-3">
-          {{data?.regionQuantity}}
-        </div>
+        <div *ngIf="data.qtyediting" class="row p-2 regionRow">
+            <div class="col-md-3 form-group">
+                <input class="form-control"  hidden type="text" formControlName="regionName" [value]="data?.regionName" #name>
+                {{data.regionName}}
+            </div>
+            <div  class="col-3 col-sm-3  col-md-3 form-group">
+                    <mat-form-field class="example-full-width ">
+                        <input class="form-control" matInput type="text" formControlName="editPrice" [value]="data?.regionPrice" #price>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 form-group">
+                    <mat-form-field class="example-full-width ">
+                        <input class="form-control" matInput type="text" formControlName="editQty" [value]="data?.regionQuantity" #qty>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-1">
+                    <button mat-icon-button mat-sm-button color="primary" matTooltip="Update the Price "
+                    (click)="update(data, productModel, name.value, price.value, qty.value  )">
+                    <mat-icon>  save </mat-icon>
+                    </button>
+                 </div>
+                 <div class="col-md-1">
+                    <button mat-icon-button mat-sm-button color="primary" matTooltip="cancel "
+                    (click)="cancel(data)">
+                    <mat-icon>  close </mat-icon>
+                    </button>
+                 </div>
+                
+         
+           
+            
+            </div>
+        
       </div>
+         
+      
     </div>
     <div class="col-md-6 col-6" >
       <label class="productHeading" *ngIf="productModel?.productDescription !== ''">
@@ -97,3 +142,5 @@
     </div>
   </div>
 </div>
+  
+</form>

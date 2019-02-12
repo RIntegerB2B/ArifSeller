@@ -50,12 +50,13 @@
         <label>View Main Category</label>
         <div class="form-group col-sm-12 col-md-2">
           <div class="textContainer">
-            <select #selectElem1 (change)="getCategory(selectElem1.value)" class="hideLabel form-control">
-              <option> Select super category</option>
-              <option *ngFor="let category of superCategoryModel" [value]="category._id">
+              <mat-form-field class="example-full-width">
+            <mat-select #selectElem1 (selectionChange)="getCategory(selectElem1.value)"  placeholder="Select super category">
+              <mat-option *ngFor="let category of superCategoryModel" [value]="category._id">
                 {{category.categoryName}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
+            </mat-form-field>
 
           </div>
 

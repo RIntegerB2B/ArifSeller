@@ -12,7 +12,9 @@ import {Product} from '../../product/add-product/product.model';
 export interface PeriodicElement {
   primeImage: string;
  productInformation: string;
-  view: string;
+ styleCode: string;
+ skuCode: string;
+ view: string;
   delete: string;
 }
 
@@ -24,11 +26,12 @@ export interface PeriodicElement {
 export class InventoryHealthComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['primeImage', 'productInformation',  'view', 'delete'];
+  displayedColumns: string[] = ['primeImage', 'productTitle', 'styleCode', 'skuCode', 'mfdQty'];
   productModel: Product[];
   productData;
   message;
   action;
+  inventoryLength;
   constructor(private fb: FormBuilder, private router: Router, private inventoryService: InventoryService,
     private snackBar: MatSnackBar) { }
 
@@ -38,9 +41,13 @@ export class InventoryHealthComponent implements OnInit {
 getInventory() {
   this.inventoryService.showInventory().subscribe(data => {
     console.log(data);
+    this.inventoryLength = data.length;
     this.productData = new MatTableDataSource<PeriodicElement>(data);
     this.productData.sort = this.sort;
     this.productData.paginator = this.paginator;
   });
+}
+viewSingleProduct(elem) {
+  this.router.navigate(['/inventory/singleinventory', elem._id ]);
 }
 }

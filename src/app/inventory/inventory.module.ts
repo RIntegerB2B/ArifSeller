@@ -37,9 +37,10 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import {InventoryService} from './inventory.service';
 import { InventoryHealthComponent } from './inventory-health/inventory-health.component';
 import {InventoryRoutingModule} from './inventory-routing.module';
+import { SingleProductComponent } from './single-product/single-product.component';
 
 @NgModule({
-  declarations: [InventoryHealthComponent],
+  declarations: [InventoryHealthComponent, SingleProductComponent],
   imports: [
     HttpClientModule,
     InventoryRoutingModule,

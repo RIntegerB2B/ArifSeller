@@ -276,8 +276,8 @@ element.skuCodeVerify = true;
     this.productModel.productDescription = this.productForm.controls.productDescription.value;
     this.productModel.price = this.productForm.controls.price.value;
     this.productModel.color = this.productForm.controls.color.value;
-    this.productModel.styleCode = this.productForm.controls.styleCode.value;
-    this.productModel.skuCode = this.productForm.controls.skuCode.value;
+    this.productModel.styleCode = this.productForm.controls.styleCode.value.toUpperCase();
+    this.productModel.skuCode = this.productForm.controls.skuCode.value.toUpperCase();
     this.productModel.moq = this.moqId;
     // category
     this.productModel.mainCategory = this.categories;
