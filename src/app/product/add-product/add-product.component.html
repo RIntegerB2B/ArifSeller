@@ -1,9 +1,10 @@
-<form [formGroup]="productForm" (ngSubmit)="addProducts()">
-  <mat-tab-group class="mat-tab-fill-height" dynamicHeight (selectedIndexChange)="selectedIndexChange($event)"
-    [selectedIndex]="selectedIndex">
-    <!-- Product details-->
-    <mat-tab label="Product">
-      <div class="container-fluid">
+<div class="pageBoxLg">
+  <form [formGroup]="productForm" (ngSubmit)="addProducts()">
+    <mat-tab-group class="mat-tab-fill-height" dynamicHeight 
+    (selectedIndexChange)="selectedIndexChange($event)"
+      [selectedIndex]="selectedIndex">
+      <!-- Product details-->
+      <mat-tab label="Product">
         <div class="row rowBox">
           <div class="col-md-6">
             <label>
@@ -101,10 +102,8 @@
             </mat-card>
           </div>
         </div>
-      </div>
-    </mat-tab>
-    <mat-tab label="Details">
-      <div class="container-fluid">
+      </mat-tab>
+      <mat-tab label="Details">
         <div class="row rowBox">
           <div class="col-md-12">
             <mat-card class="p-0">
@@ -163,11 +162,9 @@
             </mat-card>
           </div>
         </div>
-      </div>
-    </mat-tab>
-    <!-- Category -->
-    <mat-tab label="Category">
-      <div class="container-fluid">
+      </mat-tab>
+      <!-- Category -->
+      <mat-tab label="Category">
         <div class="row rowBox">
           <div class="col-md-12">
             <mat-card class="p-0">
@@ -209,11 +206,9 @@
             </mat-card>
           </div>
         </div>
-      </div>
-    </mat-tab>
-    <!--Region-->
-    <mat-tab label="Price">
-      <div class="container-fluid">
+      </mat-tab>
+      <!--Region-->
+      <mat-tab label="Price">
         <div class="row rowBox">
           <div class="col-md-12">
             <mat-card>
@@ -313,12 +308,10 @@
             </mat-card>
           </div>
         </div>
-      </div>
-    </mat-tab>
+      </mat-tab>
 
-    <!--MOQ-->
-    <mat-tab label="MOQ">
-      <div class="container-fluid">
+      <!--MOQ-->
+      <mat-tab label="MOQ">
         <div class="row rowBox">
           <div class="col-md-12">
             <mat-card class="p-0">
@@ -350,31 +343,30 @@
                     </mat-card-title>
                   </div>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="center center"
-                fxLayout.xs="column" >
-                  
-                    <button mat-raised-button color="primary" type="submit">Submit</button>
-              
-                </div>
               </mat-card-content>
             </mat-card>
           </div>
         </div>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-6">
-        <div class="float-left">
-          <button mat-raised-button type="button" color="accent" [hidden]="selectedIndex === 0" (click)="selectPreviousTab(selectedIndex)">back</button>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-6">
+          <div>
+            <button mat-stroked-button color="primary" type="button" [hidden]="selectedIndex === 0" (click)="selectPreviousTab(selectedIndex)">back</button>
+          </div>
         </div>
-      </div>
-      <div class="col-md-6 col-6">
-        <div class="float-right">
-          <button mat-raised-button type="button" color="accent" [hidden]="selectedIndex === 4" (click)="selectNextTab(selectedIndex)">next</button>
+        <div class="col-md-6 col-6" *ngIf="selectedIndex !== 4">
+          <div class="float-right">
+            <button mat-raised-button type="button" color="accent" [hidden]="selectedIndex === 4" (click)="selectNextTab(selectedIndex)">next</button>
+          </div>
+        </div>
+        <div class="col-md-6 col-6" *ngIf="selectedIndex === 4">
+          <div class="float-right">
+            <button mat-raised-button color="primary" type="submit">Save</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>

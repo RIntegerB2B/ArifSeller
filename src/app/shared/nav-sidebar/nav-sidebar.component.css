@@ -14,6 +14,18 @@
 }
 
 
+.toolBarMenu{
+  background-color: #6E1A52 ;
+  color: #ffff;
+}
+.dashBoardMenuFont
+{
+    font-size: 17px;
+    display: block;
+    color: black;
+    font-weight: 500
+}
+
 .example-container {
   display: flex;
   flex-direction: column;
@@ -34,12 +46,7 @@ h1.example-app-name {
   margin-left: 8px;
 }
 
-.example-sidenav-container {
-  
+.example-sidenav-container {  
   flex: 1;
 }
 
-.example-is-mobile .example-sidenav-container {
-  
-  flex: 1 0 auto;
-}

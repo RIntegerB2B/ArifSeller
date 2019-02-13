@@ -1,28 +1,38 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="warn" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">
+  <mat-toolbar  class="toolBarMenu">
+    <button mat-icon-button 
+    (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     <h1 class="example-app-name"></h1>
   </mat-toolbar>
 
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+  <mat-sidenav-container class="example-sidenav-container" 
+  [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+     [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
       <mat-accordion multi="true">
-
         <mat-expansion-panel class="no-shadow">
           <mat-expansion-panel-header fxLayout="row">
-            <mat-panel-title>
+            <mat-panel-title class="dashBoardMenuFont">
             Category
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-nav-list class="ml-0" dense>
-            <mat-list-item routerLink="/category/supercategory">
+            <mat-list-item routerLink="/category/supercategory" 
+            routerLinkActive="activeMenu"
+            [routerLinkActiveOptions]="{exact: true}"
+            >
               <a>Super Category</a>
             </mat-list-item>
-            <mat-list-item>
-              <a routerLink="/category/maincategory">Main Category</a>
+            <mat-list-item   routerLink="/category/maincategory" routerLinkActive="activeMenu"
+            [routerLinkActiveOptions]="{exact: true}"
+            >
+              <a 
+              
+              
+              >Main Category</a>
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>
@@ -33,11 +43,17 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-nav-list class="ml-0" dense>
-            <mat-list-item routerLink="/product/addproducts">
+            <mat-list-item routerLink="/product/addproducts"
+            routerLinkActive="activeMenu"
+            [routerLinkActiveOptions]="{exact: true}"
+            >
               <a>Upload Product</a>
             </mat-list-item>
-            <mat-list-item>
-              <a routerLink="/product/viewproducts">Manage Product</a>
+            <mat-list-item routerLink="/product/viewproducts"  
+            routerLinkActive="activeMenu"
+            [routerLinkActiveOptions]="{exact: true}">
+              <a 
+              >Manage Product</a>
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>
@@ -48,7 +64,10 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list class="ml-0" dense>
-              <mat-list-item routerLink="/settings/regions">
+              <mat-list-item routerLink="/settings/regions"
+              routerLinkActive="activeMenu"
+              [routerLinkActiveOptions]="{exact: true}"
+              >
                 <a> Region</a>
               </mat-list-item>
             </mat-nav-list>
@@ -60,12 +79,18 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <mat-nav-list class="ml-0" dense>
-                <mat-list-item routerLink="/moq/createmoq">
+                <mat-list-item routerLink="/moq/createmoq"
+                routerLinkActive="activeMenu"
+            [routerLinkActiveOptions]="{exact: true}"
+                 >
                   <a> Add MOQ</a>
                 </mat-list-item>
               </mat-nav-list>
               <mat-nav-list class="ml-0" dense>
-                  <mat-list-item routerLink="/moq/viewmoq">
+                  <mat-list-item routerLink="/moq/viewmoq" 
+                  routerLinkActive="activeMenu"
+            [routerLinkActiveOptions]="{exact: true}"
+                  >
                     <a> View MOQ</a>
                   </mat-list-item>
                 </mat-nav-list>

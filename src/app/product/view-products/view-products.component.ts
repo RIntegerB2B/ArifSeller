@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource , MatSort} from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,15 +8,7 @@ import { MatSnackBar } from '@angular/material';
 import { ProductService } from '../product.service';
 import { Product } from '../add-product/product.model';
 
-export interface PeriodicElement {
-  primeImage: string;
-  productName: string;
-  productTitle: string;
-  styleCode: string;
-  skuCode: string;
-  view: string;
-  delete: string;
-}
+
 @Component({
   selector: 'app-view-products',
   templateUrl: './view-products.component.html',
@@ -25,8 +17,11 @@ export interface PeriodicElement {
 export class ViewProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['primeImage', 'productName', 'productTitle', 'styleCode', 'skuCode', 'view', 'delete'];
-  productModel: Product[];
+  displayedColumns: string[] = ['primeImage', 'productName', 'styleCode', 'skuCode', 'view', 'delete'];
+  productModel: Product;
+  subProductModel: Product;
+  productNameFilter = new FormControl('');
+  productSkuCodeFilter = new FormControl('');
   productData;
   message;
   action;
@@ -35,15 +30,41 @@ export class ViewProductsComponent implements OnInit {
 
   ngOnInit() {
     this.getProducts();
+    this.subProductModel = new Product();
+    this.subProductModel.productName = '';
+    this.subProductModel.skuCode = '';
+    this.productNameFilter.valueChanges
+    .subscribe(
+      productName => {
+        this.subProductModel.productName = productName;
+        this.productData.filter = JSON.stringify(this.subProductModel);
+      }
+    );
+    this.productSkuCodeFilter.valueChanges
+    .subscribe(
+      skuCode => {
+        this.subProductModel.skuCode = skuCode;
+        this.productData.filter = JSON.stringify(this.subProductModel);
+      }
+    );
   }
   getProducts() {
     this.productService.getProducts().subscribe(data => {
-      this.productData = new MatTableDataSource<PeriodicElement>(data);
+      this.productData = new MatTableDataSource<Product>(data);
       this.productData.sort = this.sort;
       this.productData.paginator = this.paginator;
+      this.productData.filterPredicate = this.createProductFilter();
     }, err => {
       console.log(err);
     });
+  }
+  createProductFilter(): (data: any, filter: string) => boolean {
+    const filterFunction = function(data, filter): boolean {
+      const searchTerms = JSON.parse(filter);
+      return data.productName.toLowerCase().indexOf(searchTerms.productName) !== -1 &&
+      data.skuCode.toLowerCase().indexOf(searchTerms.skuCode) !== -1;
+    };
+    return filterFunction;
   }
   applyFilter(filterValue: string) {
     this.productData.filter = filterValue.trim().toLowerCase();
@@ -51,7 +72,7 @@ export class ViewProductsComponent implements OnInit {
   deleteProduct(product) {
     this.message = 'Product deleted';
     this.productService.deleteProduct(product).subscribe(data => {
-      this.productData = new MatTableDataSource<PeriodicElement>(data);
+      this.productData = new MatTableDataSource<Product>(data);
       this.productData.sort = this.sort;
       this.productData.paginator = this.paginator;
       this.snackBar.open(this.message, this.action, {

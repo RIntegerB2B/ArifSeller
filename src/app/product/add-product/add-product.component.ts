@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -29,6 +29,7 @@ export interface PeriodicElement {
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
+  @ViewChild('myDiv') myDivElementRef: ElementRef;
   selectedIndex = 0;
   matTab: MatTab;
   productForm: FormGroup;

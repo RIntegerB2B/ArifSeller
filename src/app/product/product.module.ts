@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {
   MatSidenavModule,
   MatListModule,
@@ -29,8 +29,7 @@ import {
   MatPaginatorModule,
   MatTableModule,
   MatSortModule,
-  MatTabsModule,
-
+  MatTabsModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
@@ -40,9 +39,13 @@ import {ProductService} from './product.service';
 import { ViewProductsComponent } from './view-products/view-products.component';
 import { ViewSingleProductComponent } from './view-single-product/view-single-product.component';
 import { ProductDetailsViewComponent } from './product-details-view/product-details-view.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
+
 
 @NgModule({
-  declarations: [AddProductComponent, ViewProductsComponent, ViewSingleProductComponent, ProductDetailsViewComponent],
+  declarations: [AddProductComponent, ViewProductsComponent,
+     ViewSingleProductComponent, ProductDetailsViewComponent,
+      EditProductComponent],
   imports: [
     HttpClientModule,
     ProductRoutingModule,
@@ -72,7 +75,9 @@ import { ProductDetailsViewComponent } from './product-details-view/product-deta
     MatCheckboxModule,
     FlexLayoutModule,
     MatRadioModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FormsModule
+
       ],
   providers:
    [

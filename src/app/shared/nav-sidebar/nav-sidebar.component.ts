@@ -9,7 +9,6 @@ import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 export class NavSidebarComponent implements OnDestroy {
 
   mobileQuery: MediaQueryList;
-
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
