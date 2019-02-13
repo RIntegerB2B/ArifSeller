@@ -107,6 +107,7 @@ export class AddProductComponent implements OnInit {
       closure: [''],
       compartments: [''],
       pockets: [''],
+      mfdQty: ['', priceValue],
       confirmRegion: this.fb.array([
       ])
     });

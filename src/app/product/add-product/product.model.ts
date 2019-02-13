@@ -14,6 +14,7 @@ export class Product {
     mainCategory: string;
     region: [Region];
     moq: string;
+    mfdQty: Number;
     // size
     length: string;
     breadth: string;
