@@ -24,6 +24,7 @@ export class SuperCategoryComponent implements OnInit {
   categoryFilter;
   superCategoryFilter: SuperCategory[];
   superCategoryData;
+  checKCategoryName = false;
   displayedColumns: string[] = ['categoryName',  'description', 'edit', 'delete'];
   showCategoryName: boolean;
   categoryValue = [];
@@ -103,12 +104,17 @@ export class SuperCategoryComponent implements OnInit {
     });
   }
   categoryVerify(val) {
+    this.checKCategoryName = false;
     this.superCategoryFilter.forEach(element => {
       if (element.categoryName === val ) {
         element.checkCategoryName = true;
+        this.checKCategoryName = true;
       } else {
         element.checkCategoryName = false;
       }
     });
   }
 }
+
+
+

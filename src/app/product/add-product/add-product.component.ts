@@ -57,6 +57,7 @@ export class AddProductComponent implements OnInit {
   showSelectedMOQ: boolean;
   category;
   mainCategory;
+  mainCategoryData: string;
   moqName;
   imageError: boolean;
 
@@ -154,7 +155,7 @@ export class AddProductComponent implements OnInit {
     }
   }
   selectedSuperCategory(val) {
-    this.category = val;
+    this.category = val._id;
     this.superCategoryName = val.categoryName;
     this.filteredSuperCategory = this.superCategoryModel.filter(data => data._id === val._id);
     this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
@@ -234,7 +235,8 @@ export class AddProductComponent implements OnInit {
   }
 
   selectedCategory(categoryVal) {
-    this.mainCategory = categoryVal.mainCategoryName;
+    this.mainCategory = categoryVal._id;
+    this.mainCategoryData = categoryVal.mainCategoryName;
     this.categories = categoryVal._id;
     this.showCategory = true;
   }

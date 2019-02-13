@@ -189,7 +189,8 @@
                       <small> Super Category</small>
                     </mat-card-title>
                     <div *ngFor="let data of superCategoryModel; let i = index">
-                      <mat-card (click)="selectedSuperCategory(data)" [class.active]="data === category">
+                      <mat-card (click)="selectedSuperCategory(data)" 
+                      [class.active]="data._id === category">
                         {{data.categoryName | titlecase}}
                       </mat-card>
                     </div>
@@ -202,7 +203,9 @@
                       <small> Main Category</small>
                     </mat-card-title>
                     <div *ngFor="let data of mainCategoryModel">
-                      <mat-card (click)="selectedCategory(data)" [class.active]="data.mainCategoryName  === mainCategory">
+                      <mat-card (click)="selectedCategory(data)"
+                       [class.active]="data._id  === mainCategory"
+                       >
                         {{data.mainCategoryName | titlecase}}
                       </mat-card>
                     </div>
@@ -213,7 +216,7 @@
                         <small>Selected Category</small>
                       </mat-card-title>
                       <mat-card>
-                        {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
+                        {{superCategoryName | titlecase}} / {{mainCategoryData | titlecase}}
                       </mat-card>
                     </div>
                   </div>
