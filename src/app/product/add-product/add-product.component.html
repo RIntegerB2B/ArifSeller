@@ -1,5 +1,5 @@
 <div class="pageBoxLg">
-  <form [formGroup]="productForm" (ngSubmit)="addProducts()">
+  <form [formGroup]="productForm" (ngSubmit)="validateProducts()">
     <mat-tab-group class="mat-tab-fill-height" dynamicHeight 
     (selectedIndexChange)="selectedIndexChange($event)"
       [selectedIndex]="selectedIndex">

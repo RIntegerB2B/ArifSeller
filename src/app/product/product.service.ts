@@ -82,4 +82,9 @@ editRegionDetails(elem, data, regionDetails: Region): Observable<any> {
   const url: string = this.serviceUrl + addUrl + elem  + addurl1 + data;
   return this.httpClient.put<Product>(url, regionDetails);
 }
+editQtyDetails(elem,  productDetails: Product): Observable<any> {
+  const addUrl = 'mfdqty/';
+  const url: string = this.serviceUrl + addUrl + elem ;
+  return this.httpClient.put<Product>(url, productDetails);
+}
 }

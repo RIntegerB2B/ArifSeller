@@ -16,7 +16,6 @@ export interface PeriodicElement {
   currency: string;
 }
 
-
 @Component({
   selector: 'app-region',
   templateUrl: './region.component.html',
@@ -36,6 +35,7 @@ export class RegionComponent implements OnInit {
   displayedColumns: string[] = ['regionName', 'currency',  'delete'];
 selectedRegion;
    region;
+
   constructor(private fb: FormBuilder, private router: Router, private settingsService: SettingsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -43,10 +43,12 @@ selectedRegion;
     this.getRegions();
     this.getJSONRegion();
   }
+
   createForm() {
     this.addRegionForm = this.fb.group({
       regionName: [''],
-      currency: ['']
+      currency: [''],
+      regionNameCtrl: ['']
     });
   }
   getJSONRegion() {

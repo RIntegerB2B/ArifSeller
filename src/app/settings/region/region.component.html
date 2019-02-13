@@ -7,7 +7,7 @@
           <div class="form-group col-md-4">
             <mat-form-field class="example-full-width">
               <mat-select #selectedregion placeholder="Region Name" formControlName="regionName" (selectionChange)="showCurrency(selectedregion.value)">
-  <mat-option *ngFor="let data of region" [value]="data">{{data.country}}</mat-option>
+                <mat-option *ngFor="let data of region" [value]="data">{{data.country}}</mat-option>
                  </mat-select>
                 
             </mat-form-field>

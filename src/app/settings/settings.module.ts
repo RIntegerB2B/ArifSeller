@@ -29,7 +29,8 @@ import {
   MatNativeDateModule,
   MatPaginatorModule,
   MatTableModule,
-  MatSortModule
+  MatSortModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import {SettingRoutingModule} from './setting-routing.module';
@@ -62,7 +63,8 @@ import { RegionComponent } from './region/region.component';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatAutocompleteModule
   ],
   providers:
    [

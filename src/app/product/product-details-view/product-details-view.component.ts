@@ -16,6 +16,7 @@ import { Region } from '../../product/add-product/region.model';
 })
 export class ProductDetailsViewComponent implements OnInit {
   regionModel: Region[];
+  productData: Product;
   @Input() productModel: Product;
   @Input() mainCatergoryName: string;
   editProductForm: FormGroup;
@@ -34,11 +35,15 @@ export class ProductDetailsViewComponent implements OnInit {
     this.editProductForm = this.fb.group({
       regionName: [''],
       editQty: [''],
-      editPrice: ['']
+      editPrice: [''],
+      editMfdQty: ['']
     });
   }
   editQty(elem) {
     elem.qtyediting = true;
+  }
+  editMfdQty(data) {
+    data.editMfdQty = true;
   }
   update(data, elem, name, price , value) {
     this.message = 'Product updated successfully';
@@ -56,5 +61,19 @@ export class ProductDetailsViewComponent implements OnInit {
   }
   cancel(data) {
     data.qtyediting = false;
+  }
+  cancelMfdQty(data) {
+    data.editMfdQty = false;
+  }
+  updateMfdQty(product, val) {
+    this.message = 'Manufactured Quantity updated successfully';
+    this.productData = new Product();
+    this.productData.mfdQty = val.value;
+    this.productService.editQtyDetails(product._id, this.productData ).subscribe(data => {
+      this.productModel = data;
+      this.snackBar.open(this.message, this.action, {
+        duration: 3000,
+      });
+    });
   }
 }
