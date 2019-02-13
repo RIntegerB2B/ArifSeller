@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material';
 
 import {SuperCategory} from './superCategory.model';
 import {CategoryService} from '../category.service';
@@ -28,7 +29,9 @@ export class SuperCategoryComponent implements OnInit {
   categoryValue = [];
   cat;
   showEditCategory: boolean;
-  constructor(private fb: FormBuilder, private router: Router, private categoryService: CategoryService ) { }
+  message;
+  action;
+  constructor(private fb: FormBuilder, private router: Router, private categoryService: CategoryService, private snackBar: MatSnackBar ) { }
 
   ngOnInit() {
     this.createForm();
@@ -61,37 +64,48 @@ export class SuperCategoryComponent implements OnInit {
     cat.editing = false;
   }
   addSuperCategory() {
+    this.message = 'Super Category Added successfully';
     this.superCategoryModel = new SuperCategory(
       this.superCategoryForm.controls.categoryName.value,
       this.superCategoryForm.controls.description.value,
     );
     this.categoryService.addSuperCategory(this.superCategoryModel).subscribe(data => {
       this.superCategoryFilter = data;
+      this.snackBar.open(this.message, this.action , {
+        duration: 3000,
+      });
     });
     /* this.superCategoryForm.reset(); */
   }
   updateCategory(id, name, desc) {
+    this.message = 'Super Category Updated successfully';
     this.superCategoryModel = new SuperCategory(
       name.value,
      desc.value,
     );
     this.superCategoryModel._id = id.value;
     this.categoryService.updateSuperCategory(this.superCategoryModel).subscribe(data => {
+      this.snackBar.open(this.message, this.action , {
+        duration: 3000,
+      });
       this.superCategoryFilter = data;
     }, err  => {
       console.log(err);
     });
     }
   deleteSuperCategory(value) {
+    this.message = 'Super Category Deleted successfully';
     this.categoryService.deleteSuperCategory(value).subscribe(deleteData => {
       this.superCategoryFilter = deleteData;
+      this.snackBar.open(this.message, this.action , {
+        duration: 3000,
+      });
     });
   }
   categoryVerify(val) {
     this.superCategoryFilter.forEach(element => {
       if (element.categoryName === val ) {
         element.checkCategoryName = true;
-        this.cat = element.checkCategoryName;
       } else {
         element.checkCategoryName = false;
       }
