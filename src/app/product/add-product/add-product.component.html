@@ -10,6 +10,9 @@
             <label>
               <input type="file" (change)="handleFileInput($event.target.files)" multiple>
             </label>
+            <div class="alert alert-danger" *ngIf="imageError">
+              <h4>Please Select the images</h4>
+            </div>
             <div class="row">
               <div class="col-md-6 pb-2" *ngFor="let url of urls">
                 <mat-card>
@@ -40,7 +43,7 @@
 
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Style Code" formControlName="styleCode" required>
+                        <input matInput placeholder="Style Code" formControlName="styleCode" required  appUpperCase>
                         <mat-error *ngIf="productForm.controls['styleCode'].errors?.required">
                           Style Code is
                           <strong>required</strong>
@@ -50,22 +53,33 @@
                     </div>
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"
-                          required #skuvalue>
+                        <input matInput placeholder="SKU Code" formControlName="skuCode" (keyup)="skuCodeVerify(skuvalue.value)"  appUpperCase required #skuvalue>
                         <mat-error *ngIf="productForm.controls['skuCode'].errors?.required">
                           SKU Code is
                           <strong>required</strong>
                         </mat-error>
                       </mat-form-field>
-                      <small *ngIf="showSkuError">
-                        SKU Code
-                        <strong>exists</strong>
-                      </small>
+                      <div *ngFor="let data of productDetail">
+                          <small *ngIf="data.skuCodeVerify">
+                              SKU Code
+                              <strong>exists</strong>
+                            </small>
+                      </div>
+                      
                     </div>
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        <textarea matInput placeholder="Product Description" formControlName="productDescription"
-                          required></textarea>
+                        <input matInput placeholder="Manufactured Quantity" formControlName="mfdQty"   >
+                        <mat-error *ngIf="productForm.controls['mfdQty'].errors">
+                          Manufactured Quantity contains only
+                          <strong>number</strong>
+                        </mat-error>
+                      </mat-form-field>
+
+                    </div>
+                    <div class="pb-1">
+                      <mat-form-field class="example-full-width">
+                        <textarea matInput placeholder="Product Description" formControlName="productDescription"></textarea>
                         <mat-error *ngIf="productForm.controls['productDescription'].errors?.required">
                           Product Description is
                           <strong>required</strong>
@@ -73,7 +87,7 @@
                       </mat-form-field>
                     </div>
                     <div class="pb-1">
-                      <label>Size </label>
+                      <label>Size (inch)</label>
                       <mat-form-field>
                         <input matInput placeholder="Length" formControlName="length">
                         <mat-error *ngIf="productForm.controls['length'].errors?.required">
@@ -180,6 +194,9 @@
                       </mat-card>
                     </div>
                   </div>
+                  <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategoryError">
+<h4>No results found</h4>
+                  </div>
                   <div fxFlex="35" fxFlex.xs="100" *ngIf="showMainCategory">
                     <mat-card-title class="">
                       <small> Main Category</small>
@@ -198,7 +215,6 @@
                       <mat-card>
                         {{superCategoryName | titlecase}} / {{mainCategory | titlecase}}
                       </mat-card>
-
                     </div>
                   </div>
                 </div>
@@ -263,10 +279,8 @@
                           </mat-form-field>
                           <button mat-raised-button color="accent" [disabled]="productForm.controls.confirmRegion.controls[i].controls.regionPrice.invalid || 
                     productForm.controls.confirmRegion.controls[i].controls.regionQuantity.invalid
-                    "
-                            (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
-                      productForm.controls.confirmRegion.controls[i].controls.regionName.value)"
-                            type="button">ADD</button>
+                    " (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
+                      productForm.controls.confirmRegion.controls[i].controls.regionName.value)" type="button">ADD</button>
                         </div>
                       </div>
                     </div>
@@ -320,8 +334,8 @@
                   <div fxFlex="35" fxFlex.xs="100">
                     <mat-radio-group class="example-radio-group">
                       <div *ngFor="let data of moqModel">
-                        <mat-card (click)="selectedMOQ(data)" [class.active]="data.moqName  === moqName">
-                          <mat-radio-button class="example-radio-button" [value]="data">
+                        <mat-card [class.active]="data.moqName  === moqName">
+                          <mat-radio-button class="example-radio-button" [value]="data" (change)="selectedMOQ($event, data)">
                             {{data.moqName}}
                           </mat-radio-button>
                           <div>
@@ -341,6 +355,7 @@
                     <mat-card-title class="">
                       <small> Selected MOQ: {{moqName}}</small>
                     </mat-card-title>
+
                   </div>
                 </div>
               </mat-card-content>

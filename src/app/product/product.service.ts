@@ -46,7 +46,7 @@ export class ProductService {
   uploadImages(data, skucode): Observable<any> {
     const addUrl = 'productimages/';
     const url: string = this.serviceUrl + addUrl + skucode ;
-    return this.httpClient.put<boolean>(url, data);
+    return this.httpClient.put<Product>(url, data);
   }
 getProducts(): Observable<any> {
   const categoryUrl = 'product';
@@ -74,5 +74,12 @@ getRelatedProducts(data): Observable<any> {
   const productUrl1 = '/product/';
   const url: string = this.serviceUrl + productUrl + data.styleCode + productUrl1 + data._id;
   return this.httpClient.get<Product>(url);
+}
+
+editRegionDetails(elem, data, regionDetails: Region): Observable<any> {
+  const addUrl = 'product/';
+  const addurl1 = '/region/';
+  const url: string = this.serviceUrl + addUrl + elem  + addurl1 + data;
+  return this.httpClient.put<Product>(url, regionDetails);
 }
 }

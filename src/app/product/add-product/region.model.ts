@@ -3,4 +3,6 @@ export class Region {
     regionName: string;
     regionPrice: number;
     regionQuantity: number;
+    qtyediting: boolean;
+    currency: string;
 }

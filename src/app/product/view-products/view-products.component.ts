@@ -8,7 +8,6 @@ import { MatSnackBar } from '@angular/material';
 import { ProductService } from '../product.service';
 import { Product } from '../add-product/product.model';
 
-
 @Component({
   selector: 'app-view-products',
   templateUrl: './view-products.component.html',

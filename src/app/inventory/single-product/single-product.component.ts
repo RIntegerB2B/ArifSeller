@@ -6,18 +6,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { ProductService } from '../product.service';
-import { Product } from '../add-product/product.model';
-import { MainCategory } from './../product-details-view/mainCategory.model';
-import {Region} from './../add-product/region.model';
+import { Product } from '../../product/add-product/product.model';
+import {Region} from '../../product/add-product/region.model';
+import { MainCategory } from '../../category/main-category/mainCategory.model';
+import {InventoryService} from '../inventory.service';
 
 @Component({
-  selector: 'app-view-single-product',
-  templateUrl: './view-single-product.component.html',
-  styleUrls: ['./view-single-product.component.css']
+  selector: 'app-single-product',
+  templateUrl: './single-product.component.html',
+  styleUrls: ['./single-product.component.css']
 })
-export class ViewSingleProductComponent implements OnInit {
-  regionModel: Region;
+export class SingleProductComponent implements OnInit {
+  regionModel: Region[];
   productModel: Product;
   productData;
   productId;
@@ -30,48 +30,33 @@ export class ViewSingleProductComponent implements OnInit {
   relatedProducts = [];
   color = 'red';
   mainCatergoryName: string;
-
-  constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar,
+  editInventoryForm: FormGroup;
+  constructor(private fb: FormBuilder, private router: Router, private inventoryService: InventoryService, private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute) {
     this.productId = this.activatedRoute.snapshot.paramMap.get('id');
-  }
+   }
 
-  ngOnInit() {
+   ngOnInit() {
     this.getProductById();
+    this.createForm();
   }
-
+createForm() {
+  this.editInventoryForm = this.fb.group({
+    editQty: ['']
+  });
+}
   getProductById() {
-    this.productService.getProductById(this.productId).subscribe(data => {
-      console.log('single product', data);
+    this.inventoryService.getProductById(this.productId).subscribe(data => {
+      this.productModel = data;
       this.regionModel = data.region;
-      if (data.styleCode === '' || data.styleCode === undefined || data.styleCode === null) {
-        this.showRelatedProducts = false;
-        this.productModel = data;
-        this.regionModel = data.region;
-        console.log(this.regionModel);
-      } else {
-        this.showRelatedProducts = true;
-        this.productService.getRelatedProducts(data).subscribe(relatedProductData => {
-          console.log('related products', relatedProductData);
-          relatedProductData.forEach(element => {
-            if (element._id !== this.productId) {
-              this.relatedProducts.push(element);
-            }
-          });
-          this.productModel = relatedProductData.find(e => e._id === this.productId);
-         /*  console.log(this.productModel); */
-        }, err => {
-          console.log(err);
-        });
-      }
-      this.getCategory();
+      console.log('single product', data);
     }, err => {
       console.log(err);
     });
   }
 
   getCategory()  {
-    this.productService.showAllMainCategory().subscribe(data => {
+    this.inventoryService.showAllMainCategory().subscribe(data => {
       this.mainCategory = data;
       this.mainCategory.forEach(element => {
         if (element._id === this.productModel.mainCategory)         {
@@ -98,4 +83,13 @@ export class ViewSingleProductComponent implements OnInit {
       this.relatedProducts.splice(index, 1);
     }
   }
+  editQty(elem) {
+    this.regionModel.forEach(element => {
+      if (element === elem) {
+element.qtyediting = true;
+      } else {
+        element.qtyediting = false;
+      }
+    });
+     }
 }

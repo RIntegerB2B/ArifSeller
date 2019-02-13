@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { ReactiveFormsModule} from '@angular/forms';
 import {
   MatSidenavModule,
   MatListModule,
@@ -29,25 +29,21 @@ import {
   MatPaginatorModule,
   MatTableModule,
   MatSortModule,
-  MatTabsModule
+  MatTabsModule,
+
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import {ProductRoutingModule} from './product-routing.module';
-import { AddProductComponent } from './add-product/add-product.component';
-import {ProductService} from './product.service';
-import { ViewProductsComponent } from './view-products/view-products.component';
-import { ViewSingleProductComponent } from './view-single-product/view-single-product.component';
-import { ProductDetailsViewComponent } from './product-details-view/product-details-view.component';
-import { EditProductComponent } from './edit-product/edit-product.component';
-import { UpperCaseDirective } from './add-product/upper-case.directive';
+import {InventoryService} from './inventory.service';
+import { InventoryHealthComponent } from './inventory-health/inventory-health.component';
+import {InventoryRoutingModule} from './inventory-routing.module';
+import { SingleProductComponent } from './single-product/single-product.component';
 
 @NgModule({
-  declarations: [AddProductComponent, ViewProductsComponent, ViewSingleProductComponent, ProductDetailsViewComponent, UpperCaseDirective,
-     EditProductComponent ],
+  declarations: [InventoryHealthComponent, SingleProductComponent],
   imports: [
     HttpClientModule,
-    ProductRoutingModule,
+    InventoryRoutingModule,
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -74,13 +70,11 @@ import { UpperCaseDirective } from './add-product/upper-case.directive';
     MatCheckboxModule,
     FlexLayoutModule,
     MatRadioModule,
-    MatExpansionModule,
-    FormsModule
-
+    MatExpansionModule
       ],
   providers:
    [
-    ProductService
+    InventoryService
    ]
 })
-export class ProductModule { }
+export class InventoryModule { }

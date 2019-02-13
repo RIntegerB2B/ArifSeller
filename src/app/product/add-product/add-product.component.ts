@@ -9,7 +9,7 @@ import { ProductService } from '../product.service';
 import { Product } from './product.model';
 import { MainCategory } from '../../category/main-category/mainCategory.model';
 import { MOQ } from '../../moq/create-moq/moq.model';
-import {SuperCategory} from '../../category/super-category/superCategory.model';
+import { SuperCategory } from '../../category/super-category/superCategory.model';
 import { priceValue } from '../../shared/validation/price-validation';
 import { SettingsService } from './../../settings/settings.service';
 import { Region } from './region.model';
@@ -28,6 +28,7 @@ export interface PeriodicElement {
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
+
 export class AddProductComponent implements OnInit {
   @ViewChild('myDiv') myDivElementRef: ElementRef;
   selectedIndex = 0;
@@ -51,11 +52,13 @@ export class AddProductComponent implements OnInit {
   superCategoryName;
   mainCategoryName;
   showMainCategory: boolean;
+  showMainCategoryError: boolean;
   showCategory: boolean;
   showSelectedMOQ: boolean;
   category;
   mainCategory;
   moqName;
+  imageError: boolean;
 
   fileLength;
   selectRegion: number;
@@ -105,26 +108,27 @@ export class AddProductComponent implements OnInit {
       closure: [''],
       compartments: [''],
       pockets: [''],
+      mfdQty: ['', priceValue],
       confirmRegion: this.fb.array([
       ])
     });
   }
-  selectedIndexChange(val: number ) {
+  selectedIndexChange(val: number) {
     this.selectedIndex = val;
   }
-  selectNextTab(tab)   {
-      if (tab !== 4 )     {
-    this.selectedIndex = tab + 1;
-  }   else {
-    this.selectedIndex = 4;
+  selectNextTab(tab) {
+    if (tab !== 4) {
+      this.selectedIndex = tab + 1;
+    } else {
+      this.selectedIndex = 4;
+    }
   }
-  }
-  selectPreviousTab(tab)   {
+  selectPreviousTab(tab) {
     if (tab !== 0) {
-    this.selectedIndex = tab - 1;
-  } else {
-    this.selectedIndex = 0;
-  }
+      this.selectedIndex = tab - 1;
+    } else {
+      this.selectedIndex = 0;
+    }
   }
   get regionForms() {
     return this.productForm.get('confirmRegion') as FormArray;
@@ -139,9 +143,9 @@ export class AddProductComponent implements OnInit {
       this.regionForms.push(data);
     }
   }
-  selectedCountry(test, inputRegionName)   {
+  selectedCountry(test, inputRegionName) {
     this.countryFilter =
-     this.confirmRegion.filter(data => data.regionName.indexOf(inputRegionName) !== -1);
+      this.confirmRegion.filter(data => data.regionName.indexOf(inputRegionName) !== -1);
     if (this.countryFilter.length !== 0) {
       this.countryError = true;
     } else {
@@ -151,10 +155,18 @@ export class AddProductComponent implements OnInit {
   }
   selectedSuperCategory(val) {
     this.category = val;
-    this.showMainCategory = true;
     this.superCategoryName = val.categoryName;
-    this.filteredSuperCategory =  this.superCategoryModel.filter(data => data._id === val._id);
+    this.filteredSuperCategory = this.superCategoryModel.filter(data => data._id === val._id);
     this.mainCategoryModel = this.filteredSuperCategory[0].mainCategory;
+    if (this.mainCategoryModel.length !== 0) {
+      this.showMainCategory = true;
+      this.showMainCategoryError = false;
+      this.showCategory = false;
+    } else {
+      this.showMainCategory = false;
+      this.showMainCategoryError = true;
+      this.showCategory = false;
+    }
   }
   deleteCountry(data) {
     this.countryError = false;
@@ -167,15 +179,16 @@ export class AddProductComponent implements OnInit {
   addNewRegion(e, region) {
     this.countryError = false;
     this.countryFilter =
-     this.confirmRegion.filter(data => data.regionName.indexOf(region.regionName) !== -1);
-    if (e.checked === true)     {
-    this.regionSelectName = region.regionName;
-  } else {
-    this.regionSelectName = '';
-  }
+      this.confirmRegion.filter(data => data.regionName.indexOf(region.regionName) !== -1);
+    if (e.checked === true) {
+      this.regionSelectName = region.regionName;
+    } else {
+      this.regionSelectName = '';
+    }
   }
 
   handleFileInput(images: any) {
+    this.imageError = false;
     this.fileToUpload = images;
     this.urls = [];
     const files = images;
@@ -200,7 +213,6 @@ export class AddProductComponent implements OnInit {
   getRegions() {
     this.productService.getAllRegions().subscribe(data => {
       this.regionDetail = data;
-      console.log(this.regionDetail);
       this.selectAllRegion();
     }, err => {
       console.log(err);
@@ -222,28 +234,42 @@ export class AddProductComponent implements OnInit {
   }
 
   selectedCategory(categoryVal) {
-this.mainCategory = categoryVal.mainCategoryName;
-this.categories = categoryVal._id;
-this.showCategory = true;
+    this.mainCategory = categoryVal.mainCategoryName;
+    this.categories = categoryVal._id;
+    this.showCategory = true;
   }
   deleteCategory(data) {
     const index = this.categories.indexOf(data);
     if (index > -1) {
       this.categories.splice(index, 1);
     }
-      }
-  skuCodeVerify(elem) {
-    this.skuFilter = this.productDetail.filter(data => data.skuCode.indexOf(elem) !== -1);
-    if (this.skuFilter.length !== 0) {
-      this.showSkuError = true;
-    } else if (this.skuFilter.length === 0) {
-      this.showSkuError = false;
-    }
   }
-  selectedMOQ(data) {
+  skuCodeVerify(elem) {
+    this.productDetail.forEach(element => {
+      if (element.skuCode === elem) {
+element.skuCodeVerify = true;
+      } else {
+        element.skuCodeVerify = false;
+      }
+    });
+  }
+  selectedMOQ(event, data) {
     this.moqId = data._id;
     this.moqName = data.moqName;
     this.showSelectedMOQ = true;
+  }
+  validateProducts() {
+    if (this.productForm.controls.productName.value === '' || this.productForm.controls.skuCode.value === ''
+      || this.fileToUpload === undefined || this.productForm.controls.styleCode.value === '') {
+      this.selectedIndex = 0;
+      if (this.fileToUpload === undefined) {
+        this.imageError = true;
+      } else {
+        this.imageError = false;
+      }
+    } else {
+      this.addProducts();
+    }
   }
   addProducts() {
     this.message = 'Product added successfully';
@@ -252,8 +278,10 @@ this.showCategory = true;
     this.productModel.productDescription = this.productForm.controls.productDescription.value;
     this.productModel.price = this.productForm.controls.price.value;
     this.productModel.color = this.productForm.controls.color.value;
-    this.productModel.styleCode = this.productForm.controls.styleCode.value;
-    this.productModel.skuCode = this.productForm.controls.skuCode.value;
+    this.productModel.mfdQty = this.productForm.controls.mfdQty.value;
+    this.productModel.styleCode = this.productForm.controls.styleCode.value.toUpperCase();
+    this.productModel.skuCode = this.productForm.controls.skuCode.value.toUpperCase();
+    this.productModel.moq = this.moqId;
     // category
     this.productModel.mainCategory = this.categories;
     // size
@@ -268,16 +296,13 @@ this.showCategory = true;
     this.productModel.compartments = this.productForm.controls.compartments.value;
     this.productModel.pockets = this.productForm.controls.pockets.value;
     this.productModel.region = this.confirmRegion;
-    console.log(this.productModel);
     this.productService.addProduct(this.productModel).subscribe(data => {
-      console.log('saved product', data);
       this.productId = data._id;
-      this.uploadImages(this.productModel.skuCode);
-      this.addProductToMoq();
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
-      this.router.navigate(['product/viewproducts']);
+      this.uploadImages(this.productModel.skuCode);
+
     }, error => {
       console.log(error);
     });
@@ -289,15 +314,12 @@ this.showCategory = true;
       formData.append('uploads[]', this.fileToUpload[i]);
     }
     this.productService.uploadImages(formData, skucode).subscribe(data => {
+      this.redirect();
     }, error => {
       console.log(error);
     });
   }
-  addProductToMoq() {
-    this.productService.addMOQ(this.moqId, this.productId).subscribe(data => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-    });
+  redirect() {
+    this.router.navigate(['product/viewproducts']);
   }
 }

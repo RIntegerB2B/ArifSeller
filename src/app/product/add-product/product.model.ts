@@ -9,13 +9,16 @@ export class Product {
     color: string;
     styleCode: string;
     skuCode: string;
+    skuCodeVerify: boolean;
     productImageName: [string];
     mainCategory: string;
     region: [Region];
+    moq: string;
+    mfdQty: Number;
     // size
-    length: Number;
-    breadth: Number;
-    height: Number;
+    length: string;
+    breadth: string;
+    height: string;
     // details
     material: string;
     waterProof: string;
