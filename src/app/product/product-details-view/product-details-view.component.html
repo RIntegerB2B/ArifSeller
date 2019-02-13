@@ -32,12 +32,12 @@
       </h6>
     </div>
     <div class="col-md-6 col-6">
-      <label class="productHeading" *ngIf="mfdQty !== undefined">
+      <label class="productHeading" *ngIf="productModel?.mfdQty !== undefined">
        Manufactured Quantity
       </label>
     </div>
     <div class="col-md-6 col-6">
-      <h6 class="p-2" *ngIf="mfdQty !== undefined">
+      <h6 class="p-2" *ngIf="productModel?.mfdQty !== undefined">
         {{productModel?.mfdQty}}
       </h6>
     </div>
