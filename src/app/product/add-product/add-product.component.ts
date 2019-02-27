@@ -2,16 +2,14 @@ import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material';
 
 import { ProductService } from '../product.service';
 import { Product } from './product.model';
-import { MainCategory } from '../../category/main-category/mainCategory.model';
 import { MOQ } from '../../moq/create-moq/moq.model';
 import { SuperCategory } from '../../category/super-category/superCategory.model';
 import { priceValue } from '../../shared/validation/price-validation';
-import { SettingsService } from './../../settings/settings.service';
+
 import { Region } from './region.model';
 import { MatTabChangeEvent, MatTab } from '@angular/material';
 
@@ -139,7 +137,8 @@ export class AddProductComponent implements OnInit {
       const data = this.fb.group({
         regionName: [this.regionDetail[i].regionName],
         regionPrice: ['', priceValue],
-        regionQuantity: ['', priceValue]
+        regionQuantity: ['', priceValue],
+        domainRegion: [this.regionDetail[i].domainRegion],
       });
       this.regionForms.push(data);
     }
@@ -249,7 +248,7 @@ export class AddProductComponent implements OnInit {
   skuCodeVerify(elem) {
     this.productDetail.forEach(element => {
       if (element.skuCode === elem) {
-element.skuCodeVerify = true;
+        element.skuCodeVerify = true;
       } else {
         element.skuCodeVerify = false;
       }
@@ -298,17 +297,44 @@ element.skuCodeVerify = true;
     this.productModel.compartments = this.productForm.controls.compartments.value;
     this.productModel.pockets = this.productForm.controls.pockets.value;
     this.productModel.region = this.confirmRegion;
-    this.productService.addProduct(this.productModel).subscribe(data => {
+    console.log(this.confirmRegion);
+    this.allRegionServiceUrl(this.productModel);
+    /* this.productService.addProduct(this.productModel).subscribe(data => {
       this.productId = data._id;
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
       this.uploadImages(this.productModel.skuCode);
-
+    }, error => {
+      console.log(error);
+    }); */
+  }
+  allRegionServiceUrl(productModel) {
+    this.message = 'Product added successfully';
+    for (let i = 0; i < this.confirmRegion.length; i++) {
+      this.productService.addRegionService(this.confirmRegion[i].domainRegion,
+        productModel).subscribe(data => {
+          console.log(data);
+          this.snackBar.open(this.message, this.action, {
+            duration: 3000,
+          });
+        });
+      this.uploadAllDomainImages(this.confirmRegion[i].domainRegion, productModel.skuCode);
+    }
+  }
+  uploadAllDomainImages(url, skucode) {
+    const formData: any = new FormData();
+    this.fileLength = this.fileToUpload.length;
+    for (let i = 0; i <= this.fileLength; i++) {
+      formData.append('uploads[]', this.fileToUpload[i]);
+    }
+    this.productService.uploadAllImages(url, formData, skucode).subscribe(data => {
+      this.redirect();
     }, error => {
       console.log(error);
     });
   }
+
   uploadImages(skucode) {
     const formData: any = new FormData();
     this.fileLength = this.fileToUpload.length;
@@ -316,7 +342,6 @@ element.skuCodeVerify = true;
       formData.append('uploads[]', this.fileToUpload[i]);
     }
     this.productService.uploadImages(formData, skucode).subscribe(data => {
-      this.redirect();
     }, error => {
       console.log(error);
     });

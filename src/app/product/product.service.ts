@@ -34,8 +34,19 @@ export class ProductService {
   }
   addProduct(data: Product): Observable<any> {
     const categoryUrl = 'product';
+    console.log('region' , data);
     const url: string = this.serviceUrl + categoryUrl;
     return this.httpClient.post<Product>(url, data);
+  }
+  addRegionService(subUrl, data: Product): Observable<any> {
+    const categoryUrl = 'product';
+    const url: string = subUrl + categoryUrl;
+    return this.httpClient.post<Product>(url, data);
+  }
+  uploadAllImages(subUrl, data, skucode): Observable<any> {
+    const addUrl = 'productimages/';
+    const url: string = subUrl + addUrl + skucode ;
+    return this.httpClient.put<Product>(url, data);
   }
   addMOQ(moqid, productid): Observable<any> {
     const categoryUrl = 'addMoq/';

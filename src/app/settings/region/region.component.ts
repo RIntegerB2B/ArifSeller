@@ -32,7 +32,7 @@ export class RegionComponent implements OnInit {
   showRegionName: boolean;
   currencyValue;
   selectedCurrency;
-  displayedColumns: string[] = ['regionName', 'currency',  'delete'];
+  displayedColumns: string[] = ['regionName', 'currency',  'domainRegion','delete'];
 selectedRegion;
    region;
 
@@ -48,7 +48,8 @@ selectedRegion;
     this.addRegionForm = this.fb.group({
       regionName: [''],
       currency: [''],
-      regionNameCtrl: ['']
+      regionNameCtrl: [''],
+      domainRegion: ['']
     });
   }
   getJSONRegion() {
@@ -81,6 +82,7 @@ element.checkRegionName = true;
     this.regionModel = new Region();
     this.regionModel.regionName = this.selectedRegion;
     this.regionModel.currency = this.addRegionForm.controls.currency.value;
+    this.regionModel.domainRegion = this.addRegionForm.controls.domainRegion.value;
     this.settingsService.addRegion(this.regionModel).subscribe(data => {
       this.regionDetail = data;
       this.regionData = new MatTableDataSource<PeriodicElement>(data);
