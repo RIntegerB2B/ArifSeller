@@ -3,4 +3,5 @@ export class Region {
     regionName: string;
     checkRegionName: boolean;
     currency: string;
+    domainRegion: string;
 }

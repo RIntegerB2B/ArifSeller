@@ -297,30 +297,32 @@ export class AddProductComponent implements OnInit {
     this.productModel.compartments = this.productForm.controls.compartments.value;
     this.productModel.pockets = this.productForm.controls.pockets.value;
     this.productModel.region = this.confirmRegion;
-    console.log(this.confirmRegion);
-    this.allRegionServiceUrl(this.productModel);
-    /* this.productService.addProduct(this.productModel).subscribe(data => {
+    this.productService.addProduct(this.productModel).subscribe(data => {
       this.productId = data._id;
+      this.uploadImages(this.productModel.skuCode);
+      this.allRegionServiceUrl(this.productModel);
       this.snackBar.open(this.message, this.action, {
         duration: 3000,
       });
-      this.uploadImages(this.productModel.skuCode);
     }, error => {
       console.log(error);
-    }); */
+    });
   }
   allRegionServiceUrl(productModel) {
     this.message = 'Product added successfully';
     for (let i = 0; i < this.confirmRegion.length; i++) {
-      this.productService.addRegionService(this.confirmRegion[i].domainRegion,
-        productModel).subscribe(data => {
-          console.log(data);
-          this.snackBar.open(this.message, this.action, {
-            duration: 3000,
-          });
-        });
+      this.subProduct(this.confirmRegion[i].domainRegion, productModel);
       this.uploadAllDomainImages(this.confirmRegion[i].domainRegion, productModel.skuCode);
     }
+  }
+  subProduct(path, productModel) {
+  this.productService.addRegionService(path,
+    productModel).subscribe(data => {
+      console.log(data);
+      this.snackBar.open(this.message, this.action, {
+        duration: 3000,
+      });
+    });
   }
   uploadAllDomainImages(url, skucode) {
     const formData: any = new FormData();

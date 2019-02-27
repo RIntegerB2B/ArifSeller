@@ -32,7 +32,7 @@ export class RegionComponent implements OnInit {
   showRegionName: boolean;
   currencyValue;
   selectedCurrency;
-  displayedColumns: string[] = ['regionName', 'currency',  'domainRegion','delete'];
+  displayedColumns: string[] = ['regionName', 'currency',  'domainRegion', 'delete'];
 selectedRegion;
    region;
 
