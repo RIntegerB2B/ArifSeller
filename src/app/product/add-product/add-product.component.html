@@ -259,6 +259,9 @@
                             <input matInput [readOnly]="true" placeholder="Region Name" formControlName="regionName">
                           </mat-form-field>
                           <mat-form-field class="full-width">
+                            <input matInput placeholder="Domain Name" readonly formControlName="domainRegion" >
+                          </mat-form-field>
+                          <mat-form-field class="full-width">
                             <input matInput placeholder="Price" formControlName="regionPrice" required>
                             <mat-error *ngIf="region.controls.regionPrice.errors?.required">
                               Price is
@@ -280,6 +283,7 @@
                               <strong>Quantity</strong>
                             </mat-error>
                           </mat-form-field>
+                          
                           <button mat-raised-button color="accent" [disabled]="productForm.controls.confirmRegion.controls[i].controls.regionPrice.invalid || 
                     productForm.controls.confirmRegion.controls[i].controls.regionQuantity.invalid
                     " (click)="selectedCountry(productForm.controls.confirmRegion.controls[i].value,
@@ -290,30 +294,36 @@
                   </div>
                   <div fxFlex="50">
                     <div fxLayout="row" class="p-2 listRow" *ngIf="confirmRegion?.length > 0">
-                      <div fxFlex="25">
+                      <div fxFlex="20">
                         <b>Region Name</b>
                       </div>
                       <div fxFlex="25">
-                        <b>Region Price</b>
+                        <b>Domain Name</b>
                       </div>
-                      <div fxFlex="25">
-                        <b>Region Quantity</b>
+                      <div fxFlex="15">
+                        <b> Price</b>
                       </div>
-                      <div fxFlex="25">
+                      <div fxFlex="20">
+                        <b> Quantity</b>
+                      </div>
+                      <div fxFlex="20">
                         <b>Delete</b>
                       </div>
                     </div>
                     <div fxLayout="row" class="p-2 alertRow" *ngFor="let data of confirmRegion">
-                      <div fxFlex="25">
+                      <div fxFlex="20">
                         {{data.regionName}}
                       </div>
                       <div fxFlex="25">
+                        {{data.domainRegion}}
+                      </div>
+                      <div fxFlex="15">
                         {{data.regionPrice}}
                       </div>
-                      <div fxFlex="25">
+                      <div fxFlex="20">
                         {{data.regionQuantity}}
                       </div>
-                      <div fxFlex="25">
+                      <div fxFlex="20">
                         <a (click)="deleteCountry(data)">
                           <mat-icon>delete</mat-icon>
                         </a>
@@ -345,7 +355,7 @@
                             <small>Description: {{data.moqDescription}}</small>
                           </div>
                           <div>
-                            <small>Quantity: {{data.moqDescription}}</small>
+                            <small>Quantity: {{data.moqQuantity}}</small>
                           </div>
                         </mat-card>
                       </div>

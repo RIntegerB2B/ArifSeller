@@ -75,6 +75,11 @@ deleteProduct(data): Observable<any> {
   const url: string = this.serviceUrl + deleteUrl + data._id + deleteUrl1 + data.skuCode;
   return this.httpClient.delete<Product>(url);
 }
+deleteDistributorProduct(path, skucode): Observable<any> {
+  const deleteUrl = 'sku/';
+  const url: string = path + deleteUrl + skucode ;
+  return this.httpClient.delete<Product>(url);
+}
 getProductById(data): Observable<any> {
   const productUrl = 'product/';
   const url: string = this.serviceUrl + productUrl + data;
