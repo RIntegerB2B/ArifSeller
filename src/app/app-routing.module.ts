@@ -29,6 +29,10 @@ const routes: Routes = [
     {
       path: 'inventory',
       loadChildren: './inventory/inventory.module#InventoryModule'
+    },
+    {
+      path: 'regions',
+      loadChildren: './region/region.module#RegionModule'
     }
     ]
   }

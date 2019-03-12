@@ -33,16 +33,15 @@ import {
   MatAutocompleteModule
 } from '@angular/material';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import {SettingRoutingModule} from './setting-routing.module';
-import {SettingsService} from './settings.service';
-import { RegionComponent } from './region/region.component';
-import { ProductSettingsComponent } from './product-settings/product-settings.component';
+import { AllRegionsComponent } from './all-regions/all-regions.component';
+import {RegionRoutingModule} from './region-routing.module';
+import { RegionDetailsComponent } from './region-details/region-details.component';
 
 @NgModule({
-  declarations: [RegionComponent, ProductSettingsComponent],
+  declarations: [AllRegionsComponent, RegionDetailsComponent],
   imports: [
     HttpClientModule,
-    SettingRoutingModule,
+    RegionRoutingModule,
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -69,7 +68,6 @@ import { ProductSettingsComponent } from './product-settings/product-settings.co
   ],
   providers:
    [
-    SettingsService
    ]
 })
-export class SettingsModule { }
+export class RegionModule { }

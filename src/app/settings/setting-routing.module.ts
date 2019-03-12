@@ -3,10 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import {RegionComponent} from './region/region.component';
+import {ProductSettingsComponent} from './product-settings/product-settings.component';
 
 const routes: Routes = [{
   path: 'regions',
   component: RegionComponent
+},
+{
+  path: 'products',
+  component: ProductSettingsComponent
 }
 ];
 

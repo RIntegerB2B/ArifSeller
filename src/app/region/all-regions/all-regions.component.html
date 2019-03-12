@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-md-2 example-card" *ngFor="let data of regionModel" style="margin-left:20px;">
+     
+        <mat-card  (click)="viewRegion(data)">
+          <mat-card-title >
+            <small class="text-muted"> {{data.regionName}}</small>
+            <span ></span>
+          </mat-card-title>
+          
+        </mat-card>
+      </div>
+</div>

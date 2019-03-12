@@ -88,7 +88,6 @@ export class MainCategoryComponent implements OnInit {
     });
   }
   editGridRow(cat) {
-    console.log(cat);
     cat.editing = true;
   }
   cancel(cat) {

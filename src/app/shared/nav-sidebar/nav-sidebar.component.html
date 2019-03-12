@@ -83,6 +83,14 @@
                 <a> Region</a>
               </mat-list-item>
             </mat-nav-list>
+            <mat-nav-list class="ml-0" dense>
+              <mat-list-item routerLink="/settings/products"
+              routerLinkActive="activeMenu"
+              [routerLinkActiveOptions]="{exact: true}"
+              >
+                <a> Product</a>
+              </mat-list-item>
+            </mat-nav-list>
           </mat-expansion-panel>
           <mat-expansion-panel class="no-shadow">
               <mat-expansion-panel-header fxLayout="row">
@@ -107,6 +115,21 @@
                   </mat-list-item>
                 </mat-nav-list>
             </mat-expansion-panel>
+            <mat-expansion-panel class="no-shadow">
+                <mat-expansion-panel-header fxLayout="row">
+                  <mat-panel-title>
+                Regions
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-nav-list class="ml-0" dense>
+                  <mat-list-item routerLink="/regions/allregions"
+                  routerLinkActive="activeMenu"
+              [routerLinkActiveOptions]="{exact: true}"
+                   >
+                    <a>All Regions</a>
+                  </mat-list-item>
+                </mat-nav-list>
+              </mat-expansion-panel>
       </mat-accordion>
     </mat-sidenav>
     <mat-sidenav-content>

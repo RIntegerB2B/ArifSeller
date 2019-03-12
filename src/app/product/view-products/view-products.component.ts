@@ -66,7 +66,9 @@ export class ViewProductsComponent implements OnInit {
     return filterFunction;
   }
   applyFilter(filterValue: string) {
+    console.log('tset');
     this.productData.filter = filterValue.trim().toLowerCase();
+    console.log(this.productData);
   }
   deleteProduct(product) {
     this.message = 'Product deleted';
