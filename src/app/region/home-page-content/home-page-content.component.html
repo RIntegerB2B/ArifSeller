@@ -1,0 +1,337 @@
+<div class="row">
+    <div class="col-md-2 example-card" style="margin-left:20px;">
+     
+        <mat-card  (click)="getBannerDetails()">
+          <mat-card-title >
+            <small class="text-muted"> Banners</small>
+            <span ></span>
+          </mat-card-title>
+          
+        </mat-card>
+      </div>
+
+      <div class="col-md-2 example-card" style="margin-left:20px;">
+     
+          <mat-card  (click)="getCategoryContent()">
+            <mat-card-title >
+              <small class="text-muted"> Category Content</small>
+              <span ></span>
+            </mat-card-title>
+            
+          </mat-card>
+        </div>
+
+        <div class="col-md-2 example-card" style="margin-left:20px;">
+     
+            <mat-card  (click)="getPromotions()">
+              <mat-card-title >
+                <small class="text-muted"> Promotions</small>
+                <span ></span>
+              </mat-card-title>
+              
+            </mat-card>
+          </div>
+</div>
+
+<!--banner-->
+<div class="pageBoxLg " *ngIf="showBanner">
+
+    <div class="row">
+      <div class="col-md-2">
+        <label class="pageBoxLg-label "> <a (click)="getBannerDetails()"> Banners</a></label>
+      </div>
+      <div class="col-md-3">
+          <label class="pageBoxLg-label "><a (click)="approvedBanner()">Approved Banners</a> </label>
+        </div>
+    </div>
+    <div class="row">
+      <table mat-table [dataSource]="bannerData" class="container-fluid ">
+        <ng-container matColumnDef="imageName">
+          <th mat-header-cell *matHeaderCellDef> Banner Image</th>
+          <td mat-cell *matCellDef="let element">
+            <img [src]="element.bannerImage" style="width: 180px; height: 145px;" /> </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Position">
+  
+          <th mat-header-cell *matHeaderCellDef> Banner Position</th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="approve">
+          <th mat-header-cell *matHeaderCellDef>Approve </th>
+          <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approveBanner(element)">
+              <mat-icon>done</mat-icon>
+  
+            </button> </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+  
+            <th mat-header-cell *matHeaderCellDef> Status</th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.isApproved" >
+                <h5 style="color:green"> Approved</h5>
+              </div>
+              <div *ngIf="!element.isApproved" >
+                <h5 style="color:red" >Not Approved</h5>
+              </div>
+            </td>
+          </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  
+  </div>
+  <div class="pageBoxLg " *ngIf="showApprovedBanner">
+
+      <div class="row">
+        <div class="col-md-2">
+          <label class="pageBoxLg-label "> <a (click)="getBannerDetails()"> Banners</a></label>
+        </div>
+        <div class="col-md-3">
+            <label class="pageBoxLg-label "><a (click)="approvedBanner()">Approved Banners</a> </label>
+          </div>
+      </div>
+      <div class="row">
+        <table mat-table [dataSource]="bannerData" class="container-fluid ">
+          <ng-container matColumnDef="imageName">
+            <th mat-header-cell *matHeaderCellDef> Banner Image</th>
+            <td mat-cell *matCellDef="let element">
+              <img [src]="element.bannerImage" style="width: 180px; height: 145px;" /> </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="Position">
+    
+            <th mat-header-cell *matHeaderCellDef> Banner Position</th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="approve">
+            <th mat-header-cell *matHeaderCellDef>Delete </th>
+            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approveBanner(element)">
+                <mat-icon>delete sweep icon</mat-icon>
+    
+              </button> </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+    
+              <th mat-header-cell *matHeaderCellDef> Status</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.isApproved" >
+                  <h5 style="color:green"> Approved</h5>
+                </div>
+                <div *ngIf="!element.isApproved" >
+                  <h5 style="color:red" >Not Approved</h5>
+                </div>
+              </td>
+            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    
+    </div>
+<!--Category-->
+  <div class="pageBoxLg " *ngIf="showCategoryContent">
+
+      <div class="row">
+        <div class="col-md-2">
+          <label class="pageBoxLg-label "><a (click)="getCategoryContent()">Category Content</a> </label>
+        </div>
+        <div class="col-md-4">
+            <label class="pageBoxLg-label "> <a (click)="approvedAds()">Approved Category Contenet</a></label>
+          </div>
+      </div>
+      <div class="row">
+        <table mat-table [dataSource]="adsData" class="container-fluid ">
+          <ng-container matColumnDef="imageName">
+            <th mat-header-cell *matHeaderCellDef> Category Image</th>
+            <td mat-cell *matCellDef="let element">
+              <img [src]="element.adsImageName" style="width: 180px; height: 145px;" /> </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="Position">
+    
+            <th mat-header-cell *matHeaderCellDef> Category Position</th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="approve">
+            <th mat-header-cell *matHeaderCellDef>Approve </th>
+            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approveAds(element)">
+                <mat-icon>done</mat-icon>
+    
+              </button> </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+    
+              <th mat-header-cell *matHeaderCellDef> Status</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.isApproved" >
+                  <h5 style="color:green"> Approved</h5>
+                </div>
+                <div *ngIf="!element.isApproved" >
+                  <h5 style="color:red" >Not Approved</h5>
+                </div>
+              </td>
+            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    
+    </div>
+    <!-- approved Category content-->
+    <div class="pageBoxLg " *ngIf="showApprovedCategoryContent">
+
+        <div class="row">
+          <div class="col-md-2">
+            <label class="pageBoxLg-label "><a (click)="getCategoryContent()">Category Content</a> </label>
+          </div>
+          <div class="col-md-4">
+              <label class="pageBoxLg-label "> <a (click)="approvedAds()">Approved Category Contenet</a></label>
+            </div>
+        </div>
+        <div class="row">
+          <table mat-table [dataSource]="adsData" class="container-fluid ">
+            <ng-container matColumnDef="imageName">
+              <th mat-header-cell *matHeaderCellDef> Category Image</th>
+              <td mat-cell *matCellDef="let element">
+                <img [src]="element.adsImageName" style="width: 180px; height: 145px;" /> </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="Position">
+      
+              <th mat-header-cell *matHeaderCellDef> Category Position</th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="approve">
+              <th mat-header-cell *matHeaderCellDef>Delete </th>
+              <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approveAds(element)">
+                  <mat-icon>delete sweep icon</mat-icon>
+      
+                </button> </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+      
+                <th mat-header-cell *matHeaderCellDef> Status</th>
+                <td mat-cell *matCellDef="let element">
+                  <div *ngIf="element.isApproved" >
+                    <h5 style="color:green"> Approved</h5>
+                  </div>
+                  <div *ngIf="!element.isApproved" >
+                    <h5 style="color:red" >Not Approved</h5>
+                  </div>
+                </td>
+              </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      
+      </div>
+
+    <!--Promotions-->
+
+    <div class="pageBoxLg " *ngIf="showPromotions">
+
+        <div class="row">
+          <div class="col-md-2">
+            <label class="pageBoxLg-label "> <a (click)="getPromotions()">  Promotions</a></label>
+          </div>
+          <div class="col-md-4">
+              <label class="pageBoxLg-label "><a (click)="approvedPromotions()">Approved  Promotions</a></label>
+            </div>
+        </div>
+        <div class="row">
+          <table mat-table [dataSource]="promotionsData" class="container-fluid ">
+            <ng-container matColumnDef="imageName">
+              <th mat-header-cell *matHeaderCellDef> Promotion  Title</th>
+              <td mat-cell *matCellDef="let element">
+                {{element.promotionTitle}}
+            </ng-container>
+            
+            <ng-container matColumnDef="Position">
+      
+              <th mat-header-cell *matHeaderCellDef> Promotions Position</th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="approve">
+              <th mat-header-cell *matHeaderCellDef>Approve </th>
+              <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approvePromotions(element)">
+                  <mat-icon>done</mat-icon>
+      
+                </button> </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+      
+                <th mat-header-cell *matHeaderCellDef> Status</th>
+                <td mat-cell *matCellDef="let element">
+                  <div *ngIf="element.isApproved" >
+                    <h5 style="color:green"> Approved</h5>
+                  </div>
+                  <div *ngIf="!element.isApproved" >
+                    <h5 style="color:red" >Not Approved</h5>
+                  </div>
+                </td>
+              </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      
+      </div>
+      <!--Approved Promotions-->
+      <div class="pageBoxLg " *ngIf="showApprovedPromotions">
+
+          <div class="row">
+            <div class="col-md-2">
+              <label class="pageBoxLg-label "> <a (click)="getPromotions()">  Promotions</a></label>
+            </div>
+            <div class="col-md-4">
+                <label class="pageBoxLg-label "><a (click)="approvedPromotions()">Approved  Promotions</a></label>
+              </div>
+          </div>
+          <div class="row">
+            <table mat-table [dataSource]="promotionsData" class="container-fluid ">
+              <ng-container matColumnDef="imageName">
+                <th mat-header-cell *matHeaderCellDef> Promotion  Title</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.promotionTitle}}
+              </ng-container>
+              
+              <ng-container matColumnDef="Position">
+        
+                <th mat-header-cell *matHeaderCellDef> Promotions Position</th>
+                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+              </ng-container>
+        
+              <ng-container matColumnDef="approve">
+                <th mat-header-cell *matHeaderCellDef>Delete </th>
+                <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approvePromotions(element)">
+                    <mat-icon>delete sweep icon</mat-icon>
+        
+                  </button> </td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+        
+                  <th mat-header-cell *matHeaderCellDef> Status</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div *ngIf="element.isApproved" >
+                      <h5 style="color:green"> Approved</h5>
+                    </div>
+                    <div *ngIf="!element.isApproved" >
+                      <h5 style="color:red" >Not Approved</h5>
+                    </div>
+                  </td>
+                </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        
+        </div>
+  

@@ -4,10 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material';
-import {RegionService} from '../region.service';
+import { RegionService } from '../region.service';
 
-import {Region} from '../../settings/region/region.model';
-import {Product} from '../../product/add-product/product.model';
+import { Region } from '../../settings/region/region.model';
+import { Product } from '../../product/add-product/product.model';
 
 @Component({
   selector: 'app-region-details',
@@ -26,19 +26,23 @@ export class RegionDetailsComponent implements OnInit {
     this.id = this.route.snapshot.params.id;
     this.getDetails();
   }
-getDetails() {
-  this.regionService.getSpecificRegion(this.id).subscribe(data => {
-this.serviceUrl = data[0].domainRegion;
-this.getProducts(this.serviceUrl);
-  }, err => {
-    console.log(err);
-  });
-}
-getProducts(serviceUrl) {
-this.regionService.getProducts(serviceUrl).subscribe(data => {
-this.productModel = data;
-}, err => {
-  console.log(err);
-});
-}
+  getDetails() {
+    this.regionService.getSpecificRegion(this.id).subscribe(data => {
+      this.serviceUrl = data[0].domainRegion;
+      localStorage.setItem('selectedRegion', this.serviceUrl);
+      this.getProducts(this.serviceUrl);
+    }, err => {
+      console.log(err);
+    });
+  }
+  getProducts(serviceUrl) {
+    this.regionService.getProducts(serviceUrl).subscribe(data => {
+      this.productModel = data;
+    }, err => {
+      console.log(err);
+    });
+  }
+  viewHomePage(data) {
+    this.router.navigate(['/regions/homepage', this.id]);
+  }
 }

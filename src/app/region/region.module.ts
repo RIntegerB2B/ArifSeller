@@ -36,9 +36,10 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { AllRegionsComponent } from './all-regions/all-regions.component';
 import {RegionRoutingModule} from './region-routing.module';
 import { RegionDetailsComponent } from './region-details/region-details.component';
+import { HomePageContentComponent } from './home-page-content/home-page-content.component';
 
 @NgModule({
-  declarations: [AllRegionsComponent, RegionDetailsComponent],
+  declarations: [AllRegionsComponent, RegionDetailsComponent, HomePageContentComponent],
   imports: [
     HttpClientModule,
     RegionRoutingModule,

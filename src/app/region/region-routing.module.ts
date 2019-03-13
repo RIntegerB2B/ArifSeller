@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {AllRegionsComponent} from './all-regions/all-regions.component';
 import {RegionDetailsComponent} from './region-details/region-details.component';
+import {HomePageContentComponent} from './home-page-content/home-page-content.component';
 
 const routes: Routes = [{
   path: 'allregions',
@@ -12,6 +13,10 @@ const routes: Routes = [{
 {
   path: 'region/:id',
   component: RegionDetailsComponent
+},
+{
+  path: 'homepage/:id',
+  component: HomePageContentComponent
 }
 ];
 

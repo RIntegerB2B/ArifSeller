@@ -9,6 +9,7 @@ import {MainCategory} from '../category/main-category/mainCategory.model';
 import {SuperCategory} from '../category/super-category/superCategory.model';
 import {MOQ} from '../moq/create-moq/moq.model';
 import {Region} from '../product/add-product/region.model';
+import {ProductSettings} from '../settings/product-settings/product-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -102,5 +103,13 @@ editQtyDetails(elem,  productDetails: Product): Observable<any> {
   const addUrl = 'mfdqty/';
   const url: string = this.serviceUrl + addUrl + elem ;
   return this.httpClient.put<Product>(url, productDetails);
+}
+
+// product settings
+
+getProductSettings(): Observable<any> {
+  const categoryUrl = 'productSettings';
+  const url: string = this.serviceUrl + categoryUrl;
+  return this.httpClient.get<ProductSettings>(url);
 }
 }

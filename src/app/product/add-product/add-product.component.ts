@@ -12,6 +12,7 @@ import { priceValue } from '../../shared/validation/price-validation';
 
 import { Region } from './region.model';
 import { MatTabChangeEvent, MatTab } from '@angular/material';
+import { ProductSettings } from 'src/app/settings/product-settings/product-settings.model';
 
 
 export interface PeriodicElement {
@@ -76,6 +77,9 @@ export class AddProductComponent implements OnInit {
   displayedColumns: string[] = ['moqName', 'moqDescription', 'moqQuantity'];
   moqData;
   waterProofValue = ['Yes', 'No'];
+  material;
+  color;
+  productSettingsModel: ProductSettings;
   constructor(private fb: FormBuilder, private router: Router, private productService: ProductService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -84,6 +88,7 @@ export class AddProductComponent implements OnInit {
     this.showSuperCategory();
     this.showMOQ();
     this.getProducts();
+    this.getProductSettings();
     /* this.addProducts(); */
   }
   createForm() {
@@ -110,6 +115,16 @@ export class AddProductComponent implements OnInit {
       mfdQty: ['', priceValue],
       confirmRegion: this.fb.array([
       ])
+    });
+  }
+  getProductSettings() {
+    this.productService.getProductSettings().subscribe(data => {
+      this.productSettingsModel = data;
+      this.material = data[0].material;
+      this.color = data[0].color;
+      console.log(this.material);
+    }, err => {
+      console.log(err);
     });
   }
   selectedIndexChange(val: number) {
