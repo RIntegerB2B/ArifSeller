@@ -32,7 +32,11 @@ export class RegionService {
   }
 
   // content approval
-
+  getUnApprovedHeaders(serviceUrl): Observable<any> {
+    const categoryUrl = 'headerstoapprove';
+    const url: string = serviceUrl + categoryUrl ;
+    return this.httpClient.get<Banner>(url);
+  }
   getUnApprovedBanners(serviceUrl): Observable<any> {
     const categoryUrl = 'bannerstoapprove';
     const url: string = serviceUrl + categoryUrl ;
@@ -50,6 +54,11 @@ export class RegionService {
   }
   getApprovedCategory(serviceUrl): Observable<any> {
     const categoryUrl = 'approvedCategory';
+    const url: string = serviceUrl + categoryUrl ;
+    return this.httpClient.get<Banner>(url);
+  }
+  getApprovedHeader(serviceUrl): Observable<any> {
+    const categoryUrl = 'approvedheader';
     const url: string = serviceUrl + categoryUrl ;
     return this.httpClient.get<Banner>(url);
   }
@@ -74,7 +83,11 @@ export class RegionService {
     const url: string = serviceUrl + categoryUrl + id;
     return this.httpClient.get<Banner>(url);
   }
-
+  approveHeader(serviceUrl, id): Observable<any> {
+    const categoryUrl = 'approveheader/';
+    const url: string = serviceUrl + categoryUrl + id;
+    return this.httpClient.get<Banner>(url);
+  }
   approvePromotions(serviceUrl, id): Observable<any> {
     const categoryUrl = 'approvepromotions/';
     const url: string = serviceUrl + categoryUrl + id;
