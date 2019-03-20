@@ -24,6 +24,7 @@ export interface PeriodicElement {
 export class HomePageContentComponent implements OnInit {
   showBanner: boolean;
   showApprovedBanner: boolean;
+  showDisabledBanner: boolean;
   showHeaderTable: boolean;
   showApprovedHeader: boolean;
   showCategoryContent:  boolean;
@@ -36,7 +37,9 @@ export class HomePageContentComponent implements OnInit {
   id;
   serviceUrl;
   displayedColumns: string[] = ['imageName', 'Position', 'status',  'approve'];
+  displayedApprovedColumns: string[] = ['imageName', 'Position', 'status',  'delete',  'disable'];
   displayedColumns1: string[] = ['imageName',  'status',  'approve'];
+  displayedApprovedColumns1: string[] = ['imageName',  'status',   'delete',  'disable'];
   bannerData;
   adsData;
   headersData;
@@ -51,6 +54,7 @@ export class HomePageContentComponent implements OnInit {
   getHeaders() {
     this.serviceUrl = localStorage.getItem('selectedRegion');
       this.showHeaderTable = true;
+      this.showDisabledBanner = false;
       this.showBanner = false;
       this.showApprovedHeader = false;
       this.showApprovedBanner = false;
@@ -79,6 +83,7 @@ this.regionService.getUnApprovedBanners(this.serviceUrl).subscribe(data => {
   this.bannerData = new MatTableDataSource<PeriodicElement>(data);
   this.bannerModel = data;
   this.showBanner = true;
+  this.showDisabledBanner = false;
   this.showHeaderTable = false;
   this.showApprovedHeader = false;
   this.showApprovedBanner = false;
@@ -102,6 +107,7 @@ this.regionService.approveBanner(this.serviceUrl, data._id).subscribe(val => {
 approvedBanner() {
   this.showCategoryContent = false;
   this.showBanner = false;
+  this.showDisabledBanner = false;
   this.showPromotions = false;
   this.showHeaderTable = false;
   this.showApprovedHeader = false;
@@ -120,6 +126,7 @@ approvedBanner() {
     console.log('approved header');
     this.showCategoryContent = false;
     this.showBanner = false;
+    this.showDisabledBanner = false;
     this.showPromotions = false;
     this.showHeaderTable = false;
     this.showApprovedHeader = true;
@@ -135,6 +142,7 @@ approvedBanner() {
 getCategoryContent() {
   this.showCategoryContent = true;
   this.showBanner = false;
+  this.showDisabledBanner = false;
   this.showPromotions = false;
   this.showApprovedBanner = false;
   this.showHeaderTable = false;
@@ -153,6 +161,7 @@ approvedAds(data) {
   this.showCategoryContent = false;
   this.showBanner = false;
   this.showPromotions = false;
+  this.showDisabledBanner = false;
   this.showApprovedBanner = false;
   this.showApprovedCategoryContent = true;
   this.showApprovedPromotions = false;
@@ -178,6 +187,7 @@ getPromotions() {
   this.showPromotions = true;
   this.showCategoryContent = false;
   this.showBanner = false;
+  this.showDisabledBanner = false;
   this.showApprovedBanner = false;
   this.showApprovedCategoryContent = false;
   this.showApprovedPromotions = false;
@@ -202,6 +212,7 @@ approvedPromotions(data) {
   this.showPromotions = false;
   this.showCategoryContent = false;
   this.showBanner = false;
+  this.showDisabledBanner = false;
   this.showApprovedBanner = false;
   this.showApprovedCategoryContent = false;
   this.showApprovedPromotions = true;
@@ -214,4 +225,82 @@ approvedPromotions(data) {
     console.log(err);
   });
 }
+// delete banner
+
+deleteBanner(data) {
+  this.regionService.deleteBanners(this.serviceUrl, data).subscribe(val => {
+    this.bannerData = new MatTableDataSource<PeriodicElement>(val);
+    this.bannerModel = val;
+  }, err => {
+    console.log(err);
+  });
+
+}
+
+// disable banner
+disableBanner(data) {
+  this.regionService.disableBanners(this.serviceUrl, data).subscribe(val => {
+    this.bannerData = new MatTableDataSource<PeriodicElement>(val);
+    this.bannerModel = val;
+  }, err => {
+    console.log(err);
+  });
+}
+
+// categoty content or ads
+deleteCategoryContent(data) {
+  this.regionService.deleteCategoryContent(this.serviceUrl, data).subscribe(val => {
+    this.adsData = new MatTableDataSource<PeriodicElement>(val);
+    this.adsData = val;
+  }, err => {
+    console.log(err);
+  });
+}
+
+// disable category
+
+disableCategoryContent(data) {
+  this.regionService.disableCategory(this.serviceUrl, data).subscribe(val => {
+    this.adsData = new MatTableDataSource<PeriodicElement>(val);
+    this.adsData = val;
+  }, err => {
+    console.log(err);
+  });
+}
+
+// delete Promotions
+
+deletePromotions(data) {
+  this.regionService.deletePromotions(this.serviceUrl, data).subscribe(val => {
+    this.promotionsData = new MatTableDataSource<PeriodicElement>(val);
+    this.promotionsData = val;
+  }, err => {
+    console.log(err);
+  });
+}
+
+// disable Promotions
+disablePromotions(data) {
+  this.regionService.disablePromotions(this.serviceUrl, data).subscribe(val => {
+    this.promotionsData = new MatTableDataSource<PeriodicElement>(val);
+    this.promotionsData = val;
+  }, err => {
+    console.log(err);
+  });
+}
+
+// delete header
+deleteHeader(data) {
+  this.regionService.deleteHeader(this.serviceUrl, data).subscribe(val => {
+    this.headersData = new MatTableDataSource<PeriodicElement>(val);
+  }, err => {
+    console.log(err);
+  });
+}
+
+// disable header
+disableHeader(data) {
+
+}
+
 }

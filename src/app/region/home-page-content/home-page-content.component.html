@@ -119,27 +119,39 @@
             <td mat-cell *matCellDef="let element"> {{element.position}} </td>
           </ng-container>
     
-          <ng-container matColumnDef="approve">
-            <th mat-header-cell *matHeaderCellDef>Delete </th>
-            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approveBanner(element)">
-                <mat-icon>delete sweep icon</mat-icon>
-    
-              </button> </td>
-          </ng-container>
           <ng-container matColumnDef="status">
     
               <th mat-header-cell *matHeaderCellDef> Status</th>
               <td mat-cell *matCellDef="let element">
-                <div *ngIf="element.isApproved" >
+                <div *ngIf="element.status === 1" >
                   <h5 style="color:green"> Approved</h5>
                 </div>
-                <div *ngIf="!element.isApproved" >
+                <div *ngIf="element.status === 0" >
                   <h5 style="color:red" >Waiting For Approval</h5>
+                </div>
+                <div *ngIf="element.status === 2" >
+                  <h5 style="color:black ">Disabled</h5>
                 </div>
               </td>
             </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <ng-container matColumnDef="delete">
+    
+              <th mat-header-cell *matHeaderCellDef>Delete </th>
+            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="deleteBanner(element)">
+                <mat-icon>delete sweep icon</mat-icon>
+    
+              </button> </td>
+            </ng-container>
+            <ng-container matColumnDef="disable">
+    
+              <th mat-header-cell *matHeaderCellDef>Disable </th>
+              <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="disableBanner(element)">
+                  <mat-icon>visibility_off</mat-icon>
+      
+                </button> </td>
+            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedApprovedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedApprovedColumns;"></tr>
         </table>
       </div>
     
@@ -152,7 +164,7 @@
           <label class="pageBoxLg-label "><a (click)="getCategoryContent()">Category Content</a> </label>
         </div>
         <div class="col-md-4">
-            <label class="pageBoxLg-label "> <a (click)="approvedAds()">Approved Category Contenet</a></label>
+            <label class="pageBoxLg-label "> <a (click)="approvedAds()">Approved Category Content</a></label>
           </div>
       </div>
       <div class="row">
@@ -219,27 +231,39 @@
               <td mat-cell *matCellDef="let element"> {{element.position}} </td>
             </ng-container>
       
-            <ng-container matColumnDef="approve">
-              <th mat-header-cell *matHeaderCellDef>Delete </th>
-              <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approveAds(element)">
-                  <mat-icon>delete sweep icon</mat-icon>
-      
-                </button> </td>
-            </ng-container>
             <ng-container matColumnDef="status">
       
                 <th mat-header-cell *matHeaderCellDef> Status</th>
                 <td mat-cell *matCellDef="let element">
-                  <div *ngIf="element.isApproved" >
+                  <div *ngIf="element.status === 1" >
                     <h5 style="color:green"> Approved</h5>
                   </div>
-                  <div *ngIf="!element.isApproved" >
+                  <div *ngIf="!element.status === 0" >
                     <h5 style="color:red" >Waiting For Approval</h5>
+                  </div>
+                  <div *ngIf="!element.status === 2" >
+                    <h5 style="color:red" >Disabled</h5>
                   </div>
                 </td>
               </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <ng-container matColumnDef="delete">
+      
+                <th mat-header-cell *matHeaderCellDef>Delete </th>
+                <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="deleteCategoryContent(element)">
+                    <mat-icon>delete sweep icon</mat-icon>
+        
+                  </button> </td>
+              </ng-container>
+              <ng-container matColumnDef="disable">
+      
+                <th mat-header-cell *matHeaderCellDef>Disable </th>
+                <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="disableCategoryContent(element)">
+                    <mat-icon>visibility_off</mat-icon>
+        
+                  </button> </td>
+              </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedApprovedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedApprovedColumns;"></tr>
           </table>
         </div>
       
@@ -282,11 +306,14 @@
       
                 <th mat-header-cell *matHeaderCellDef> Status</th>
                 <td mat-cell *matCellDef="let element">
-                  <div *ngIf="element.isApproved" >
+                  <div *ngIf="element.status === 1" >
                     <h5 style="color:green"> Approved</h5>
                   </div>
-                  <div *ngIf="!element.isApproved" >
+                  <div *ngIf="!element.status === 0" >
                     <h5 style="color:red" >Waiting For Approval</h5>
+                  </div>
+                  <div *ngIf="!element.status === 2" >
+                    <h5 style="color:red" >Disabled</h5>
                   </div>
                 </td>
               </ng-container>
@@ -321,27 +348,39 @@
                 <td mat-cell *matCellDef="let element"> {{element.position}} </td>
               </ng-container>
         
-              <ng-container matColumnDef="approve">
-                <th mat-header-cell *matHeaderCellDef>Delete </th>
-                <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approvePromotions(element)">
-                    <mat-icon>delete sweep icon</mat-icon>
-        
-                  </button> </td>
-              </ng-container>
               <ng-container matColumnDef="status">
         
                   <th mat-header-cell *matHeaderCellDef> Status</th>
                   <td mat-cell *matCellDef="let element">
-                    <div *ngIf="element.isApproved" >
+                    <div *ngIf="element.status === 1" >
                       <h5 style="color:green"> Approved</h5>
                     </div>
-                    <div *ngIf="!element.isApproved" >
+                    <div *ngIf="!element.status === 0" >
                       <h5 style="color:red" >Waiting For Approval</h5>
+                    </div>
+                    <div *ngIf="!element.status === 2" >
+                      <h5 style="color:red" >Disabled</h5>
                     </div>
                   </td>
                 </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <ng-container matColumnDef="delete">
+        
+                  <th mat-header-cell *matHeaderCellDef>Delete </th>
+                <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="deletePromotions(element)">
+                    <mat-icon>delete sweep icon</mat-icon>
+        
+                  </button> </td>
+                </ng-container>
+                <ng-container matColumnDef="disable"> 
+        
+                  <th mat-header-cell *matHeaderCellDef>Disable </th>
+                <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="disablePromotions(element)">
+                    <mat-icon>visibility_off</mat-icon>
+        
+                  </button> </td>
+                </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedApprovedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedApprovedColumns;"></tr>
             </table>
           </div>
       
@@ -413,13 +452,6 @@
           </ng-container>
           
     
-          <ng-container matColumnDef="approve">
-            <th mat-header-cell *matHeaderCellDef>Delete </th>
-            <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="approveHeader(element)">
-                <mat-icon>sweep delete icon</mat-icon>
-    
-              </button> </td>
-          </ng-container>
           <ng-container matColumnDef="status">
     
               <th mat-header-cell *matHeaderCellDef> Status</th>
@@ -432,8 +464,25 @@
                 </div>
               </td>
             </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            <ng-container matColumnDef="delete">
+    
+              <th mat-header-cell *matHeaderCellDef>Delete </th>
+              <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="deleteHeader(element)">
+                  <mat-icon>delete sweep icon</mat-icon>
+      
+                </button> </td>
+               
+            </ng-container>
+            <ng-container matColumnDef="disable">  
+    
+              <th mat-header-cell *matHeaderCellDef>Disable </th>
+              <td mat-cell *matCellDef="let element"> <button mat-icon-button mat-sm-button color="primary" (click)="disableHeader(element)">
+              	<mat-icon>visibility_off</mat-icon>
+      
+                </button> </td>
+            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedApprovedColumns1"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedApprovedColumns1;"></tr>
         </table>
       </div>
     

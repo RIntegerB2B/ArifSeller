@@ -93,4 +93,47 @@ export class RegionService {
     const url: string = serviceUrl + categoryUrl + id;
     return this.httpClient.get<Promotion>(url);
   }
+  // delete
+
+  deleteBanners(serviceUrl, data): Observable<any> {
+    const categoryUrl = 'deletebanners/';
+    const url: string = serviceUrl + categoryUrl + data._id;
+    return this.httpClient.delete<Banner>(url);
+  }
+
+  deleteCategoryContent(serviceUrl, data): Observable<any> {
+    const categoryUrl = 'deleteads/';
+    const url: string = serviceUrl + categoryUrl + data._id;
+    return this.httpClient.delete<Banner>(url);
+  }
+
+  deletePromotions(serviceUrl, data): Observable<any> {
+    const categoryUrl = 'deletepromotions/';
+    const url: string = serviceUrl + categoryUrl + data._id;
+    return this.httpClient.delete<Promotion>(url);
+  }
+  deleteHeader(serviceUrl, data): Observable<any> {
+    const categoryUrl = 'headerDetails/';
+    const url: string = serviceUrl + categoryUrl + data._id;
+    return this.httpClient.delete<Promotion>(url);
+  }
+
+  // disable
+
+  disableBanners(serviceUrl, data): Observable<any> {
+    const categoryUrl = 'disablebanner/';
+    const url: string = serviceUrl + categoryUrl + data._id;
+    return this.httpClient.get<Banner>(url);
+  }
+
+  disableCategory(serviceUrl, data): Observable<any> {
+    const categoryUrl = 'disablecategory/';
+    const url: string = serviceUrl + categoryUrl + data._id;
+    return this.httpClient.get<Banner>(url);
+  }
+  disablePromotions(serviceUrl, data): Observable<any> {
+    const categoryUrl = 'disablepromotions/';
+    const url: string = serviceUrl + categoryUrl + data._id;
+    return this.httpClient.get<Promotion>(url);
+  }
 }
