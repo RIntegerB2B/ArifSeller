@@ -153,6 +153,7 @@ export class AddProductComponent implements OnInit {
         regionName: [this.regionDetail[i].regionName],
         regionPrice: ['', priceValue],
         regionQuantity: ['', priceValue],
+        moq: ['', priceValue],
         domainRegion: [this.regionDetail[i].domainRegion],
       });
       this.regionForms.push(data);

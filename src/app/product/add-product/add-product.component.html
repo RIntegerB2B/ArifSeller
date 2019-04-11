@@ -131,13 +131,13 @@
                   <div fxFlex="60" class="p-5">
                     <div class="pb-1">
                       <mat-form-field>
-                          <mat-select placeholder="Select the Material" formControlName="material">
-                              <mat-option    *ngFor="let data of material" [value]="data">
-                                {{data}}
-                              </mat-option>
-                            </mat-select>
+                        <mat-select placeholder="Select the Material" formControlName="material">
+                          <mat-option *ngFor="let data of material" [value]="data">
+                            {{data}}
+                          </mat-option>
+                        </mat-select>
                       </mat-form-field>
-                     
+
                       <!--  <mat-form-field class="example-full-width">
                         <input matInput placeholder="Material" formControlName="material">
                       </mat-form-field> -->
@@ -176,13 +176,13 @@
                     </div>
                     <div class="pb-1">
                       <mat-form-field class="example-full-width">
-                        
-                              <mat-select placeholder="Select the Color" formControlName="color" >
-                                  <mat-option   *ngFor="let data of color" [value]="data">
-                                    {{data}}
-                                  </mat-option>
-                                </mat-select>
-                         
+
+                        <mat-select placeholder="Select the Color" formControlName="color">
+                          <mat-option *ngFor="let data of color" [value]="data">
+                            {{data}}
+                          </mat-option>
+                        </mat-select>
+
                       </mat-form-field>
                     </div>
                   </div>
@@ -297,6 +297,17 @@
                               <strong>Quantity</strong>
                             </mat-error>
                           </mat-form-field>
+                          <mat-form-field class="full-width">
+                            <input matInput placeholder="MOQ" formControlName="moq" required>
+                            <mat-error *ngIf="region.controls.moq.errors?.required">
+                              MOQ is
+                              <strong>required</strong>
+                            </mat-error>
+                            <mat-error *ngIf="!region.controls.moq.errors?.required">
+                              Enter the valid
+                              <strong>MOQ</strong>
+                            </mat-error>
+                          </mat-form-field>
 
                           <button mat-raised-button color="accent" [disabled]="productForm.controls.confirmRegion.controls[i].controls.regionPrice.invalid || 
                     productForm.controls.confirmRegion.controls[i].controls.regionQuantity.invalid
@@ -315,11 +326,14 @@
                       <div fxFlex="25">
                         <b>Domain Name</b>
                       </div>
-                      <div fxFlex="15">
+                      <div fxFlex="10">
                         <b> Price</b>
                       </div>
-                      <div fxFlex="20">
+                      <div fxFlex="15">
                         <b> Quantity</b>
+                      </div>
+                      <div fxFlex="15">
+                        <b> MOQ</b>
                       </div>
                       <div fxFlex="20">
                         <b>Delete</b>
@@ -332,11 +346,14 @@
                       <div fxFlex="25">
                         {{data.domainRegion}}
                       </div>
-                      <div fxFlex="15">
+                      <div fxFlex="10">
                         {{data.regionPrice}}
                       </div>
-                      <div fxFlex="20">
+                      <div fxFlex="15">
                         {{data.regionQuantity}}
+                      </div>
+                      <div fxFlex="15">
+                        {{data.moq}}
                       </div>
                       <div fxFlex="20">
                         <a (click)="deleteCountry(data)">
@@ -353,7 +370,7 @@
       </mat-tab>
 
       <!--MOQ-->
-      <mat-tab label="MOQ">
+     <!--  <mat-tab label="MOQ">
         <div class="row rowBox">
           <div class="col-md-12">
             <mat-card class="p-0">
@@ -391,7 +408,7 @@
             </mat-card>
           </div>
         </div>
-      </mat-tab>
+      </mat-tab> -->
     </mat-tab-group>
     <div class="container">
       <div class="row">

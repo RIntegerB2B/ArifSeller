@@ -6,4 +6,5 @@ export class Region {
     domainRegion: string;
     qtyediting: boolean;
     currency: string;
+    moq: number;
 }
