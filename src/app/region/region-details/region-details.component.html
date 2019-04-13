@@ -20,4 +20,15 @@
             
           </mat-card>
         </div>
+        <div class="col-md-2 example-card"  style="margin-left:20px;">
+     
+          <mat-card  (click)="viewOrdersPage()">
+            <mat-card-title >
+              <small class="text-muted"> Orders</small>
+              <h3 class="m-0 font-normal">{{orderModel?.length}}</h3>
+              <span ></span>
+            </mat-card-title>
+            
+          </mat-card>
+        </div>
 </div>

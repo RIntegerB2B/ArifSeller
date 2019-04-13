@@ -1,0 +1,127 @@
+<form [formGroup]="orderForm">
+  <div class="row ">
+
+    <div class="col-md-7 pageBoxLg">
+      <div class="row ">
+        <div class="col-md-12">Order <b> {{orderModel?.orderId}}</b> Details</div>
+       <!--  <div class="col-md-12 space">
+          <p>General</p>
+        </div> -->
+       
+        <div class="col-md-12 space">
+          <div>
+            <p>Date created</p>
+          </div>
+          <div>
+           <b> {{orderModel?.orderDate | date}}</b>
+          </div>
+        </div>
+        <div class="col-md-12 space">
+          <div>
+            <p>Status</p>
+          </div>
+        <!--   <div class="row">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Status Update" formControlName="statusType" [(ngModel)]="orderModel.orderStatus">
+                <mat-option *ngFor="let data of OrderStatus" [value]="data">
+                  {{data}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div> -->
+
+    <!--       <div class="row">
+<button mat-raised-button color="primary" (click)="updateStatus()">Update Status</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 pageBoxLg">
+      <div class="row ">
+          <div class="col-md-12">
+              <div  *ngFor="let data of orderModel.addressDetails" >
+                  <b>Delivery Address</b>
+                 <div>
+                   <b> {{data.name}}</b>
+                 </div>
+                
+        
+                 <div>
+                    {{data.building}}
+                 </div> 
+                 <div>
+                    {{data.streetAddress}}
+                 </div> 
+                 <div>
+                    {{data.landmark}}
+                 </div>  
+                 <div>
+                    {{data.city}} - {{data.pincode}}
+                 </div>
+                 <div>
+                    {{data.state}}
+                 </div>
+                  <div>
+                 Mobile Number : <b>{{data.mobileNumber}}</b> 
+                 </div>
+                </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+      <div class="col-md-10 pageBoxLg">
+        <div class="row">
+            <div class="col-md-6">
+              <p>Product</p>  
+              </div>
+              <div class="col-md-1">
+               <p>Product Name</p>   
+                </div>
+                <div class="col-md-1">
+                <p>Price</p>  
+                  </div>
+                  <div class="col-md-1">
+                    <p>Quantity</p>  
+                      </div>
+
+                      <div class="col-md-1">
+                          <p>Total</p>  
+                            </div>
+        </div>
+        
+        <div class="row" *ngFor="let data of orderModel.products">  
+          <div  *ngFor="let productDetail of productModel">
+            <div class="col-md-6" *ngIf="data.productId === productDetail._id">
+                <img class="img-fluid" style="height: 100px;width:300px;" [src]="productDetail?.productImageName[0]">
+            </div>
+           
+          </div>
+          <div  *ngFor="let productDetail of productModel">
+              <div class="col-md-1" *ngIf="data.productId === productDetail._id">
+                  <p>{{productDetail?.productName}}</p>
+              </div>
+          </div>
+          
+          <div class="col-md-1">
+              <p>{{data?.price}}</p>
+            </div>
+          <div class="col-md-1">
+              <p>{{data?.set * data?.moq }}</p>
+            </div>
+          <div class="col-md-1">
+             
+            <h5>{{data?.set * data?.moq * data?.price}}</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 " >
+            <p class="float-right"><b>Total: {{orderModel.total}}</b></p>  
+          </div>  
+        </div>
+        </div>
+  
+  </div>
+</form>

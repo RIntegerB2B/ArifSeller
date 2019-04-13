@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {AllRegionsComponent} from './all-regions/all-regions.component';
 import {RegionDetailsComponent} from './region-details/region-details.component';
 import {HomePageContentComponent} from './home-page-content/home-page-content.component';
+import {ViewRegionOrdersComponent} from './view-region-orders/view-region-orders.component';
+import {ViewOrderDetailsComponent} from './view-order-details/view-order-details.component';
 
 const routes: Routes = [{
   path: 'allregions',
@@ -17,6 +19,14 @@ const routes: Routes = [{
 {
   path: 'homepage/:id',
   component: HomePageContentComponent
+},
+{
+  path: 'orders',
+  component: ViewRegionOrdersComponent
+},
+{
+  path: 'viewordersdetails/:id',
+  component: ViewOrderDetailsComponent
 }
 ];
 

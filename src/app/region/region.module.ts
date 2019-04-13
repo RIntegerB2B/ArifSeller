@@ -37,9 +37,11 @@ import { AllRegionsComponent } from './all-regions/all-regions.component';
 import {RegionRoutingModule} from './region-routing.module';
 import { RegionDetailsComponent } from './region-details/region-details.component';
 import { HomePageContentComponent } from './home-page-content/home-page-content.component';
+import { ViewRegionOrdersComponent } from './view-region-orders/view-region-orders.component';
+import { ViewOrderDetailsComponent } from './view-order-details/view-order-details.component';
 
 @NgModule({
-  declarations: [AllRegionsComponent, RegionDetailsComponent, HomePageContentComponent],
+  declarations: [AllRegionsComponent, RegionDetailsComponent, HomePageContentComponent, ViewRegionOrdersComponent, ViewOrderDetailsComponent],
   imports: [
     HttpClientModule,
     RegionRoutingModule,

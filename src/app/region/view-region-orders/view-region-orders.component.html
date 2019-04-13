@@ -1,0 +1,87 @@
+<div class="pageBoxLg">
+  <div class="row">
+
+    <div class="orders">
+      <a (click)=viewOrders()>All({{allOrderCount}})</a>
+
+    </div>
+    <div class="orders">
+      <a (click)="viewNewOrders()">New({{newOrderCount}})</a>
+
+    </div>
+    <div class="orders">
+      <a (click)="viewActiveOrders()">Processing({{activeOrderCount}})</a>
+
+    </div>
+    <div class="orders">
+      <a (click)="viewCompletedOrders()">Completed({{completedOrderCount}})</a>
+
+    </div>
+    <div class="orders">
+      <a (click)="viewCancelledOrders()">Cancelled({{cancelledOrderCount}})</a>
+
+    </div>
+
+
+   
+
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+
+    </div>
+    <div class="col-md-4">
+        <mat-form-field>
+            <input matInput placeholder="Search Orders" (keyup)="applyFilter($event.target.value)">
+          </mat-form-field>
+      </div>
+     
+  </div>
+  <div class="row">
+    <table mat-table [dataSource]="orderModel" matSort class="container-fluid ">
+      <ng-container matColumnDef="order">
+        <th mat-header-cell *matHeaderCellDef> Order
+
+        </th>
+        <td mat-cell *matCellDef="let element">
+
+         <a (click)="showOrderDetails(element)">{{element.orderId}}</a>  </td>
+      </ng-container>   
+      <ng-container matColumnDef="view">
+          <th mat-header-cell *matHeaderCellDef> view
+  
+          </th>
+          <td mat-cell *matCellDef="let element">
+  
+              <a (click)="showOrderDetails(element)"><mat-icon>visibility   </mat-icon> </a>    </td>
+        </ng-container>
+      <ng-container matColumnDef="date">
+
+        <th mat-header-cell *matHeaderCellDef> Date <br>
+
+
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.orderDate | date}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status<br>
+
+
+
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.orderStatus}} </td>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef>Total<br>
+
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

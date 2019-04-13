@@ -17,6 +17,7 @@ import { Product } from '../../product/add-product/product.model';
 export class RegionDetailsComponent implements OnInit {
   regionModel: Region;
   productModel: Product;
+  orderModel: any;
   id;
   serviceUrl;
   constructor(private fb: FormBuilder, private router: Router, private regionService: RegionService,
@@ -31,6 +32,7 @@ export class RegionDetailsComponent implements OnInit {
       this.serviceUrl = data[0].domainRegion;
       localStorage.setItem('selectedRegion', this.serviceUrl);
       this.getProducts(this.serviceUrl);
+      this.getOrders(this.serviceUrl);
     }, err => {
       console.log(err);
     });
@@ -42,7 +44,19 @@ export class RegionDetailsComponent implements OnInit {
       console.log(err);
     });
   }
-  viewHomePage(data) {
+  getOrders(serviceUrl) {
+    this.regionService.getOrders(serviceUrl).subscribe(data => {
+      this.orderModel = data;
+      console.log(data, 'orders');
+    }, err => {
+      console.log(err);
+    });
+  }
+  viewHomePage() {
     this.router.navigate(['/regions/homepage', this.id]);
+  }
+
+  viewOrdersPage() {
+    this.router.navigate(['/regions/orders']);
   }
 }
