@@ -38,6 +38,7 @@ export class RegionService {
     return this.httpClient.get<Region>(url);
   }
 
+<<<<<<< HEAD
   getCustomers(distService): Observable<any> {
     const categoryUrl = 'customers';
     const url: string = distService + categoryUrl ;
@@ -45,6 +46,8 @@ export class RegionService {
   }
 
 
+=======
+>>>>>>> 91ba717012811eec8fee259f10c229692a574633
   // content approval
   getUnApprovedHeaders(serviceUrl): Observable<any> {
     const categoryUrl = 'headerstoapprove';

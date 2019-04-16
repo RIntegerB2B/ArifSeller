@@ -7,7 +7,10 @@ import {RegionDetailsComponent} from './region-details/region-details.component'
 import {HomePageContentComponent} from './home-page-content/home-page-content.component';
 import {ViewRegionOrdersComponent} from './view-region-orders/view-region-orders.component';
 import {ViewOrderDetailsComponent} from './view-order-details/view-order-details.component';
+<<<<<<< HEAD
 import {ViewCustomersComponent} from './view-customers/view-customers.component';
+=======
+>>>>>>> 91ba717012811eec8fee259f10c229692a574633
 
 const routes: Routes = [{
   path: 'allregions',
@@ -28,10 +31,13 @@ const routes: Routes = [{
 {
   path: 'viewordersdetails/:id',
   component: ViewOrderDetailsComponent
+<<<<<<< HEAD
 },
 {
   path: 'viewcustomers',
   component: ViewCustomersComponent
+=======
+>>>>>>> 91ba717012811eec8fee259f10c229692a574633
 }
 ];
 
