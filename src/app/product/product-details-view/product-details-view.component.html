@@ -36,17 +36,17 @@
        Manufactured Quantity
       </label>
     </div>
-    <div class="col-md-4 col-6" *ngIf="!editMfdQty">
+    <div class="col-md-4 col-6" >
       <h6 class="p-2" *ngIf="productModel?.mfdQty !== undefined">
         {{productModel?.mfdQty}}
-        <button mat-icon-button mat-sm-button color="primary" matTooltip="Edit Manufacturing Quantity"
+        <!-- <button mat-icon-button mat-sm-button color="primary" matTooltip="Edit Manufacturing Quantity"
                   (click)="editMfdQty(productModel)">
                   <mat-icon>  edit </mat-icon>
-                  </button>
+                  </button> -->
       </h6>
       
     </div>
-    <div class="col-md-4 col-6" *ngIf="editMfdQty">
+    <!-- <div class="col-md-4 col-6" *ngIf="editMfdQty">
       <div class="row">
           <div class="col-md-4">
               <h6 class="p-2" >
@@ -71,7 +71,7 @@
      
       
         
-      </div>
+      </div> -->
     <div class="col-md-12">
       <label class="productHeading" *ngIf="productModel?.region.length !== 0">
         Product Price
