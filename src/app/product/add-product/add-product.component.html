@@ -418,13 +418,13 @@
               (click)="selectPreviousTab(selectedIndex)">back</button>
           </div>
         </div>
-        <div class="col-md-6 col-6" *ngIf="selectedIndex !== 4">
+        <div class="col-md-6 col-6" *ngIf="selectedIndex !== 3">
           <div class="float-right">
-            <button mat-raised-button type="button" color="accent" [hidden]="selectedIndex === 4"
+            <button mat-raised-button type="button" color="accent" [hidden]="selectedIndex === 3"
               (click)="selectNextTab(selectedIndex)">next</button>
           </div>
         </div>
-        <div class="col-md-6 col-6" *ngIf="selectedIndex === 4">
+        <div class="col-md-6 col-6" *ngIf="selectedIndex === 3">
           <div class="float-right">
             <button mat-raised-button color="primary" type="submit">Save</button>
           </div>

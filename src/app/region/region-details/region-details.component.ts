@@ -8,6 +8,7 @@ import { RegionService } from '../region.service';
 
 import { Region } from '../../settings/region/region.model';
 import { Product } from '../../product/add-product/product.model';
+import {RegModel} from '../view-customers/customer.model';
 
 @Component({
   selector: 'app-region-details',
@@ -17,6 +18,8 @@ import { Product } from '../../product/add-product/product.model';
 export class RegionDetailsComponent implements OnInit {
   regionModel: Region;
   productModel: Product;
+  orderModel: any;
+customerModel: any;
   id;
   serviceUrl;
   constructor(private fb: FormBuilder, private router: Router, private regionService: RegionService,
@@ -31,6 +34,8 @@ export class RegionDetailsComponent implements OnInit {
       this.serviceUrl = data[0].domainRegion;
       localStorage.setItem('selectedRegion', this.serviceUrl);
       this.getProducts(this.serviceUrl);
+      this.getOrders(this.serviceUrl);
+      this.getCustomers(this.serviceUrl);
     }, err => {
       console.log(err);
     });
@@ -42,7 +47,29 @@ export class RegionDetailsComponent implements OnInit {
       console.log(err);
     });
   }
-  viewHomePage(data) {
+  getOrders(serviceUrl) {
+    this.regionService.getOrders(serviceUrl).subscribe(data => {
+      this.orderModel = data;
+    }, err => {
+      console.log(err);
+    });
+  }
+  getCustomers(serviceUrl) {
+    this.regionService.getCustomers(serviceUrl).subscribe(data => {
+      this.customerModel = data;
+      console.log(data, 'customers');
+    }, err => {
+      console.log(err);
+    });
+  }
+  viewHomePage() {
     this.router.navigate(['/regions/homepage', this.id]);
+  }
+
+  viewOrdersPage() {
+    this.router.navigate(['/regions/orders']);
+  }
+  viewCustomersPage() {
+  this.router.navigate(['/regions/viewcustomers']);
   }
 }

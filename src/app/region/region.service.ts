@@ -7,6 +7,7 @@ import { AppSetting } from '../config/appSetting';
 import {Region} from '../settings/region/region.model';
 import {Banner} from '../region/home-page-content/banner.model';
 import {Promotion} from '../region/home-page-content/promotions.model';
+import {Order} from '../region/view-region-orders/orders.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,19 @@ export class RegionService {
     const url: string = serviceUrl + categoryUrl ;
     return this.httpClient.get<Region>(url);
   }
+
+  getOrders(serviceUrl): Observable<any> {
+    const categoryUrl = 'allorders';
+    const url: string = serviceUrl + categoryUrl ;
+    return this.httpClient.get<Region>(url);
+  }
+
+  getCustomers(distService): Observable<any> {
+    const categoryUrl = 'customers';
+    const url: string = distService + categoryUrl ;
+    return this.httpClient.get<Region>(url);
+  }
+
 
   // content approval
   getUnApprovedHeaders(serviceUrl): Observable<any> {
@@ -136,4 +150,14 @@ export class RegionService {
     const url: string = serviceUrl + categoryUrl + data._id;
     return this.httpClient.get<Promotion>(url);
   }
+
+  // region wise orders
+
+  getSingleOrderDetails(serviceUrl, id): Observable<any> {
+    const categoryUrl = 'orders/';
+    const url: string = serviceUrl + categoryUrl + id;
+    return this.httpClient.get<Order>(url);
+  }
+
+
 }
